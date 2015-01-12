@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F83E8A97-4617-4015-954F-E51CD78B01B5}</ProjectGuid>
+    <RootNamespace>GProjectDemo2</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\Franklin\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\src\DbClass\h;C:\Users\Franklin\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass\h;C:\Users\Franklin\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\src\toolClass\h;C:\Users\Franklin\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass\h;C:\Users\Franklin\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass\h;C:\Users\Franklin\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass\h;C:\Users\Franklin\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Franklin.LiTianjie-PC\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\GProjectDemo2;D:\Program Files\MATLAB\R2011a\extern\lib\win32\microsoft;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ReadMe.txt" />
+    <None Include="res\GProjectDemo2.ico" />
+    <None Include="res\GProjectDemo2.rc2" />
+    <None Include="res\GProjectDemo2Doc.ico" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="res\Toolbar256.bmp" />
+    <None Include="UserImages.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GProjectDemo2.h" />
+    <ClInclude Include="GProjectDemo2Doc.h" />
+    <ClInclude Include="GProjectDemo2View.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="src\DbClass\h\CreateSqlTool.h" />
+    <ClInclude Include="src\DbClass\h\DataBase.h" />
+    <ClInclude Include="src\DbClass\h\DBConnect.h" />
+    <ClInclude Include="src\DbClass\h\DBConnPool.h" />
+    <ClInclude Include="src\DbClass\h\DBHelper.h" />
+    <ClInclude Include="src\ExcelClass\h\CApplication.h" />
+    <ClInclude Include="src\ExcelClass\h\CRange.h" />
+    <ClInclude Include="src\ExcelClass\h\CWorkbook.h" />
+    <ClInclude Include="src\ExcelClass\h\CWorkbooks.h" />
+    <ClInclude Include="src\ExcelClass\h\CWorksheet.h" />
+    <ClInclude Include="src\ExcelClass\h\CWorksheets.h" />
+    <ClInclude Include="src\ExcelClass\h\OperateExcelFileTool.h" />
+    <ClInclude Include="src\MapxClass\h\MAPX.H" />
+    <ClInclude Include="src\ObjectClass\h\AntannaTypeDefine.h" />
+    <ClInclude Include="src\ObjectClass\h\Area.h" />
+    <ClInclude Include="src\ObjectClass\h\AreaGrid.h" />
+    <ClInclude Include="src\ObjectClass\h\Building.h" />
+    <ClInclude Include="src\ObjectClass\h\BuildingArea.h" />
+    <ClInclude Include="src\ObjectClass\h\BuildingBuildingPoint.h" />
+    <ClInclude Include="src\ObjectClass\h\BuildingGrid.h" />
+    <ClInclude Include="src\ObjectClass\h\BuildingMaterial.h" />
+    <ClInclude Include="src\ObjectClass\h\BuildingPoint.h" />
+    <ClInclude Include="src\ObjectClass\h\BuildingPointParamObject.h" />
+    <ClInclude Include="src\ObjectClass\h\CoverTypeDefine.h" />
+    <ClInclude Include="src\ObjectClass\h\FreqTypeDefine.h" />
+    <ClInclude Include="src\ObjectClass\h\Grid.h" />
+    <ClInclude Include="src\ObjectClass\h\GridStrengthObject.h" />
+    <ClInclude Include="src\ObjectClass\h\RTData.h" />
+    <ClInclude Include="src\toolClass\h\ChangeTypeTool.h" />
+    <ClInclude Include="src\toolClass\h\GetDistanceTool.h" />
+    <ClInclude Include="src\toolClass\h\GetLonLatBoundsTool.h" />
+    <ClInclude Include="src\toolClass\h\GetStrongestStrength.h" />
+    <ClInclude Include="src\toolClass\h\GridBSDistanceCal.h" />
+    <ClInclude Include="src\toolClass\h\InsertRTGridIdTool.h" />
+    <ClInclude Include="src\toolClass\h\MakeGrid.h" />
+    <ClInclude Include="src\toolClass\h\MakeGridFileTool.h" />
+    <ClInclude Include="src\toolClass\h\PutXY.h" />
+    <ClInclude Include="src\toolClass\h\RecordAreaGridIntersectionTool.h" />
+    <ClInclude Include="src\toolClass\h\RecordAreaInfoTool.h" />
+    <ClInclude Include="src\toolClass\h\RecordBuildingPointTool.h" />
+    <ClInclude Include="src\toolClass\h\RecordGridBuildingIntersectionTool.h" />
+    <ClInclude Include="src\toolClass\h\RecordGridInfoTool.h" />
+    <ClInclude Include="src\toolClass\h\RecordRTData.h" />
+    <ClInclude Include="src\toolClass\h\SetGridColorTool.h" />
+    <ClInclude Include="src\toolClass\h\StringParser.h" />
+    <ClInclude Include="src\zhangzheClass\h\complex.h" />
+    <ClInclude Include="src\zhangzheClass\h\findGrid.h" />
+    <ClInclude Include="src\zhangzheClass\h\firstReflectionNew.h" />
+    <ClInclude Include="src\zhangzheClass\h\gridPower.h" />
+    <ClInclude Include="src\zhangzheClass\h\gridPowerResult.h" />
+    <ClInclude Include="src\zhangzheClass\h\line.h" />
+    <ClInclude Include="src\zhangzheClass\h\MyPoint.h" />
+    <ClInclude Include="src\zhangzheClass\h\rayInit.h" />
+    <ClInclude Include="src\zhangzheClass\h\rayManage.h" />
+    <ClInclude Include="src\zhangzheClass\h\rayPath.h" />
+    <ClInclude Include="src\zhangzheClass\h\shootingRay.h" />
+    <ClInclude Include="src\zhangzheClass\h\Staining.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GProjectDemo2.cpp" />
+    <ClCompile Include="GProjectDemo2Doc.cpp" />
+    <ClCompile Include="GProjectDemo2View.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="src\DbClass\cpp\CreateSqlTool.cpp" />
+    <ClCompile Include="src\DbClass\cpp\DataBase.cpp" />
+    <ClCompile Include="src\DbClass\cpp\DBConnect.cpp" />
+    <ClCompile Include="src\DbClass\cpp\DBConnPool.cpp" />
+    <ClCompile Include="src\DbClass\cpp\DBHelper.cpp" />
+    <ClCompile Include="src\ExcelClass\cpp\OperateExcelFileTool.cpp" />
+    <ClCompile Include="src\MapxClass\cpp\MAPX.CPP" />
+    <ClCompile Include="src\ObjectClass\cpp\AntannaTypeDefine.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\Area.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\AreaGrid.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\Building.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\BuildingArea.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\BuildingBuildingPoint.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\BuildingGrid.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\BuildingMaterial.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\BuildingPoint.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\BuildingPointParamObject.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\CoverTypeDefine.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\FreqTypeDefine.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\Grid.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\GridStrengthObject.cpp" />
+    <ClCompile Include="src\ObjectClass\cpp\RTData.cpp" />
+    <ClCompile Include="src\toolClass\cpp\ChangeTypeTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\GetDistanceTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\GetLonLatBoundsTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\GetStrongestStrength.cpp" />
+    <ClCompile Include="src\toolClass\cpp\GridBSDistanceCal.cpp" />
+    <ClCompile Include="src\toolClass\cpp\InsertRTGridIdTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\MakeGrid.cpp" />
+    <ClCompile Include="src\toolClass\cpp\MakeGridFileTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\PutXY.cpp" />
+    <ClCompile Include="src\toolClass\cpp\RecordAreaGridIntersectionTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\RecordAreaInfoTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\RecordBuildingPointTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\RecordGridBuildingIntersectionTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\RecordGridInfoTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\RecordRTData.cpp" />
+    <ClCompile Include="src\toolClass\cpp\SetGridColorTool.cpp" />
+    <ClCompile Include="src\toolClass\cpp\StringParser.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\complex.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\findGrid.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\firstReflectionNew.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\gridPower.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\gridPowerResult.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\rayInit.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\rayManage.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\shootingRay.cpp" />
+    <ClCompile Include="src\zhangzheClass\cpp\Staining.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GProjectDemo2.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="GProjectDemo2.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
