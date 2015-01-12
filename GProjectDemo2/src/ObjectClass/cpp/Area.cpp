@@ -15,7 +15,7 @@ Area Area::getFullOject(vector<string> param) {
 	return area;
 }
 */
-//nihaoma ?
+//
 vector<Area> Area::getObjectSet(vector<vector<string>> param) {
 	vector<Area> AreaSet;
 	vector<vector<string>>::iterator iter = param.begin();
