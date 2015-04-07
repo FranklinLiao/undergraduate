@@ -28,6 +28,9 @@ public:
 	 //覆盖优化中弱覆盖的方法
 	 long MaxId(string maxidString);
 	 long MinId(string minidString);
+
+	 //干扰优化的方法
+	 vector<long> getUserIdFromDb(string tableName,int areaId,int userCnt);
 };
 
 #endif

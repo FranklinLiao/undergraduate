@@ -44,6 +44,9 @@ public:
 	static vector<double> queryGridXY(int id);
 	static vector<double> queryRTDataXY(int id);
 	static int getRTDataId(string tableName,double x,double y);
+//∏…»≈”≈ªØ
+public:
+	static vector<long> getUserId(int areaId,int userCnt);
 };
 
 #endif

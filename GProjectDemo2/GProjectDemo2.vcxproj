@@ -115,7 +115,6 @@
     <ClInclude Include="GProjectDemo2View.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SFROptimize\User.h" />
     <ClInclude Include="src\CoverOptimize\OverLay.h" />
     <ClInclude Include="src\CoverOptimize\pollution.h" />
     <ClInclude Include="src\CoverOptimize\WeakLay.h" />
@@ -147,6 +146,8 @@
     <ClInclude Include="src\ObjectClass\Grid.h" />
     <ClInclude Include="src\ObjectClass\GridStrengthObject.h" />
     <ClInclude Include="src\ObjectClass\RTData.h" />
+    <ClInclude Include="src\SFROptimize\oldArea.h" />
+    <ClInclude Include="src\SFROptimize\User.h" />
     <ClInclude Include="src\ToolClass\ChangeTypeTool.h" />
     <ClInclude Include="src\ToolClass\GetDistanceTool.h" />
     <ClInclude Include="src\ToolClass\GetLonLatBoundsTool.h" />
@@ -184,7 +185,6 @@
     <ClCompile Include="GProjectDemo2Doc.cpp" />
     <ClCompile Include="GProjectDemo2View.cpp" />
     <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="SFROptimize\User.cpp" />
     <ClCompile Include="src\CoverOptimize\OverLay.cpp" />
     <ClCompile Include="src\CoverOptimize\pollution.cpp" />
     <ClCompile Include="src\CoverOptimize\WeakLay.cpp" />
@@ -210,6 +210,7 @@
     <ClCompile Include="src\ObjectClass\Grid.cpp" />
     <ClCompile Include="src\ObjectClass\GridStrengthObject.cpp" />
     <ClCompile Include="src\ObjectClass\RTData.cpp" />
+    <ClCompile Include="src\SFROptimize\User.cpp" />
     <ClCompile Include="src\ToolClass\ChangeTypeTool.cpp" />
     <ClCompile Include="src\ToolClass\GetDistanceTool.cpp" />
     <ClCompile Include="src\ToolClass\GetLonLatBoundsTool.cpp" />

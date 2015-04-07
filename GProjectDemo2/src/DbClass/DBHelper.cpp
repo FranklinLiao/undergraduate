@@ -209,3 +209,11 @@ int DBHelper::getRTDataId(string tableName,double x,double y){
 	
 }
 
+//∏…»≈”≈ªØ
+vector<long> DBHelper::getUserId(int areaId,int userCnt) {
+	DataBase db;
+	String tableName = "Grid";
+	vector<long> userId = db.();
+	return userId;
+}
+

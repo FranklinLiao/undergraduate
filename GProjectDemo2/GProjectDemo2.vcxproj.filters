@@ -55,11 +55,11 @@
     <Filter Include="源文件\CoverOptimize">
       <UniqueIdentifier>{c91033b1-1ff4-4b24-b050-ddeb2e685c7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\SFROptimize">
-      <UniqueIdentifier>{9c21a28a-998a-46d4-ae2c-e95edf03d6cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\SFROptimize">
-      <UniqueIdentifier>{19dbf0c2-55e9-41b2-aba8-92802ec86476}</UniqueIdentifier>
+      <UniqueIdentifier>{0409a2e4-0cd0-49b7-a924-948ac6c14ac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\SFROptimize">
+      <UniqueIdentifier>{0d2c3199-8a44-4bee-8f7e-807d62494dc2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -286,7 +286,10 @@
     <ClInclude Include="src\CoverOptimize\WeakLay.h">
       <Filter>头文件\CoverOptimize</Filter>
     </ClInclude>
-    <ClInclude Include="SFROptimize\User.h">
+    <ClInclude Include="src\SFROptimize\User.h">
+      <Filter>头文件\SFROptimize</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFROptimize\oldArea.h">
       <Filter>头文件\SFROptimize</Filter>
     </ClInclude>
   </ItemGroup>
@@ -462,7 +465,7 @@
     <ClCompile Include="src\CoverOptimize\WeakLay.cpp">
       <Filter>源文件\CoverOptimize</Filter>
     </ClCompile>
-    <ClCompile Include="SFROptimize\User.cpp">
+    <ClCompile Include="src\SFROptimize\User.cpp">
       <Filter>源文件\SFROptimize</Filter>
     </ClCompile>
   </ItemGroup>

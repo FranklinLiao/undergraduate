@@ -552,3 +552,41 @@ void DataBase::deletAllInfo(string TableName)
 		}
 	}
 
+
+
+//************************************  
+// 函数名称: getUserIdFromDb     
+// 函数说明： 在小区areaId中随机生成userCnt个用户     
+// 作者:Franklin     
+// 日期：2015/04/07     
+// 返 回 值: void     
+// 参    数: string tableName      
+// 参    数: int areaId      
+// 参    数: int userCnt      
+//************************************
+void DataBase::getUserIdFromDb(string tableName,int areaId,int userCnt) {
+	//GetDBConnTool dbCon;
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	try {
+		//connection=GetDBConnTool::getMyConnection();
+		//GetDBConnTool dbCon;
+		//dbCon.getMyConnection(connection);
+		//connection.CreateInstance(__uuidof(Connection));
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		sqlString = insertString.c_str();
+		connection->Execute(sqlString,0,0); 
+		//dbCon.closeConnection(connection);
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//_CrtDumpMemoryLeaks();
+	}catch(_com_error e) {
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<e.Description()<<endl;
+		cout<<"insert info failed";
+	}
+
+}
