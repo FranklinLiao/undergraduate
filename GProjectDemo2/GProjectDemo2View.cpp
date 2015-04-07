@@ -54,6 +54,9 @@ BEGIN_MESSAGE_MAP(CGProjectDemo2View, CView)
 	ON_COMMAND(ID_CALCULATE, &CGProjectDemo2View::OnCalculate)
 	ON_COMMAND(ID_GRIDMIF, &CGProjectDemo2View::OnGridmif)
 	ON_COMMAND(ID_CHANGE, &CGProjectDemo2View::OnChange)
+	ON_COMMAND(ID_OVERLAY, &CGProjectDemo2View::OnOverlay)
+	ON_COMMAND(ID_WEAKLAY, &CGProjectDemo2View::OnWeaklay)
+	ON_COMMAND(ID_POLLUTION, &CGProjectDemo2View::OnPollution)
 END_MESSAGE_MAP()
 
 // CGProjectDemo2View 构造/析构
@@ -280,6 +283,13 @@ void CGProjectDemo2View::InitDataBase()
 }
 
 
+//************************************  
+// 函数名称: OnTestdbconnection     
+// 函数说明： 测试数据库连接是否正常    
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnTestdbconnection()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -356,6 +366,13 @@ void CGProjectDemo2View::OnTestdbconnection()
 
 
 
+//************************************  
+// 函数名称: OnBinddata     
+// 函数说明： 数据绑定  但是没成功  所以放弃了    
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnBinddata()
 {
 	//进行文本绑定~
@@ -578,7 +595,14 @@ void CGProjectDemo2View::OnBinddata()
 }
 
 
-void CGProjectDemo2View::OnGridmaker()
+//************************************  
+// 函数名称: OnGridmaker     
+// 函数说明：生成网格 将数据插入到数据库中去     
+// 作者:Franklin     
+// 日期：2015/03/20     
+// 返 回 值: void     
+//************************************
+void CGProjectDemo2View::OnGridmaker() 
 {
 	MakeGrid::makeGrid();
 	MessageBox(_T("恭喜您，网格生成成功"),_T("录入信息"),MB_OK);
@@ -641,17 +665,30 @@ void CGProjectDemo2View::OnGridmaker()
 //	return featureRegion;
 //}
 
+//************************************  
+// 函数名称: OnIntersection     
+// 函数说明： 录入建筑物折点和网格的相交性信息    
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnIntersection()
 {
 	RecordGridBuildingIntersectionTool::recordGridBuildingIntersectionTool();
 	//基站和网格的关系是得按照SNR计算得出
 	//RecordAreaGridIntersectionTool::recordAreaGridIntersectionTool();
 	//建筑物和Area的关系不需要计算出来使用
-
 	MessageBox(_T("恭喜您，相交信息已经录入成功"),_T("录入信息"),MB_OK);
 }
 
 
+//************************************  
+// 函数名称: OnRecordbuilding     
+// 函数说明： 录入建筑物数据     
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnRecordbuilding()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -687,6 +724,13 @@ void CGProjectDemo2View::OnRecordbuilding()
 }
 
 
+//************************************  
+// 函数名称: OnRecordgrid     
+// 函数说明： 这个方法没有使用  因为太慢了  用makegrid替代了    
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnRecordgrid()
 {/*
 	if(RecordGridInfoTool::recordGridInfoToDB()==true) {
@@ -695,11 +739,19 @@ void CGProjectDemo2View::OnRecordgrid()
 }
 
 
+//************************************  
+// 函数名称: OnOpenbsxls     
+// 函数说明： 录入基站数据 （以网格的范围做了限定）    
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnOpenbsxls()
 {
 	//int* p = new int;
 	// TODO: 在此添加命令处理程序代码
-	CString OpenFilter = _T("基站文件(*.csv)|*.csv;*.CSV|所有文件(*.*)|*.*||");
+	//"路测文件(*.xls,*.xlsx)|*.xls;*.XLS;*.xlsx;*.XLSX|所有文件(*.*)|*.*||"
+	CString OpenFilter = _T("基站文件(*.xls,*.xlsx)|*.xls;*.XLS;*.xlsx;*.XLSX|所有文件(*.*)|*.*||");
 	CFileDialog FileDlgOpen(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, OpenFilter);
 	if(IDOK == FileDlgOpen.DoModal())
 	{
@@ -716,6 +768,13 @@ void CGProjectDemo2View::OnOpenbsxls()
 }
 
 
+//************************************  
+// 函数名称: OnModify     
+// 函数说明：该方法暂时没用  当时是准备校正路测数据的    
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnModify()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -732,6 +791,13 @@ void CGProjectDemo2View::OnModify()
 }
 
 
+//************************************  
+// 函数名称: OnPutxy     
+// 函数说明： 放置XY，已经把路测数据所属的网格也添加了     
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnPutxy()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -742,6 +808,13 @@ void CGProjectDemo2View::OnPutxy()
 
 
 
+//************************************  
+// 函数名称: OnRecordrtdata     
+// 函数说明： 用来录入路测数据 （以地图网格范围做了限制）     
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnRecordrtdata()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -762,15 +835,29 @@ void CGProjectDemo2View::OnRecordrtdata()
 }
 
 
+//************************************  
+// 函数名称: OnCalculate     
+// 函数说明： 用来计算场强的   但是未和张喆确定是否正确！！ 
+// 作者:zhangzhe     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnCalculate()
 {
 	// TODO: 在此添加命令处理程序代码
 	//调用张喆的模块，进行场强的计算
 	GetStrongestStrength::getStrongestStrength();
-	MessageBox(_T("恭喜您，计算数据成功!"),_T("通知"),MB_OK);
+	MessageBox(_T("恭喜您，场强计算成功!"),_T("通知"),MB_OK);
 }
 
 
+//************************************  
+// 函数名称: OnGridmif     
+// 函数说明： 将场强值转化为对应的颜色，并生成对应的场强值mif文件     
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnGridmif()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -791,6 +878,13 @@ void CGProjectDemo2View::OnGridmif()
 }
 
 
+//************************************  
+// 函数名称: OnChange     
+// 函数说明： 未找到对应的按钮 应该是用来做测试的 现在没用了    
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
 void CGProjectDemo2View::OnChange()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -802,3 +896,158 @@ void CGProjectDemo2View::OnChange()
 	MessageBox(_T("计算完成"),_T("通知"),MB_OK);
 
 }
+
+
+//************************************  
+// 函数名称: OnOverlay     
+// 函数说明：过覆盖优化    
+// 作者:yuanman     
+// 日期：2015/03/17     
+// 返 回 值: void     
+//************************************
+void CGProjectDemo2View::OnOverlay()
+{
+	// TODO: 在此添加命令处理程序代码
+	long Gid;
+	long Aid;
+	long maxid,maxgid,maxaid,minaid;
+
+	//获取gid的范围
+	string maxGid = WeakLay::Max("Grid","GId");
+	DataBase Maxgid;
+	maxgid = Maxgid.MaxId(maxGid);
+
+	//获取aid的范围
+	string minAid = WeakLay::Min("Area","AId");
+	string maxAid = WeakLay::Max("Area","AId");
+	DataBase Minaid,Maxaid;
+	minaid = Minaid.MinId(minAid);
+	maxaid = Maxaid.MaxId(maxAid);
+
+	//更新goverlay
+	for(long gid = 1;gid<=maxgid;gid++){
+		//long gid = 35;
+		string ojudge = OverLay::ojudge(gid);
+		DataBase oj;
+		oj.updateInfo(ojudge);
+	}
+
+	//更新aoverlay
+	string ajudge = OverLay::ajudge(minaid,maxaid,0.1);
+	DataBase aj;
+	aj.updateInfo(ajudge);
+	MessageBox(_T("恭喜您，已经完成过覆盖的判断!"),_T("通知"),MB_OK);
+}
+
+
+//************************************  
+// 函数名称: OnWeaklay     
+// 函数说明： 弱覆盖     要先执行 ，将一些距离计算出来  再进行过覆盖判断
+// 作者:yuanman     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
+void CGProjectDemo2View::OnWeaklay()
+{
+	// TODO: 在此添加命令处理程序代码
+	long Gid;
+	long Aid;
+	long maxid,maxgid,maxaid,minaid;
+	//获取gid的范围
+	string maxGid = WeakLay::Max("Grid","GId");
+	DataBase Maxgid;
+	maxgid = Maxgid.MaxId(maxGid);
+	//获取aid的范围
+	string minAid = WeakLay::Min("Area","AId");
+	string maxAid = WeakLay::Max("Area","AId");
+	DataBase Minaid,Maxaid;
+	minaid = Minaid.MinId(minAid);
+	maxaid = Maxaid.MaxId(maxAid);
+
+	////更新小区到网格的距离
+	//clock_t startTime = GetTickCount();
+	GridBSDistanceCal::updateDistance();
+	////clock_t endTime = GetTickCount();
+	//DWORD lastTime = endTime - startTime;
+	//cout<<lastTime;
+
+	////更新GAId   根据gid的位置，找到离它最近的小区，从而得到它归属的小区的id（GAID)
+	for(long gid = 1;gid<=maxgid;gid++){
+		string updateGAId = WeakLay::GetGAId(gid);
+		DataBase db;
+		db.updateInfo(updateGAId);
+	}
+
+	//更新GWeakLay  根据给定的阈值，判断在此阈值下，grid是否处于弱覆盖
+	for(long gid = 1;gid<=maxgid;gid++){
+		//long gid = 35;
+		string wjudge = WeakLay::WJudge(gid,-60);
+		DataBase wj;
+		wj.updateInfo(wjudge);
+	}
+
+	//更新AWeaklay 通过比例，判断area是否是弱覆盖的区域
+	string ajudge = WeakLay::AJudge(minaid,maxaid,0.1);
+	DataBase aj;
+	aj.updateInfo(ajudge);
+	MessageBox(_T("恭喜您，已经完成弱覆盖的判断!"),_T("通知"),MB_OK);
+}
+
+
+//************************************  
+// 函数名称: ThreadFunc     
+// 函数说明： 导频污染的线程函数  
+// 作者:yuanman     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
+//线程函数
+//volatile BOOL m_Run;
+void ThreadFunc(){
+	long gid;
+	long maxgid;
+	long minaid;
+	long maxaid;
+
+	//获取gid的范围
+	string maxGid = WeakLay::Max("Grid","GId");
+	DataBase Maxgid;
+	maxgid = Maxgid.MaxId(maxGid);
+
+	//获取aid的范围
+	string minAid = WeakLay::Min("Area","AId");
+	string maxAid = WeakLay::Max("Area","AId");
+	DataBase Minaid,Maxaid;
+	minaid = Minaid.MinId(minAid);
+	maxaid = Maxaid.MaxId(maxAid);
+
+	for (long gid = 1;gid<=maxgid;gid++){
+		if (gid == 175){
+			int kk = 1;
+		}
+		string pj = pollution::PJudge( gid , 3 ,-60 ,20 );
+		DataBase db;
+		db.updateInfo(pj);	
+	}
+	string ajudge = pollution::APJudge(0,minaid,maxaid);
+	DataBase aj;
+	aj.updateInfo(ajudge);
+}
+
+//************************************  
+// 函数名称: OnPollution     
+// 函数说明： 导频污染    
+// 作者:yuanman     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
+void CGProjectDemo2View::OnPollution()
+{
+	// TODO: 在此添加命令处理程序代码
+	
+	THandle = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)ThreadFunc,NULL,0,&TId);
+	int kk = 1;
+	CloseHandle(THandle);
+	MessageBox(_T("恭喜您，已经完成导频污染的判断!"),_T("通知"),MB_OK);
+}
+

@@ -13,6 +13,54 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\DbClass">
+      <UniqueIdentifier>{85637d4e-c6d5-43db-991f-99dca1bc2299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DbClass">
+      <UniqueIdentifier>{df6eb752-b73c-4186-9c38-1991ebaa62e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ExcelClass">
+      <UniqueIdentifier>{94e7e57b-5e03-4467-bfcb-af080d960d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\MapxClass">
+      <UniqueIdentifier>{11991634-df27-4bfa-bb5a-07f33304e6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ObjectClass">
+      <UniqueIdentifier>{6673fa8b-ac6d-45c4-8fdc-203c92611def}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ToolClass">
+      <UniqueIdentifier>{0d338caa-1a43-4f4b-a8cf-f51f345a1b87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\zhangzheClass">
+      <UniqueIdentifier>{81b0ceaa-71a3-4e81-966b-0bed7b1fdbd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ExcelClass">
+      <UniqueIdentifier>{77d7929c-cbde-4b3c-9502-041c61128bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\MapxClass">
+      <UniqueIdentifier>{60e56fc8-5b74-43a7-8f98-8bfc87546c8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\zhangzheClass">
+      <UniqueIdentifier>{f36a973a-fc50-44e7-9af6-a2815f20243c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ToolClass">
+      <UniqueIdentifier>{74c39766-e6b8-41be-8236-7518f878bcfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ObjectClass">
+      <UniqueIdentifier>{370d0aa9-2869-4cba-9fec-552a3793d7db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\CoverOptimize">
+      <UniqueIdentifier>{b2f6dcfc-b4d6-4bac-990a-1efb2cfa8a45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\CoverOptimize">
+      <UniqueIdentifier>{c91033b1-1ff4-4b24-b050-ddeb2e685c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\SFROptimize">
+      <UniqueIdentifier>{9c21a28a-998a-46d4-ae2c-e95edf03d6cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\SFROptimize">
+      <UniqueIdentifier>{19dbf0c2-55e9-41b2-aba8-92802ec86476}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -58,176 +106,188 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\DbClass\h\CreateSqlTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\DbClass\CreateSqlTool.h">
+      <Filter>头文件\DbClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\DbClass\h\DataBase.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\DbClass\DataBase.h">
+      <Filter>头文件\DbClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\DbClass\h\DBConnect.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\DbClass\DBConnect.h">
+      <Filter>头文件\DbClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\DbClass\h\DBConnPool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\DbClass\DBConnPool.h">
+      <Filter>头文件\DbClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\DbClass\h\DBHelper.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\DbClass\DBHelper.h">
+      <Filter>头文件\DbClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExcelClass\h\CApplication.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ExcelClass\CApplication.h">
+      <Filter>头文件\ExcelClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExcelClass\h\CRange.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ExcelClass\CRange.h">
+      <Filter>头文件\ExcelClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExcelClass\h\CWorkbook.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ExcelClass\CWorkbook.h">
+      <Filter>头文件\ExcelClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExcelClass\h\CWorkbooks.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ExcelClass\CWorkbooks.h">
+      <Filter>头文件\ExcelClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExcelClass\h\CWorksheet.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ExcelClass\CWorksheet.h">
+      <Filter>头文件\ExcelClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExcelClass\h\CWorksheets.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ExcelClass\CWorksheets.h">
+      <Filter>头文件\ExcelClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExcelClass\h\OperateExcelFileTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ExcelClass\OperateExcelFileTool.h">
+      <Filter>头文件\ExcelClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\MapxClass\h\MAPX.H">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\MapxClass\MAPX.H">
+      <Filter>头文件\MapxClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\AntannaTypeDefine.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\AntannaTypeDefine.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\Area.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\Area.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\AreaGrid.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\AreaGrid.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\Building.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\Building.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\BuildingArea.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\BuildingArea.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\BuildingBuildingPoint.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\BuildingBuildingPoint.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\BuildingGrid.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\BuildingGrid.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\BuildingMaterial.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\BuildingMaterial.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\BuildingPoint.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\BuildingPoint.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\BuildingPointParamObject.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\BuildingPointParamObject.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\CoverTypeDefine.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\CoverTypeDefine.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\FreqTypeDefine.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\FreqTypeDefine.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\Grid.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\Grid.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\GridStrengthObject.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\GridStrengthObject.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectClass\h\RTData.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ObjectClass\RTData.h">
+      <Filter>头文件\ObjectClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\ChangeTypeTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\ChangeTypeTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\GetDistanceTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\GetDistanceTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\GetLonLatBoundsTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\GetLonLatBoundsTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\GetStrongestStrength.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\GetStrongestStrength.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\GridBSDistanceCal.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\GridBSDistanceCal.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\InsertRTGridIdTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\InsertRTGridIdTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\MakeGrid.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\MakeGrid.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\MakeGridFileTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\MakeGridFileTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\PutXY.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\PutXY.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\RecordAreaGridIntersectionTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\RecordAreaGridIntersectionTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\RecordAreaInfoTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\RecordAreaInfoTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\RecordBuildingPointTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\RecordBuildingPointTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\RecordGridBuildingIntersectionTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\RecordGridBuildingIntersectionTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\RecordGridInfoTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\RecordGridInfoTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\RecordRTData.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\RecordRTData.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\SetGridColorTool.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\SetGridColorTool.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\toolClass\h\StringParser.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\ToolClass\StringParser.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\complex.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\complex.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\findGrid.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\findGrid.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\firstReflectionNew.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\firstReflectionNew.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\gridPower.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\gridPower.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\line.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\gridPowerResult.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\MyPoint.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\line.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\rayInit.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\MyPoint.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\rayManage.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\rayInit.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\rayPath.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\rayManage.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\shootingRay.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\rayPath.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\Staining.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\shootingRay.h">
+      <Filter>头文件\zhangzheClass</Filter>
     </ClInclude>
-    <ClInclude Include="src\zhangzheClass\h\gridPowerResult.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\zhangzheClass\Staining.h">
+      <Filter>头文件\zhangzheClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoverOptimize\OverLay.h">
+      <Filter>头文件\CoverOptimize</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoverOptimize\pollution.h">
+      <Filter>头文件\CoverOptimize</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoverOptimize\WeakLay.h">
+      <Filter>头文件\CoverOptimize</Filter>
+    </ClInclude>
+    <ClInclude Include="SFROptimize\User.h">
+      <Filter>头文件\SFROptimize</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -246,149 +306,164 @@
     <ClCompile Include="GProjectDemo2View.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\complex.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\DbClass\CreateSqlTool.cpp">
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\findGrid.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\DbClass\DataBase.cpp">
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\firstReflectionNew.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\DbClass\DBConnect.cpp">
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\gridPower.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\DbClass\DBConnPool.cpp">
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\rayInit.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\DbClass\DBHelper.cpp">
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\rayManage.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ExcelClass\OperateExcelFileTool.cpp">
+      <Filter>源文件\ExcelClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\shootingRay.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\MapxClass\MAPX.CPP">
+      <Filter>源文件\MapxClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\Staining.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\AntannaTypeDefine.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\ChangeTypeTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\Area.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\GetDistanceTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\AreaGrid.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\GetLonLatBoundsTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\Building.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\GetStrongestStrength.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\BuildingArea.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\GridBSDistanceCal.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\BuildingBuildingPoint.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\InsertRTGridIdTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\BuildingGrid.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\MakeGrid.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\BuildingMaterial.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\MakeGridFileTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\BuildingPoint.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\PutXY.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\BuildingPointParamObject.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\RecordAreaGridIntersectionTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\CoverTypeDefine.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\RecordAreaInfoTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\FreqTypeDefine.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\RecordBuildingPointTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\Grid.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\RecordGridBuildingIntersectionTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\GridStrengthObject.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\RecordGridInfoTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ObjectClass\RTData.cpp">
+      <Filter>源文件\ObjectClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\RecordRTData.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\ChangeTypeTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\SetGridColorTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\GetDistanceTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\toolClass\cpp\StringParser.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\GetLonLatBoundsTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\AntannaTypeDefine.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\GetStrongestStrength.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\Area.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\GridBSDistanceCal.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\AreaGrid.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\gridPowerResult.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\Building.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\InsertRTGridIdTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\BuildingArea.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\MakeGrid.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\BuildingBuildingPoint.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\MakeGridFileTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\BuildingGrid.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\PutXY.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\BuildingMaterial.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\RecordAreaGridIntersectionTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\BuildingPoint.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\RecordAreaInfoTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\BuildingPointParamObject.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\RecordBuildingPointTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\CoverTypeDefine.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\RecordGridBuildingIntersectionTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\FreqTypeDefine.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\RecordGridInfoTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\Grid.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\RecordRTData.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\GridStrengthObject.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\SetGridColorTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectClass\cpp\RTData.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\ToolClass\StringParser.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\MapxClass\cpp\MAPX.CPP">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\zhangzheClass\complex.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\ExcelClass\cpp\OperateExcelFileTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\zhangzheClass\findGrid.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\DbClass\cpp\CreateSqlTool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\zhangzheClass\firstReflectionNew.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\DbClass\cpp\DataBase.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\zhangzheClass\gridPower.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\DbClass\cpp\DBConnect.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\zhangzheClass\gridPowerResult.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\DbClass\cpp\DBConnPool.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\zhangzheClass\rayInit.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\DbClass\cpp\DBHelper.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\zhangzheClass\rayManage.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
     </ClCompile>
-    <ClCompile Include="src\zhangzheClass\cpp\gridPowerResult.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="src\zhangzheClass\shootingRay.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zhangzheClass\Staining.cpp">
+      <Filter>源文件\zhangzheClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoverOptimize\OverLay.cpp">
+      <Filter>源文件\CoverOptimize</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoverOptimize\pollution.cpp">
+      <Filter>源文件\CoverOptimize</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoverOptimize\WeakLay.cpp">
+      <Filter>源文件\CoverOptimize</Filter>
+    </ClCompile>
+    <ClCompile Include="SFROptimize\User.cpp">
+      <Filter>源文件\SFROptimize</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

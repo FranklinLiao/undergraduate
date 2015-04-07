@@ -21,10 +21,12 @@
 #include "PutXY.h"
 #include "GetLonLatBoundsTool.h"
 #include "RecordAreaInfoTool.h"
-//#include "ModifyLTTool.h"
 #include "SetGridColorTool.h"
-
 #include "GridBSDistanceCal.h"
+//覆盖优化
+#include "WeakLay.h"
+#include "OverLay.h"
+#include "pollution.h"
 class CGProjectDemo2View : public CView
 {
 protected: // 仅从序列化创建
@@ -93,6 +95,13 @@ public:
 	afx_msg void OnCalculate();
 	afx_msg void OnGridmif();
 	afx_msg void OnChange();
+	afx_msg void OnOverlay();
+	afx_msg void OnWeaklay();
+	afx_msg void OnPollution();
+
+private:
+	HANDLE THandle;
+	DWORD TId;
 };
 
 #ifndef _DEBUG  // GProjectDemo2View.cpp 中的调试版本
