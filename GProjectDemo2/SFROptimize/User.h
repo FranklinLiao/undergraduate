@@ -3,14 +3,15 @@
 #include <vector>
 using namespace std;
 class User {
-	private int areaId;
-	private vector<int> rbId;
-	private int gridId;
-	private double rsrp;
-	private double sinr;
-	private double x;
-	private double y;
-	private int type;//1:中心用户  2：边缘用户
+private:
+		int areaId;
+		vector<int> rbId;
+		int gridId;
+		double rsrp;
+		double sinr;
+		double x;
+		double y;
+		int type;//1:中心用户  2：边缘用户
 	//构造方法
 	User(int areaId,vector<int> rbId,int gridId,double rsrp,double sinr,double x,double y,int type) {
 		this->areaId = areaId;
