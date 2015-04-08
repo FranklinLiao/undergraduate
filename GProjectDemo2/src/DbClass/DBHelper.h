@@ -4,6 +4,7 @@
 //#include "Grid.h"
 #include "CreateSqlTool.h"
 #include "DataBase.h"
+#include "User.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -46,7 +47,8 @@ public:
 	static int getRTDataId(string tableName,double x,double y);
 //∏…»≈”≈ªØ
 public:
-	static vector<long> getUserId(int areaId,int userCnt);
+	static vector<User> getUser(int areaId,int userCnt);
+	static vector<int> getAdjAreaId(int areaId);
 };
 
 #endif

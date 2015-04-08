@@ -210,10 +210,26 @@ int DBHelper::getRTDataId(string tableName,double x,double y){
 }
 
 //∏…»≈”≈ªØ
-vector<long> DBHelper::getUserId(int areaId,int userCnt) {
+vector<User> DBHelper::getUser(int areaId,int userCnt) {
 	DataBase db;
-	String tableName = "Grid";
-	vector<long> userId = db.();
-	return userId;
+	string tableName = "Grid";
+	vector<User> users;
+	vector<vector<string>> userInfos = db.getUserIdFromDb(tableName,areaId,userCnt);
+	vector<vector<string>>::iterator iterout = userInfos.begin();
+	while(iterout!=userInfos.end()) {
+		vector<string>::iterator iterin = (*iterout++).begin();
+		int gridId = ChangeTypeTool::stringToInt(*iterin++);
+		double rsrp = ChangeTypeTool::stringToDouble(*iterin++);
+		double x = ChangeTypeTool::stringToDouble(*iterin++);
+		double y = ChangeTypeTool::stringToDouble(*iterin++);
+		User user = new User(gridId,rsrp,x,y);
+		users.push_back(user);
+	}
+	return users;
 }
 
+vector<int> DBHelper::getAdjAreaId(int areaId) {
+	DataBase db;
+	string tableName="ANeighbourCell";
+	vector<int> adjAreaId = db.getAdjAreaIdFromDb(tableName,areaId);
+}

@@ -30,7 +30,8 @@ public:
 	 long MinId(string minidString);
 
 	 //干扰优化的方法
-	 vector<long> getUserIdFromDb(string tableName,int areaId,int userCnt);
+	 vector<vector<string>> getUserIdFromDb(string tableName,int areaId,int userCnt);
+	 vector<int> getAdjAreaIdFromDb(string tableName,int areaId);
 };
 
 #endif

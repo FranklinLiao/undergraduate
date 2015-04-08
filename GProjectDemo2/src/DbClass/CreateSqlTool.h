@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <iterator>
+#include <sstream>
 using namespace std;
 
 class CreateSqlTool {
@@ -68,6 +69,9 @@ public:
 	static string createGetSpecialGridId(string tableName,double minLongitude,double maxLongitude,double minLatitude,double maxLatitude);
 	static string creategetRTDataId(string tablename,double x,double y);
 	static string createUpdateDistance(int size,int start);
+	//∏…»≈”≈ªØ
+	static string getRandonUser(string tableName,int areaId,int userCnt);
+	static string getAdjAreaCell(string tableName,int areaId);
 };
 
 #endif

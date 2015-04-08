@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 class User {
-private:
+public:
 		int areaId;
 		vector<int> rbId;
 		int gridId;
@@ -11,18 +11,16 @@ private:
 		double sinr;
 		double x;
 		double y;
-		int type;//1:中心用户  2：边缘用户
+		int type=1;//1:中心用户  2：边缘用户  默认是中心用户
 	//构造方法
-	User(int areaId,vector<int> rbId,int gridId,double rsrp,double sinr,double x,double y,int type) {
-		this->areaId = areaId;
-		this->rbId = rbId;
+public:
+	User(int gridId,double rsrp,double x,double y){
 		this->gridId = gridId;
 		this->rsrp = rsrp;
-		this->sinr = sinr;
 		this->x = x;
 		this->y = y;
-		this->type = type;
 	}
-
+public:
+	bool isEdgeUser();
 };
 #endif

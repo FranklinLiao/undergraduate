@@ -289,7 +289,10 @@
     <ClInclude Include="src\SFROptimize\User.h">
       <Filter>头文件\SFROptimize</Filter>
     </ClInclude>
-    <ClInclude Include="src\SFROptimize\oldArea.h">
+    <ClInclude Include="src\SFROptimize\OldArea.h">
+      <Filter>头文件\SFROptimize</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFROptimize\NewArea.h">
       <Filter>头文件\SFROptimize</Filter>
     </ClInclude>
   </ItemGroup>
@@ -466,6 +469,9 @@
       <Filter>源文件\CoverOptimize</Filter>
     </ClCompile>
     <ClCompile Include="src\SFROptimize\User.cpp">
+      <Filter>源文件\SFROptimize</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SFROptimize\OldArea.cpp">
       <Filter>源文件\SFROptimize</Filter>
     </ClCompile>
   </ItemGroup>

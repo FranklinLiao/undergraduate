@@ -10,6 +10,38 @@ string CreateSqlTool::queryAllAreaString ="select * from Area Order By AId";
 string CreateSqlTool::getTableInfoNum="select count(*) from ";
 string CreateSqlTool::getMaxXY="select max(GX),max(GY) from Grid;";
 string CreateSqlTool::getRTDataXY = "select RX,RY from RTData where RId = ";
+//干扰优化
+//************************************  
+// 函数名称: getRandonUser     
+// 函数说明： 构造随机选择userCnt个网格的sql语句    
+// 作者:Franklin     
+// 日期：2015/04/08     
+// 返 回 值: std::string     
+// 参    数: string tableName      
+// 参    数: int areaId      
+// 参    数: int userCnt      
+//************************************
+string CreateSqlTool::getRandonUser(string tableName,int areaId,int userCnt) {
+	//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
+	sstream ss;
+	ss<<"select top "<<userCnt<<" ,GId,GRealRSRP,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
+	return ss.str();
+}
+
+//************************************  
+// 函数名称: getAdjAreaCell     
+// 函数说明： 构造查找areaId的邻区id的sql语句     
+// 作者:Franklin     
+// 日期：2015/04/08     
+// 返 回 值: std::string     
+// 参    数: string tableName      
+// 参    数: int areaId      
+//************************************
+string CreateSqlTool::getAdjAreaCell(string tableName,int areaId) {
+	sstream sqlString;
+	sqlString<<"select ANeighbourCellId  from "<<tableName<<" where Aid = "<<areaId;
+	return sqlString.str();
+}
 //string CreateSqlTool::createInsertSql(string tableName,string sqlInfo) {
 //	string sqlString = "insert into ";
 //	sqlString.append(tableName);

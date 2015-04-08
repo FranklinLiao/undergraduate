@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\SFROptimize;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Franklin.LiTianjie-PC\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\GProjectDemo2;D:\Program Files\MATLAB\R2011a\extern\lib\win32\microsoft;$(LibraryPath)</LibraryPath>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -146,7 +146,8 @@
     <ClInclude Include="src\ObjectClass\Grid.h" />
     <ClInclude Include="src\ObjectClass\GridStrengthObject.h" />
     <ClInclude Include="src\ObjectClass\RTData.h" />
-    <ClInclude Include="src\SFROptimize\oldArea.h" />
+    <ClInclude Include="src\SFROptimize\NewArea.h" />
+    <ClInclude Include="src\SFROptimize\OldArea.h" />
     <ClInclude Include="src\SFROptimize\User.h" />
     <ClInclude Include="src\ToolClass\ChangeTypeTool.h" />
     <ClInclude Include="src\ToolClass\GetDistanceTool.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="src\ObjectClass\Grid.cpp" />
     <ClCompile Include="src\ObjectClass\GridStrengthObject.cpp" />
     <ClCompile Include="src\ObjectClass\RTData.cpp" />
+    <ClCompile Include="src\SFROptimize\OldArea.cpp" />
     <ClCompile Include="src\SFROptimize\User.cpp" />
     <ClCompile Include="src\ToolClass\ChangeTypeTool.cpp" />
     <ClCompile Include="src\ToolClass\GetDistanceTool.cpp" />

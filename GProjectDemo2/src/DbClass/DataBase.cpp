@@ -564,29 +564,89 @@ void DataBase::deletAllInfo(string TableName)
 // 参    数: int areaId      
 // 参    数: int userCnt      
 //************************************
-void DataBase::getUserIdFromDb(string tableName,int areaId,int userCnt) {
+	
+ vector<vector<string>> DataBase::getUserFromDb(string tableName,int areaId,int userCnt) {
 	//GetDBConnTool dbCon;
 	_ConnectionPtr connection;
 	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
 	try {
-		//connection=GetDBConnTool::getMyConnection();
-		//GetDBConnTool dbCon;
-		//dbCon.getMyConnection(connection);
-		//connection.CreateInstance(__uuidof(Connection));
 		dbconnection = DBConnPool::Instanse()->GetAConnection();
 		connection = dbconnection->_connection_ptr;
-		sqlString = insertString.c_str();
-		connection->Execute(sqlString,0,0); 
-		//dbCon.closeConnection(connection);
-		//		DBConnPool::Instanse()->CloseConnection(connection);
+		sqlString = CreateSqlTool::getRandonUser(tableName,areaId,userCnt).c_str();
+		recordSet.CreateInstance(__uuidof(Recordset));
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vector<vector<string>> stringObject;
+		while(!recordSet->EndOfFile)
+		{
+			vector<string> userInfo;
+			int i=0;
+			for(;i<3;i++) {
+				vTmp = recordSet->GetCollect(_variant_t((long)i));//这儿给字段编号和字段名都可以 
+				string tmp;
+				if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+					tmp = (_bstr_t) vTmp;
+				} else {
+					tmp = (_bstr_t)vTmp;//.dblVal;
+				}
+				userInfo.push_back(tmp); 
+			}
+			stringObject.push_back(userInfo); 
+			recordSet->MoveNext(); ///移到下一条记录
+		}
+		return stringObject;
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
-		//_CrtDumpMemoryLeaks();
 	}catch(_com_error e) {
-		//		DBConnPool::Instanse()->CloseConnection(connection);
-		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
 		cout<<e.Description()<<endl;
-		cout<<"insert info failed";
+		cout<<"getRandomUser failed";
 	}
-
 }
+
+
+ //************************************  
+ // 函数名称: getAdjAreaId     
+ // 函数说明： 得到某小区的邻区Id    
+ // 作者:Franklin     
+ // 日期：2015/04/08     
+ // 返 回 值: vector<int>     
+ // 参    数: string tableName      
+ // 参    数: int areaId      
+ //************************************
+ vector<int> DataBase::getAdjAreaIdFromDb(string tableName,int areaId) {
+	 _ConnectionPtr connection;
+	 DBConnect* dbconnection;
+	 _RecordsetPtr recordSet;
+	 try {
+		 dbconnection = DBConnPool::Instanse()->GetAConnection();
+		 connection = dbconnection->_connection_ptr;
+		 sqlString = CreateSqlTool::getAdjAreaId(tableName,areaId).c_str();
+		 recordSet.CreateInstance(__uuidof(Recordset));
+		 recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		 _variant_t vTmp;
+		 vector<int> intObject;
+		 while(!recordSet->EndOfFile)
+		 {
+			 vTmp = recordSet->GetCollect(_variant_t((long)0)); //取出第1个字段（从0开始）
+			 int tmp = 0;
+			 if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+				 tmp = 0;
+			 } else {
+				 tmp = int(vTmp);//.dblVal;
+			 }
+			 intObject.push_back(tmp); 
+			 recordSet->MoveNext(); ///移到下一条记录
+		 }
+		 return intObject;
+		 DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		 DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	 }catch(_com_error e) {
+		 DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		 DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		 cout<<e.Description()<<endl;
+		 cout<<"getRandomUser failed";
+	 }
+ }
