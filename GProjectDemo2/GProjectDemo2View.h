@@ -27,6 +27,9 @@
 #include "WeakLay.h"
 #include "OverLay.h"
 #include "pollution.h"
+//软频率复用算法优化
+#include "SFROptimize.h"
+#include "RecordAdjAreaForSfrTool.h"
 class CGProjectDemo2View : public CView
 {
 protected: // 仅从序列化创建
@@ -102,6 +105,8 @@ public:
 private:
 	HANDLE THandle;
 	DWORD TId;
+public:
+	afx_msg void OnSfr();
 };
 
 #ifndef _DEBUG  // GProjectDemo2View.cpp 中的调试版本

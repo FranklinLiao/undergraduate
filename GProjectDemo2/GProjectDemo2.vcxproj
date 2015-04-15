@@ -147,7 +147,10 @@
     <ClInclude Include="src\ObjectClass\GridStrengthObject.h" />
     <ClInclude Include="src\ObjectClass\RTData.h" />
     <ClInclude Include="src\SFROptimize\NewArea.h" />
+    <ClInclude Include="src\SFROptimize\NewRbs.h" />
     <ClInclude Include="src\SFROptimize\OldArea.h" />
+    <ClInclude Include="src\SFROptimize\Rbs.h" />
+    <ClInclude Include="src\SFROptimize\SFROptimize.h" />
     <ClInclude Include="src\SFROptimize\User.h" />
     <ClInclude Include="src\ToolClass\ChangeTypeTool.h" />
     <ClInclude Include="src\ToolClass\GetDistanceTool.h" />
@@ -158,6 +161,7 @@
     <ClInclude Include="src\ToolClass\MakeGrid.h" />
     <ClInclude Include="src\ToolClass\MakeGridFileTool.h" />
     <ClInclude Include="src\ToolClass\PutXY.h" />
+    <ClInclude Include="src\ToolClass\RecordAdjAreaForSfrTool.h" />
     <ClInclude Include="src\ToolClass\RecordAreaGridIntersectionTool.h" />
     <ClInclude Include="src\ToolClass\RecordAreaInfoTool.h" />
     <ClInclude Include="src\ToolClass\RecordBuildingPointTool.h" />
@@ -211,8 +215,9 @@
     <ClCompile Include="src\ObjectClass\Grid.cpp" />
     <ClCompile Include="src\ObjectClass\GridStrengthObject.cpp" />
     <ClCompile Include="src\ObjectClass\RTData.cpp" />
+    <ClCompile Include="src\SFROptimize\NewArea.cpp" />
     <ClCompile Include="src\SFROptimize\OldArea.cpp" />
-    <ClCompile Include="src\SFROptimize\User.cpp" />
+    <ClCompile Include="src\SFROptimize\SFROptimize.cpp" />
     <ClCompile Include="src\ToolClass\ChangeTypeTool.cpp" />
     <ClCompile Include="src\ToolClass\GetDistanceTool.cpp" />
     <ClCompile Include="src\ToolClass\GetLonLatBoundsTool.cpp" />
@@ -223,6 +228,7 @@
     <ClCompile Include="src\ToolClass\MakeGrid.cpp" />
     <ClCompile Include="src\ToolClass\MakeGridFileTool.cpp" />
     <ClCompile Include="src\ToolClass\PutXY.cpp" />
+    <ClCompile Include="src\ToolClass\RecordAdjAreaForSfrTool.cpp" />
     <ClCompile Include="src\ToolClass\RecordAreaGridIntersectionTool.cpp" />
     <ClCompile Include="src\ToolClass\RecordAreaInfoTool.cpp" />
     <ClCompile Include="src\ToolClass\RecordBuildingPointTool.cpp" />

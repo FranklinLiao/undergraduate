@@ -10,7 +10,7 @@ using namespace std;
 
 
 class Area {
-protected:
+public:
 	int AId;
 	double ASendPower;
 	double ALongtitude;
@@ -28,7 +28,9 @@ protected:
 	float aZ;
 public:
 	//¹¹Ôìº¯Êý
-	Area(){}
+	Area() {
+
+	}
 	Area(vector<string> param){
 		vector<string>::iterator iter = param.begin();
 		this->setAId(ChangeTypeTool::stringToInt(*iter++));

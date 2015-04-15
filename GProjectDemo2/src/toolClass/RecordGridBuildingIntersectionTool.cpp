@@ -199,7 +199,7 @@ void RecordGridBuildingIntersectionTool::recordGridBuildingIntersectionTool() {
 							buildingGridId++;
 
 							//m_pRecordset->PutCollect("GBId",_variant_t(RBid.c_str()));
-							m_pRecordset->PutCollect("GRealSNR",_variant_t(double(0)));
+							m_pRecordset->PutCollect("GRealRSRP",_variant_t(double(0)));
 							m_pRecordset->PutCollect("GColor",_variant_t(int(0)));
 							m_pRecordset->Update();
 							RBid.clear();

@@ -214,7 +214,7 @@ vector<User> DBHelper::getUser(int areaId,int userCnt) {
 	DataBase db;
 	string tableName = "Grid";
 	vector<User> users;
-	vector<vector<string>> userInfos = db.getUserIdFromDb(tableName,areaId,userCnt);
+	vector<vector<string>> userInfos = db.getUserFromDb(tableName,areaId,userCnt);
 	vector<vector<string>>::iterator iterout = userInfos.begin();
 	while(iterout!=userInfos.end()) {
 		vector<string>::iterator iterin = (*iterout++).begin();
@@ -222,7 +222,7 @@ vector<User> DBHelper::getUser(int areaId,int userCnt) {
 		double rsrp = ChangeTypeTool::stringToDouble(*iterin++);
 		double x = ChangeTypeTool::stringToDouble(*iterin++);
 		double y = ChangeTypeTool::stringToDouble(*iterin++);
-		User user = new User(gridId,rsrp,x,y);
+		User user = User(gridId,rsrp,x,y);
 		users.push_back(user);
 	}
 	return users;
@@ -232,4 +232,11 @@ vector<int> DBHelper::getAdjAreaId(int areaId) {
 	DataBase db;
 	string tableName="ANeighbourCell";
 	vector<int> adjAreaId = db.getAdjAreaIdFromDb(tableName,areaId);
+	return adjAreaId;
+}
+
+double DBHelper::getAdjAreaGridStrength(int aid,int gridId) {
+	DataBase db;
+	double strength = db.getAdjAreaGridStrength(aid,gridId);
+	return strength;
 }

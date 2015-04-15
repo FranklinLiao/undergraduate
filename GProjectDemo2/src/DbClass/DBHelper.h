@@ -49,6 +49,7 @@ public:
 public:
 	static vector<User> getUser(int areaId,int userCnt);
 	static vector<int> getAdjAreaId(int areaId);
+	static double getAdjAreaGridStrength(int aid,int gridId);
 };
 
 #endif

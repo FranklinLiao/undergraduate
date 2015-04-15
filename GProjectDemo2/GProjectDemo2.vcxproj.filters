@@ -295,6 +295,18 @@
     <ClInclude Include="src\SFROptimize\NewArea.h">
       <Filter>头文件\SFROptimize</Filter>
     </ClInclude>
+    <ClInclude Include="src\SFROptimize\Rbs.h">
+      <Filter>头文件\SFROptimize</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFROptimize\SFROptimize.h">
+      <Filter>头文件\SFROptimize</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolClass\RecordAdjAreaForSfrTool.h">
+      <Filter>头文件\ToolClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFROptimize\NewRbs.h">
+      <Filter>头文件\SFROptimize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GProjectDemo2.cpp">
@@ -468,10 +480,16 @@
     <ClCompile Include="src\CoverOptimize\WeakLay.cpp">
       <Filter>源文件\CoverOptimize</Filter>
     </ClCompile>
-    <ClCompile Include="src\SFROptimize\User.cpp">
+    <ClCompile Include="src\SFROptimize\OldArea.cpp">
       <Filter>源文件\SFROptimize</Filter>
     </ClCompile>
-    <ClCompile Include="src\SFROptimize\OldArea.cpp">
+    <ClCompile Include="src\SFROptimize\SFROptimize.cpp">
+      <Filter>源文件\SFROptimize</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolClass\RecordAdjAreaForSfrTool.cpp">
+      <Filter>源文件\ToolClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SFROptimize\NewArea.cpp">
       <Filter>源文件\SFROptimize</Filter>
     </ClCompile>
   </ItemGroup>

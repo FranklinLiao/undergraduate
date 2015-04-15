@@ -71,7 +71,8 @@ public:
 	static string createUpdateDistance(int size,int start);
 	//∏…»≈”≈ªØ
 	static string getRandonUser(string tableName,int areaId,int userCnt);
-	static string getAdjAreaCell(string tableName,int areaId);
+	static string getAdjAreaId(string tableName,int areaId);
+	static string getAdjAreaGridStrength(int aid,int gridId);
 };
 
 #endif

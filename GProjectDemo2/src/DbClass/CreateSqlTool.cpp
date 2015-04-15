@@ -10,6 +10,7 @@ string CreateSqlTool::queryAllAreaString ="select * from Area Order By AId";
 string CreateSqlTool::getTableInfoNum="select count(*) from ";
 string CreateSqlTool::getMaxXY="select max(GX),max(GY) from Grid;";
 string CreateSqlTool::getRTDataXY = "select RX,RY from RTData where RId = ";
+
 //干扰优化
 //************************************  
 // 函数名称: getRandonUser     
@@ -23,7 +24,7 @@ string CreateSqlTool::getRTDataXY = "select RX,RY from RTData where RId = ";
 //************************************
 string CreateSqlTool::getRandonUser(string tableName,int areaId,int userCnt) {
 	//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
-	sstream ss;
+	stringstream ss;
 	ss<<"select top "<<userCnt<<" ,GId,GRealRSRP,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
 	return ss.str();
 }
@@ -37,8 +38,8 @@ string CreateSqlTool::getRandonUser(string tableName,int areaId,int userCnt) {
 // 参    数: string tableName      
 // 参    数: int areaId      
 //************************************
-string CreateSqlTool::getAdjAreaCell(string tableName,int areaId) {
-	sstream sqlString;
+string CreateSqlTool::getAdjAreaId(string tableName,int areaId) {
+	stringstream sqlString;
 	sqlString<<"select ANeighbourCellId  from "<<tableName<<" where Aid = "<<areaId;
 	return sqlString.str();
 }
@@ -361,4 +362,16 @@ string CreateSqlTool::createUpdateDistance(int size,int start) {
 						close myCursor \
 						deallocate myCursor");
 	return updateString;
+}
+
+string CreateSqlTool::getAdjAreaGridStrength(int aid,int gridId) {
+	stringstream stringInfo;
+	string info;
+	stringInfo<<"select GRSRP from GridFieldStrenth where aid = ";
+	stringInfo<<aid;
+	stringInfo<<" and gid = ";
+	stringInfo<<gridId;
+	stringInfo<<";";
+	stringInfo>>info;
+	return info;
 }

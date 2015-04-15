@@ -57,6 +57,7 @@ BEGIN_MESSAGE_MAP(CGProjectDemo2View, CView)
 	ON_COMMAND(ID_OVERLAY, &CGProjectDemo2View::OnOverlay)
 	ON_COMMAND(ID_WEAKLAY, &CGProjectDemo2View::OnWeaklay)
 	ON_COMMAND(ID_POLLUTION, &CGProjectDemo2View::OnPollution)
+	ON_COMMAND(ID_SFR, &CGProjectDemo2View::OnSfr)
 END_MESSAGE_MAP()
 
 // CGProjectDemo2View 构造/析构
@@ -1051,3 +1052,26 @@ void CGProjectDemo2View::OnPollution()
 	MessageBox(_T("恭喜您，已经完成导频污染的判断!"),_T("通知"),MB_OK);
 }
 
+
+
+//************************************  
+// 函数名称: OnSfr     
+// 函数说明： 软频率复用算法优化    
+// 作者:Franklin     
+// 日期：2015/04/10     
+// 返 回 值: void     
+//************************************
+void CGProjectDemo2View::OnSfr()
+{
+	// TODO: 在此添加命令处理程序代码
+	//先根据场强值，判断各个小区是否相邻
+	RecordAdjAreaForSfrTool::recordAdjAreaForSfrTool();
+	MessageBox(_T("恭喜您，邻区关系已经处理完成!"),_T("通知"),MB_OK);
+	bool optimizeOld = SFROptimize::optimizeOld();
+	bool optimizeNew = SFROptimize::optimizeNew();
+	if(optimizeOld&&optimizeNew) {
+		MessageBox(_T("恭喜您，软频率复用优化完成!"),_T("通知"),MB_OK);
+	} else {
+		MessageBox(_T("很抱歉，软频率复用优化失败!"),_T("通知"),MB_OK);
+	}
+}

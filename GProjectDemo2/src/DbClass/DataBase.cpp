@@ -650,3 +650,41 @@ void DataBase::deletAllInfo(string TableName)
 		 cout<<"getRandomUser failed";
 	 }
  }
+
+ /****************************************
+ SfrÓÅ»¯
+ *********************************************/
+double DataBase::getAdjAreaGridStrength(int aid,int gridId) {
+	double strength = 0;
+	string info = CreateSqlTool::getAdjAreaGridStrength(aid,gridId);
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		recordSet.CreateInstance(__uuidof(Recordset));
+		sqlString=info.c_str();
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vTmp = recordSet->GetCollect(_variant_t((long)0));
+		if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+			strength = 0;
+		} else {
+			strength = double(vTmp);//.dblVal;
+		}		
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		return strength;
+
+		//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		//dbCon.closeConnection(connection
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<"failed";
+	}
+	return strength;
+}

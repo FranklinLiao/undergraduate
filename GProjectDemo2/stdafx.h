@@ -65,6 +65,12 @@
 #define  LATITUDELENGTH  0.000045  //纬度5m
 #define HALF_LONGI (LONGITUDELENGTH/2)
 #define HALF_LATI (LATITUDELENGTH/2)
-//考虑500m间隔
+//考虑500m间隔 比地图
+/*
 #define LATIREDUENCY 0.005 //冗余度    纬度上1°是111km左右   经度上是111*cos(纬度）  0.001对应111m
 #define LONGIREDUENCY (0.005*(1/0.76)) //cose40°  0.76
+*/
+
+//考虑到减小基站的数目  只设定100m
+#define LATIREDUENCY 0.001 //   
+#define LONGIREDUENCY 0.001 //
