@@ -39,17 +39,16 @@ void NewArea::setRbPower() {
 		//边缘用户都可以拿到资源
 		edgeReal = edgeUserCnt;
 		if(centerUserCnt*USERPERRB<=subRb.size()) { //中心够用
-			int centerReal = centerUserCnt;
-			edgePowerRatio = 1.0/((edgeReal/ratio+centerReal)/ratio);
+			centerReal = centerUserCnt;
 		} else { //中心的不够用，那么就使用一部分的mainRb
 			int leftRb = mainRb.size() - edgeUserCnt * USERPERRB;
 			int leftUser = centerUserCnt - subRb.size()/USERPERRB;
 			//判断剩余mainRb的够不够用
-			if(leftRb > leftUser*USERPERRB) { //剩余的够用，剩余的中心用户都可以分配到资源
+			if(leftRb >= leftUser*USERPERRB) { //剩余的够用，剩余的中心用户都可以分配到资源
 				centerReal = centerUserCnt;
 			} else { //有一部分中心用户没有分配到mainRb，那么分配optRb
 				leftUser = centerUserCnt - subRb.size()/USERPERRB - leftRb / USERPERRB;
-				if(optRb.size() > leftUser*USERPERRB) { //optrb够用
+				if(optRb.size() >= leftUser*USERPERRB) { //optrb够用
 					centerReal = centerUserCnt; 
 				} else { //optrb也不够用
 					centerReal = subRb.size()/USERPERRB + leftRb /USERPERRB + optRb.size()/USERPERRB;
@@ -58,21 +57,21 @@ void NewArea::setRbPower() {
 		}
 	} else { //边缘用户不够用
 		int leftEdgeUser = edgeUserCnt - mainRb.size()/USERPERRB;
-		if(optRb.size() > leftEdgeUser*USERPERRB) { //optrb够用
+		if(optRb.size() >= leftEdgeUser*USERPERRB) { //optrb够边缘用户用
 			edgeReal = edgeUserCnt;
-			if(centerUserCnt*USERPERRB<=subRb.size()) { //中心够用
+			if(centerUserCnt*USERPERRB<=subRb.size()) { //分配中心用户，中心够用
 				centerReal = centerUserCnt;
 			} else { //中心的不够用，由于边缘的已经不够用了，mainRb没有了，所以从optRb中拿
 				int optRbLeft = optRb.size() - leftEdgeUser*USERPERRB;
 				int centerUserLeft = centerUserCnt - subRb.size()/USERPERRB; 
-				if(optRbLeft > centerUserLeft*USERPERRB) { //如果够用
+				if(optRbLeft >= centerUserLeft*USERPERRB) { //如果optLeft够边缘用户用
 					centerReal = centerUserCnt;
-				} else { //optRb也不够用
+				} else { //
 					centerReal = subRb.size()/USERPERRB+optRbLeft/USERPERRB;
 				}
-				centerReal = subRb.size()/USERPERRB;
+				//centerReal = subRb.size()/USERPERRB;
 			}
-		} else { //optRb不够用
+		} else { //optRb不够给中心用户用
 			edgeReal = mainRb.size()/USERPERRB + optRb.size()/USERPERRB;
 			if(centerUserCnt*USERPERRB<=subRb.size()) { //中心够用
 				centerReal = centerUserCnt;
@@ -82,7 +81,7 @@ void NewArea::setRbPower() {
 		}
 		
 	}
-	edgePowerRatio = 1.0/((edgeReal/ratio+centerReal)/ratio);
+	edgePowerRatio = (edgeReal/ratio+centerReal)/ratio;
 }
 void NewArea::sortUser() {
 	vector<User> users = users;
@@ -96,14 +95,14 @@ void NewArea::sortUser() {
 	vector<User>::iterator iter = users.begin()+index;
 	while(iter != users.end()) {
 		if(iter->type==2) {
-			edgeUsers.insert(edgeUsers.end(),*iter);
+			edgeUsers.push_back(*iter);
 		}
 		iter++;
 	}
 	iter = users.begin();
 	while(iter != users.begin()+index) {
 		if(iter->type==2) {
-			edgeUsers.insert(edgeUsers.end(),*iter);
+			edgeUsers.push_back(*iter);
 		}
 		iter++;
 	}
@@ -114,14 +113,14 @@ void NewArea::sortUser() {
 	iter = users.begin()+index;
 	while(iter != users.end()) {
 		if(iter->type==1) {
-			centerUsers.insert(centerUsers.end(),*iter);
+			centerUsers.push_back(*iter);
 		}
 		iter++;
 	}
 	iter = users.begin();
 	while(iter != users.begin()+index) {
 		if(iter->type==1) {
-			centerUsers.insert(centerUsers.end(),*iter);
+			centerUsers.push_back(*iter);
 		}
 		iter++;
 	}
@@ -136,7 +135,7 @@ void NewArea::allocateRb() { //未完成
 	sortUser();
 	//先分配边缘用户，再分配中心用户 
 	//判断主载波是否够用 
-	if(this->edgeUserCnt*USERPERRB < mainRb.size()){  //够用
+	if(edgeUserCnt*USERPERRB <= mainRb.size()){  //够用
 		mainRbOverFlag = true; //主载波够用
 		optRbOverFlag = true;
 		vector<User>::iterator iter = edgeUsers.begin();
@@ -229,8 +228,7 @@ void NewArea::allocateRb() { //未完成
 	/*********************************************************
 	*********************************************************/
 	//分配副载波  中心用户如果用主载波 必须用低的发射功率
-	int centerUserCnt = userCnt - edgeUserCnt;
-	if(centerUserCnt*USERPERRB<subRb.size()) { //如果副载波够用
+	if(centerUserCnt*USERPERRB<=subRb.size()) { //如果副载波够用
 		vector<User>::iterator iter = centerUsers.begin();
 		map<int,int>::iterator iterMap = subRb.begin();
 		while(iter!=centerUsers.end()) {

@@ -16,7 +16,7 @@ public:
 	NewRbs(int mainIndex){  //由于考虑到要能够把rb刚好分给一个用户（所以主副载波rb必须为偶数）  32 34 34 因此不是刚好平均分配
 		//对part1,part2,part3进行初始化
 		int part1Size = RBCNT/RBPARTS-1; //用part1作为主载波 32个
-		int optSize = RBCNT/RBPARTS + 4;
+		int optSize = part1Size + 4;
 		int otherPartSize = (RBCNT - part1Size - optSize) / 2;
 		int part1Start = 1;
 		switch(mainIndex) {

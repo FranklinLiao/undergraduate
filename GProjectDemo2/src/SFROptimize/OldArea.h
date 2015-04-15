@@ -48,11 +48,11 @@ public:
 		this->distanceGate = DISTANCEGATE;
 		this->edgeUserIndex = 0; //初始从0开始进行分配
 		this->centerUserIndex = 0; //初始从0开始分配
+		this->mainRbIndex = 0; //分配一个不存在的RbIndex
 	}
 public:
 	vector<int> getAdjAreaId();
 	void getCenterEdgeUser();
-	int getEdgeUserCnt();
 	bool isEdgeUser(double userX,double userY,double userRsrp);
 
 	void init();
@@ -65,13 +65,13 @@ public:
 	//对用户进行分配Rb
 	void allocateRb();
 	//计算小区边缘用户的吞吐量
-	double getEdgeThroughPut(vector<OldArea> adjArea);
+	double getEdgeThroughPut();
 	//计算小区中心的用户的吞吐量
-	double getCenterThroughPut(vector<OldArea> adjArea);
+	double getCenterThroughPut();
 	//计算小区总的用户的吞吐量
-	double getAllThroughPut(vector<OldArea> adjArea);
+	double getAllThroughPut(v);
 	double powerToThroughPut(double sinr);
 	//计算某个用户在邻区的干扰
-	double getAdjAreaPower(User user,vector<OldArea> adjArea);
+	double getAdjAreaPower(User user);
 };
 #endif

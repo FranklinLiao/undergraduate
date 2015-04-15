@@ -1,68 +1,76 @@
 #include "stdafx.h"
 #include "SFROptimize.h"
 bool SFROptimize::optimizeOld() {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´Î·ÂÕæÖĞÓĞĞ©±êÖ¾ÊÇ·ñÒÑ¾­ÇåÁãÁË£¡£¡£¡
-	bool flag = false;
-	//1.ÏÈ¼ÆËã¾­µäËã·¨
+	bool flag = true;
+	//¼ÆËã¾­µäËã·¨
 	/***********************************************
-	´ÓÊı¾İ¿âÖĞÈ¡³öËùÓĞµÄĞ¡Çø
+	´ÓÊı¾İ¿âÖĞÈ¡³öËùÓĞµÄĞ¡Çø,²¢Æ´×°³ÉOldArea
 	*************************************************/
-	vector<vector<string>> areaInfo = DBHelper::queryGridInfoFromDB();
+	vector<vector<string>> areaInfo = DBHelper::queryAreaInfoFromDB();
 	vector<OldArea> oldAreaSet;
 	vector<vector<string>>::iterator iter = areaInfo.begin();
 	while(iter!=areaInfo.end()) {
-		Area area = Area(*iter++);
+		Area area = Area(*iter);
 		OldArea oldArea = OldArea(area);
 		oldAreaSet.push_back(oldArea);
+		iter++;
 	}
 	/****************************************************
-	¸øĞ¡Çø·ÖÅämainRBIndex
+	±ãÀû¸÷¸öĞ¡Çø£¬¸øĞ¡Çø·ÖÅämainRBIndex
 	******************************************************/
 	vector<OldArea>::iterator iterArea0 = oldAreaSet.begin();
 	while(iterArea0!=oldAreaSet.end()) {
 		OldArea oldArea = *iterArea0;
-		vector<int> adjArea = oldArea.getAdjAreaId();
+		vector<int> adjArea = oldArea.getAdjAreaId(); //µÃµ½Ä³¸öĞ¡ÇøµÄÁÚÇøid
 		/****************************************************
 		//¸ù¾İÁÚÇøĞÅÏ¢£¬È·¶¨MainRbIndex 1 2 3
 		//±ãÀûÁÚÇø£¬ÅĞ¶ÏËüÃÇÊ¹ÓÃÁËÊ²Ã´Index
-		·ÖÅämainRbIndex
+		//µÃµ½ÁÚÇøÊ¹ÓÃµÄMainRbIndex£¬²¢°ÑÁÚÇøÊ¹ÓÃµÄMainRbIndex´æ·Åµ½adjMainRbIndexSetÖĞ
 		******************************************************/
 		vector<int>::iterator iterAdjAreaId = adjArea.begin();
 		vector<int> adjMainRbIndexSet;
-		while(iterAdjAreaId!=adjArea.end()) { //±ãÀûÕâ¸öĞ¡ÇøµÄÁÚÇø
+		while(iterAdjAreaId!=adjArea.end()) { //±ãÀûÕâ¸öĞ¡ÇøµÄÁÚÇøid
 			int adjMainRbIndex = 0;
 			vector<OldArea>::iterator iterTmp = oldAreaSet.begin();
-			while(iterTmp!=oldAreaSet.end()) { //ÕÒµ½¶ÔÓ¦µÄÁÚÇø
+			while(iterTmp!=oldAreaSet.end()) { //±ãÀûĞ¡Çø¼¯ºÏ£¬Í¨¹ıÁÚÇøµÄId£¬ÕÒµ½¶ÔÓ¦µÄÁÚÇø
 				if(iterTmp->area.AId==*iterAdjAreaId) {
-					adjMainRbIndex = iterTmp->mainRbIndex;
-					if(!((adjMainRbIndex > 0) && (adjMainRbIndex <= RBPARTS))) { ////ÅĞ¶ÏÊÇ·ñÓĞĞ§ 
+					adjMainRbIndex = iterTmp->mainRbIndex; //È¡³ö¸ÃÁÚÇøµÄmainRbIndex
+					if(!((adjMainRbIndex > 0) && (adjMainRbIndex <= RBPARTS))) { ////ÅĞ¶ÏÊÇ·ñÓĞĞ§,Ò²¾ÍÊÇÅĞ¶ÏÊÇ·ñÒÑ¾­·ÖÅäÁËMainRbIndex
 						adjMainRbIndex = 0; //Ö®Ç°Î´·ÖÅä¾Í¸³ÖµÎª0
 					} else {
-						adjMainRbIndexSet.push_back(adjMainRbIndex);
+						adjMainRbIndexSet.push_back(adjMainRbIndex); //Èç¹ûÓĞĞ§£¬ÄÇÃ´¾Í°ÑÁÚÇøÊ¹ÓÃµÄmainRbIndex´æ·Åµ½setÖĞ
 					}
-					break;
+					break; //Èç¹ûÕÒµ½ÁË£¬ÄÇÃ´¾ÍÌø³öÕâ¸öĞ¡Ñ­»·£¬¿ªÊ¼²éÕÒÏÂÒ»¸öÁÚÇøiterAdjAreaId
 				}
-				iterTmp++;
+				iterTmp++;  //¸ÃĞ¡ÇøiterTmp²»ÊÇ±¾Ğ¡ÇøµÄÁÚÇø£¬¾Í´ÓĞ¡Çø¼¯ºÏÖĞ£¬²éÕÒÏÂÒ»¸öĞ¡Çø
 			}
-			//ÕÒµ½ÁË¶ÔÓ¦ÁÚÇøµÄRBIndex
-			iterAdjAreaId++;
+			
+			iterAdjAreaId++; //ÒÑ¾­ÕÒµ½ÁË¶ÔÓ¦ÁÚÇøµÄmainRBIndex,¼ÌĞø²éÕÒÏÂÒ»¸öÁÚÇøµÄmainRbIndex
 		}
-		//ÕÒµ½ÁËÁÚÇøÊ¹ÓÃµÄmainRbIndex£¬²¢´æ·ÅÔÚmainRBIndexSetÖĞ
+		//ÕÒµ½ÁËÁÚÇøÊ¹ÓÃµÄmainRbIndex£¬²¢´æ·ÅÔÚmainRBIndexSetÖĞ,¿ªÊ¼¸ù¾İÕâ¸öset²é¿´ÓĞÄÄĞ©mainRbIndex¿ÉÒÔÓÃ
 		for(int mainRbIndex = 1;mainRbIndex<=RBPARTS;mainRbIndex++) {
 			vector<int>::iterator iterRBIndex = adjMainRbIndexSet.begin();
-			bool isUsed = false;
+			bool isUsed = false; //Ã¿Ò»´ÎÅĞ¶¨¸ÃmainRbIndexÊ±£¬¶¼ÒªÖÃÎ»
 			while(iterRBIndex!=adjMainRbIndexSet.end()) {
-				if(*iterRBIndex == mainRbIndex) {
+				if(*iterRBIndex == mainRbIndex) { //ÅĞ¶Ïµ±Ç°ÁÚÇøÊÇ·ñÊ¹ÓÃÁË¸ÃIndex:mainRbIndex
 					isUsed = true;
-					break; //Èç¹ûÓĞ¾ÍÍË³ö
+					break; //Èç¹ûÓĞ¾ÍÍË³öÕâ¸öÑ­»·£¬ ²é¿´ÏÂÒ»¸ömainRbIndex
 				}
-				iterRBIndex++;
+				iterRBIndex++; //µ±Ç°ÁÚÇøÃ»ÓĞÊ¹ÓÃ£¬¼ÌĞøÅĞ¶ÏÏÂÒ»¸öÁÚÇøÊÇ·ñÓÃÁË¸ÃIndex
 			}
-			if(!isUsed) { //Èç¹ûÕâÒ»¸öÃ»ÓĞÊ¹ÓÃ
+			if(!isUsed) { //Èç¹ûµ±Ç°µÄmainRbIndex£¬Ã»ÓĞÁÚÇøÊ¹ÓÃ¹ı£¬ÄÇÃ´¸ÃĞ¡Çø¾ÍÊ¹ÓÃÕâ¸ömainRbIndex
 				iterArea0->mainRbIndex = mainRbIndex;
 				break; //Ìø³öforÑ­»·
 			}
 		}
-		iterArea0++;
+		if(iterArea0->mainRbIndex==0) { //Èç¹ûÕâ¸öĞ¡ÇøÃ»ÓĞ·ÖÅäÉÏ£¬¼´ÁÚÇøÓÃÁËËùÓĞµÄmainRbIndex
+			//1.²é¿´Éú³ÉÁÚÇøµÄ·½·¨£¬¿ØÖÆ¸öÊı  
+			//2.Ëæ»ú·ÖÅä
+			//´Ë´¦ÊÇËæ»ú·ÖÅäµÄÀı×Ó
+			srand( (unsigned)time(NULL)); //Éú³ÉÖÖ×Ó
+			iterArea0->mainRbIndex = rand()%RBPARTS + 1; //rand()%RBPARTS  0 ~ RBPARTS-1
+		}
+		iterArea0++; //¸ÃĞ¡ÇøµÄmainRbIndex·ÖÅä½áÊø£¬¿ÉÒÔ·ÖÅäÏÂÒ»¸öĞ¡ÇøÁË
 	}
 	/****************************************************
 	½øĞĞ³õÊ¼»¯²Ù×÷ °üÀ¨·ÖÅäÖ÷¸±ÔØ²¨×ÊÔ´¡¢Ëæ»úÉú³ÉÓÃ»§£¬Í³¼Æ±ßÔµºÍÖĞĞÄÓÃ»§£¬¼ÆËãRBµÄ¹¦ÂÊ
@@ -80,24 +88,25 @@ bool SFROptimize::optimizeOld() {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´Î·ÂÕæÖĞÓĞĞ©±êÖ¾Ê
 	double sumEdgeOutput=0;
 	double avgEdageOutput=0;
 	for(int calcnt =0;calcnt<SIMCNT;calcnt++) {
+		//±ãÀûĞ¡Çø£¬¸øĞ¡ÇøÖĞµÄÓÃ»§·ÖÅäRb
 		vector<OldArea>::iterator iterArea3 = oldAreaSet.begin();
 		while(iterArea3!=oldAreaSet.end()) {
 			iterArea3->allocateRb(); //µ÷¶ÈËã·¨ÔÚallocateRbÖĞ
 			iterArea3++;
 		}
 		/****************************************************
-		ÏÈµÃµ½Õâ¸öĞ¡ÇøµÄÁÚÇøµÄ¼¯ºÏ£¬±ãÓÚ¼ÆËã¸ÉÈÅ£¬È»ºó¼ÆËãÍÌÍÂÁ¿£¬
+		ÏÈµÃµ½ËùÓĞĞ¡ÇøµÄÁÚÇøµÄ¼¯ºÏ£¬±ãÓÚ¼ÆËã¸ÉÈÅ£¬È»ºó¼ÆËãÍÌÍÂÁ¿
 		******************************************************/
 		vector<OldArea>::iterator iterArea4 = oldAreaSet.begin();
 		while(iterArea4!=oldAreaSet.begin()) {  //±ãÀûÃ¿Ò»¸öĞ¡Çø
 			//²éÕÒÕâ¸öĞ¡ÇøµÄÁÚÇøµÄid
-			vector<int>::iterator iter = iterArea4->adjAreaId.begin();
+			vector<int>::iterator iter = iterArea4->adjAreaId.begin(); //ÕÒµ½Õâ¸öĞ¡ÇøµÄÁÚÇø
 			while(iter!=iterArea4->adjAreaId.end()) {
-				int id = *iter;
+				int id = *iter; //µÃµ½Ä³¸öÁÚÇøµÄId
 				//ÕÒµ½¸ÃidµÄĞ¡Çø£¬²¢°ÑËû¼ÓÈëµ½¸ÃĞ¡ÇøµÄÁÚÇø¼¯ºÏÖĞ
 				vector<OldArea>::iterator iterIn = oldAreaSet.begin();
 				while(iterIn!=oldAreaSet.end()) {
-					if(iterIn->area.AId==id) {
+					if(iterIn->area.AId==id) { //´ÓĞ¡Çø¼¯ºÏÖĞÕÒµ½ÁËÕâ¸öÁÚÇø
 						(*iterArea4).adjArea.push_back(*iterIn);
 					}
 					iterIn++;
@@ -108,8 +117,8 @@ bool SFROptimize::optimizeOld() {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´Î·ÂÕæÖĞÓĞĞ©±êÖ¾Ê
 		}
 		vector<OldArea>::iterator iterArea5 = oldAreaSet.begin();
 		while(iterArea5!=oldAreaSet.end()) {
-			double edgeOutPut = iterArea5->getEdgeThroughPut(iterArea5->adjArea);
-			double sumOutput = iterArea5->getAllThroughPut(iterArea5->adjArea);
+			double edgeOutPut = iterArea5->getEdgeThroughPut();
+			double sumOutput = iterArea5->getAllThroughPut();
 			sumAllOutput += sumOutput;
 			sumEdgeOutput += edgeOutPut;
 			iterArea5++;
@@ -121,12 +130,12 @@ bool SFROptimize::optimizeOld() {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´Î·ÂÕæÖĞÓĞĞ©±êÖ¾Ê
 }
 
 bool SFROptimize::optimizeNew() {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´Î·ÂÕæÖĞÓĞĞ©±êÖ¾ÊÇ·ñÒÑ¾­ÇåÁãÁË£¡£¡£¡
-	bool flag = false;
+	bool flag = true;
 	//1.ÏÈ¼ÆËã¸Ä½øºóµÄËã·¨
 	/***********************************************
 	´ÓÊı¾İ¿âÖĞÈ¡³öËùÓĞµÄĞ¡Çø
 	*************************************************/
-	vector<vector<string>> areaInfo = DBHelper::queryGridInfoFromDB();
+	vector<vector<string>> areaInfo = DBHelper::queryAreaInfoFromDB();
 	vector<NewArea> newAreaSet;
 	vector<vector<string>>::iterator iter = areaInfo.begin();
 	while(iter!=areaInfo.end()) {
@@ -182,6 +191,14 @@ bool SFROptimize::optimizeNew() {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´Î·ÂÕæÖĞÓĞĞ©±êÖ¾Ê
 				break; //Ìø³öforÑ­»·
 			}
 		}
+		if(iterArea0->mainRbIndex==0) { //Èç¹ûÕâ¸öĞ¡ÇøÃ»ÓĞ·ÖÅäÉÏ£¬¼´ÁÚÇøÓÃÁËËùÓĞµÄmainRbIndex
+			//1.²é¿´Éú³ÉÁÚÇøµÄ·½·¨£¬¿ØÖÆ¸öÊı  
+			//2.Ëæ»ú·ÖÅä
+			//´Ë´¦ÊÇËæ»ú·ÖÅäµÄÀı×Ó
+			srand( (unsigned)time(NULL)); //Éú³ÉÖÖ×Ó
+			iterArea0->mainRbIndex = rand()%RBPARTS + 1; //rand()%RBPARTS  0 ~ RBPARTS-1
+		}
+		iterArea0++; //¸ÃĞ¡ÇøµÄmainRbIndex·ÖÅä½áÊø£¬¿ÉÒÔ·ÖÅäÏÂÒ»¸öĞ¡ÇøÁË
 		iterArea0++;
 	}
 	/****************************************************

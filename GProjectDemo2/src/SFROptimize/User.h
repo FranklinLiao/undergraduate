@@ -6,7 +6,6 @@ using namespace std;
 
 class User {
 public:
-		int areaId;
 		vector<int> rbId;  //计算吞吐量时，需要判断实际分配了几个Rb
 		int gridId;
 		double rsrp;
