@@ -61,6 +61,12 @@
     <Filter Include="源文件\SFROptimize">
       <UniqueIdentifier>{0d2c3199-8a44-4bee-8f7e-807d62494dc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ANR">
+      <UniqueIdentifier>{0dec27be-50c6-4677-8aea-ec9850103b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ANR">
+      <UniqueIdentifier>{5c7507e5-9a79-485b-b5b9-f249dfa7d568}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -307,6 +313,15 @@
     <ClInclude Include="src\SFROptimize\NewRbs.h">
       <Filter>头文件\SFROptimize</Filter>
     </ClInclude>
+    <ClInclude Include="UserANR.h">
+      <Filter>头文件\ANR</Filter>
+    </ClInclude>
+    <ClInclude Include="ANROptimize.h">
+      <Filter>头文件\ANR</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaANR.h">
+      <Filter>头文件\ANR</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GProjectDemo2.cpp">
@@ -491,6 +506,9 @@
     </ClCompile>
     <ClCompile Include="src\SFROptimize\NewArea.cpp">
       <Filter>源文件\SFROptimize</Filter>
+    </ClCompile>
+    <ClCompile Include="ANROptimize.cpp">
+      <Filter>源文件\ANR</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

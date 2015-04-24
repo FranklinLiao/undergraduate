@@ -45,7 +45,8 @@ bool SetGridColorTool::SetColor(void)
 		//var.vt==VT_NULL || var.vt==VT_EMPTY
 		//if(((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_NULL)&&((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_EMPTY)) {
 		//本来准备没有得到场强数据的网格的GRealRSRP用NULL来替代 后来决定用0来替代
-		GStrength=double(m_pRecordset->GetCollect("GRealRSRP"));
+		GStrength=m_pRecordset->GetCollect("GRealRSRP");
+
 			if(GStrength>Max&&GStrength!=0)
 				Max=GStrength;
 			if(GStrength<Min)

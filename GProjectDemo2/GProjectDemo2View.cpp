@@ -65,7 +65,7 @@ END_MESSAGE_MAP()
 CGProjectDemo2View::CGProjectDemo2View()
 {
 	//配置数据库，创建连接
-	DBConnPool::Instanse()->SetDBInfo("127.0.0.1","sa","123456","MapData",10,20);
+	DBConnPool::Instanse()->SetDBInfo("127.0.0.1","sa","123456","LteArea",30,50);
 	//清空现有的数据
 	//DBHelper::deleteAllTable();
 }
@@ -1065,8 +1065,9 @@ void CGProjectDemo2View::OnSfr()
 {
 	// TODO: 在此添加命令处理程序代码
 	//先根据场强值，判断各个小区是否相邻
-	RecordAdjAreaForSfrTool::recordAdjAreaForSfrTool();
+	//RecordAdjAreaForSfrTool::recordAdjAreaForSfrTool();
 	MessageBox(_T("恭喜您，邻区关系已经处理完成!"),_T("通知"),MB_OK);
+
 	bool optimizeOld = SFROptimize::optimizeOld();
 	bool optimizeNew = SFROptimize::optimizeNew();
 	if(optimizeOld&&optimizeNew) {

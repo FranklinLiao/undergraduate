@@ -240,3 +240,41 @@ double DBHelper::getAdjAreaGridStrength(int aid,int gridId) {
 	double strength = db.getAdjAreaGridStrength(aid,gridId);
 	return strength;
 }
+
+
+double DBHelper::getServerRSRP(int aid,int gid) {
+	DataBase db;
+	double strength = db.getServerRSRPFromDB(aid,gid);
+	return strength;
+}
+
+double DBHelper::getGridMaxXY(int flag) {
+	DataBase db;
+	double xy = db.getMaxGridXY(flag);
+	return xy;
+}
+
+vector<UserANR> DBHelper::getUserANR(int areaId,int userCnt) {
+	DataBase db;
+	string tableName = "Grid";
+	vector<UserANR> users;
+	vector<vector<string>> userInfos = db.getUserANRFromDb(tableName,areaId,userCnt);
+	vector<vector<string>>::iterator iterout = userInfos.begin();
+	while(iterout!=userInfos.end()) {
+		vector<string>::iterator iterin = (*iterout++).begin();
+		int gridId = ChangeTypeTool::stringToInt(*iterin++);
+		double x = ChangeTypeTool::stringToDouble(*iterin++);
+		double y = ChangeTypeTool::stringToDouble(*iterin++);
+		UserANR userANR = UserANR(gridId,x,y);
+		users.push_back(userANR);
+	}
+	return users;
+}
+
+
+
+int DBHelper::getGidFromXY(double x,double y) {
+	DataBase db;
+	int gid = db.getGidFromXY(x,y);
+	return gid;
+}

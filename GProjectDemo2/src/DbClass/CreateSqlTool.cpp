@@ -25,7 +25,7 @@ string CreateSqlTool::getRTDataXY = "select RX,RY from RTData where RId = ";
 string CreateSqlTool::getRandonUser(string tableName,int areaId,int userCnt) {
 	//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
 	stringstream ss;
-	ss<<"select top "<<userCnt<<" ,GId,GRealRSRP,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
+	ss<<"select top "<<userCnt<<" GId,GRealRSRP,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
 	return ss.str();
 }
 
@@ -374,4 +374,53 @@ string CreateSqlTool::getAdjAreaGridStrength(int aid,int gridId) {
 	stringInfo<<";";
 	stringInfo>>info;
 	return info;
+}
+
+string CreateSqlTool::getServerRSRP(int aid,int gid) {
+	stringstream stringInfo;
+	string info;
+	stringInfo<<"select grsrp from gridfieldstrenth where aid = ";
+	stringInfo<<aid;
+	stringInfo<<" and gid = ";
+	stringInfo<<gid;
+	stringInfo<<";";
+	stringInfo>>info;
+	return info;
+}
+
+string CreateSqlTool::getgetMaxGridXY(int flag) {
+	stringstream stringInfo;
+	string info;
+	stringInfo<<"select max( ";
+	if(flag ==1) { 
+		stringInfo<<"X";
+	} else {
+		stringInfo<<"Y";
+	}
+	stringInfo<<" ) from grid ";
+	stringInfo<<";";
+	stringInfo>>info;
+	return info;
+}
+
+
+string CreateSqlTool::getRandonUserANR(string tableName,int areaId,int userCnt) {
+	//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
+	stringstream ss;
+	ss<<"select top "<<userCnt<<" GId,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
+	return ss.str();
+}
+
+
+
+
+string CreateSqlTool::getGidFromXY(double x,double y) {
+		//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
+		stringstream ss; //判断绝对值在一定范围
+		ss<<"select gid from grid where x = "; 
+		ss<<x;
+		ss<<" and y = ";
+		ss<<y;
+		ss<<";";
+		return ss.str();
 }

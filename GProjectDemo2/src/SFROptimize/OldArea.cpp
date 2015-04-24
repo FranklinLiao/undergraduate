@@ -32,9 +32,9 @@ vector<User> OldArea::generateUser() {
 }
 
 vector<int> OldArea::getAdjAreaId() {  //这个数最多不能超过6个
-	int areaId = this->area.AId;
-	vector<int> adjAreaId = DBHelper::getAdjAreaId(areaId);
-	return adjAreaId;
+	//int areaId = this->area.AId;
+	//vector<int> adjAreaId = DBHelper::getAdjAreaId(areaId);
+	return this->adjAreaId;
 }
 
 
@@ -90,23 +90,24 @@ void OldArea::getMainSubRb() {
 }
 
 void OldArea::sortUser() {
-	vector<User> users = users;
+	vector<User> users = this->users;
 	//按照调度算法对user进行排序
 	//1.先考虑轮询算法
 	//先对边缘用户进行排序
 	int index = edgeUserIndex; //起始位置
 	//1.先将后面的添加到edgeUsers中
 	//2.将之前的再添加
+	vector<User> temp = edgeUsers;
 	edgeUsers.clear();//先清理之前的用户
-	vector<User>::iterator iter = users.begin()+index;
-	while(iter != users.end()) {
+	vector<User>::iterator iter = temp.begin()+index;
+	while(iter != temp.end()) {
 		if(iter->type==2) {
 			edgeUsers.insert(edgeUsers.end(),*iter);
 		}
 		iter++;
 	}
-	iter = users.begin();
-	while(iter != users.begin()+index) {
+	iter = temp.begin();
+	while(iter != temp.begin()+index) {
 		if(iter->type==2) {
 			edgeUsers.insert(edgeUsers.end(),*iter);
 		}
@@ -115,16 +116,17 @@ void OldArea::sortUser() {
 	
 	//对中心用户进行排序
 	index = centerUserIndex;
+	temp = centerUsers;
 	centerUsers.clear();
-	iter = users.begin()+index;
-	while(iter != users.end()) {
+	iter = temp.begin()+index;
+	while(iter != temp.end()) {
 		if(iter->type==1) {
 			centerUsers.insert(centerUsers.end(),*iter);
 		}
 		iter++;
 	}
-	iter = users.begin();
-	while(iter != users.begin()+index) {
+	iter = temp.begin();
+	while(iter != temp.begin()+index) {
 		if(iter->type==1) {
 			centerUsers.insert(centerUsers.end(),*iter);
 		}
@@ -135,8 +137,8 @@ void OldArea::sortUser() {
 
 void OldArea::setRbPower() { //此处需要重新理一下！！！
 	//边缘用户使用mainRb 并且只能用mainRb
-	int edgeUserCnt = edgeUserCnt;
-	int centerUserCnt = centerUserCnt;
+	int edgeUserCnt = this->edgeUserCnt;
+	int centerUserCnt = this->centerUserCnt;
 	int edgeReal = 0;
 	int centerReal = 0;
 	if(edgeUserCnt*USERPERRB<=mainRb.size()) { //mainRb够用
@@ -162,7 +164,9 @@ void OldArea::setRbPower() { //此处需要重新理一下！！！
 			centerReal = subRb.size()/USERPERRB;
 		}
 	}
-	edgePowerRatio = (edgeReal/ratio+centerReal)/ratio;
+	//edgePowerRatio = (edgeReal/ratio+centerReal)/ratio;
+	//按师兄建议应该是
+	edgePowerRatio = 1.0*USERPERRB/RBCNT/ratio; //因为有的RB就是分配了功率，但是没人用！
 	/*
 	if(centerUserCnt*USERPERRB < subRb.size()){ //边缘够用
 		//每个用户使用Userperrb个rb，这样算出总的用户数*每个用户使用的rb=每个副载波rb的发射功率  再/ratio：就得到主载波的发射功率
@@ -197,6 +201,7 @@ void OldArea::allocateRb() {
 			while(iterMap!=mainRb.end()) {  //mainRb有剩余，break可以控制不分配所有的mainRb
 				if(cnt<USERPERRB) { //给每个用户分配了设定的Rb数  
 					if(0==iterMap->second) { //如果还没使用
+						
 						iter->rbId.push_back(iterMap->first);
 						iterMap->second = 1; //表示已经使用了 
 						cnt++;
@@ -213,12 +218,16 @@ void OldArea::allocateRb() {
 	} else { //如果不够用  那就把全部分配给部分用户  大致和上面一样
 		map<int,int>::iterator iterMap = mainRb.begin();
 		int cnt = 0;
-		vector<User>::iterator iter = edgeUsers.begin();
+		vector<User>::iterator iter = this->edgeUsers.begin();
 		while(iterMap!=mainRb.end()) { 
 			//只有部分用户可以分配到资源 所以用户没有通过while进行遍历
 			//分配可用的Rb
 			if(cnt<USERPERRB) { //给每个用户分配了设定的Rb数
 				if(0==iterMap->second) { //如果还没使用
+					//int id = iterMap->first;
+					//User temp = *iter;
+					//temp.rbId.push_back(iterMap->first);
+
 					iter->rbId.push_back(iterMap->first);
 					iterMap->second = 1;
 					cnt++;
@@ -255,7 +264,12 @@ void OldArea::allocateRb() {
 			}
 			iter++;
 		}
-		centerUserIndex = (iter-centerUsers.begin())%centerUsers.size(); //遍历完成后，记录之后起始遍历的index
+		int mm = iter-centerUsers.begin();
+		if(centerUsers.size()>0) {
+			centerUserIndex = (iter-centerUsers.begin())%centerUsers.size(); //遍历完成后，记录之后起始遍历的index
+		} else {
+			centerUserIndex = 0;
+		}
 	} else { //如果不够用  那就把全部分配给部分用户  大致和上面一样
 		map<int,int>::iterator iterMap = subRb.begin();
 		int cnt = 0;
@@ -336,14 +350,16 @@ double OldArea::getEdgeThroughPut() {
 		//2.计算吞吐量
 		//先得到自己的功率
 		// 1.0/ratio * Userperrb是以中心用户的RB功率为单位，计算该用户在总带宽上占用的RB数
-		double percent = edgePowerRatio; //得到该用户的rb在总的带宽中占用的比例
-		double selfPower = (iter->rsrp)*percent; //*1.0用于产生double型数据
-		double noisePower = NOISE*(USERPERRB*RBFREQLEN);//一个rb 180khz
-		//计算干扰 得到某个用户在邻区的干扰
-		double otherPower = getAdjAreaPower(*iter); //此处应该是计算相邻小区使用同一RB的功率
-		double sinr = selfPower / (otherPower + noisePower);  //计算sinr
-		double userThroughPut = powerToThroughPut(sinr);  //计算吞吐量
-		sumThroughPut += userThroughPut; //累计用户的吞吐量
+		if(iter->rbId.size()>0) {  //只有被分配了资源的才计算
+			double percent = edgePowerRatio; //得到该用户的rb在总的带宽中占用的比例
+			double selfPower = (iter->rsrp) - 10.0*(log(1.0/percent)-log(10.0)); //*1.0用于产生double型数据
+			double noisePower = NOISE+10.0*log(USERPERRB*RBFREQLEN*1.0)/log(10.0);//一个rb 180khz
+			//计算干扰 得到某个用户在邻区的干扰
+			double otherPower = getAdjAreaPower(*iter); //此处应该是计算相邻小区使用同一RB的功率
+			double sinr = selfPower - (otherPower + noisePower);  //计算sinr
+			double userThroughPut = powerToThroughPut(sinr);  //计算吞吐量
+			sumThroughPut += userThroughPut; //累计用户的吞吐量
+		}
 		iter++;
 	}
 	return sumThroughPut;
@@ -356,14 +372,16 @@ double OldArea::getCenterThroughPut() {
 		//1.得到sinr sinr计算都是用dbm为单位 所以不用进行单位换算  得到的sinr是一个比值
 		//2.计算吞吐量
 		//先得到自己的功率
-		double percent = edgePowerRatio*ratio; //得到该用户的rb在总的带宽中占用的比例
-		double selfPower = (iter->rsrp)*percent; //*1.0用于产生double型数据
-		double noisePower = NOISE*(USERPERRB*RBFREQLEN);//一个rb 180khz
-		//计算干扰 得到某个用户在邻区的干扰
-		double otherPower = getAdjAreaPower(*iter); //此处应该是计算相邻小区使用同一RB的功率
-		double sinr = selfPower / (otherPower + noisePower);  //计算sinr
-		double userThroughPut = powerToThroughPut(sinr);  //计算吞吐量
-		sumThroughPut += userThroughPut; //累计用户的吞吐量
+		if(iter->rbId.size()>0) { 
+			double percent = edgePowerRatio*ratio; //得到该用户的rb在总的带宽中占用的比例
+			double selfPower = (iter->rsrp) - 10.0*(log(1.0/percent)-log(10.0)); //*1.0用于产生double型数据
+			double noisePower = NOISE+10.0*log(USERPERRB*RBFREQLEN*1.0)/log(10.0);//一个rb 180khz
+			//计算干扰 得到某个用户在邻区的干扰
+			double otherPower = getAdjAreaPower(*iter); //此处应该是计算相邻小区使用同一RB的功率
+			double sinr = selfPower - (otherPower + noisePower);  //计算sinr
+			double userThroughPut = powerToThroughPut(sinr);  //计算吞吐量
+			sumThroughPut += userThroughPut; //累计用户的吞吐量
+		}
 		iter++;
 	}
 	return sumThroughPut;
@@ -383,37 +401,42 @@ double OldArea::powerToThroughPut(double sinr) {
 double OldArea::getAdjAreaPower(User user) {
 	//遍历邻区去计算干扰  这个操作应该是每个小区都已经分布好了用户，分配好了RB
 	double disturbPower = 0.0;
-	int rbId = user.rbId.at(0); //取出第一个rbId的编号
-	vector<OldArea> adjCell = adjArea;
-	vector<OldArea>::iterator iter = adjCell.begin();
-	while(iter!=adjCell.end()) { //便利邻区
-		//判断邻区边缘用户的干扰 虽然对边缘用户而言，邻区的边缘用户无干扰，但是为了简化边缘和中心用户的程序，就合在一起了
-		//邻区边缘用户的干扰
-		vector<User>::iterator iterEdgeUser = iter->edgeUsers.begin();
-		while(iterEdgeUser!=iter->edgeUsers.end()) { //便利邻区的边缘用户
-			if(iterEdgeUser->rbId.at(0)==rbId) { //相邻小区也是用了该RB
-				//取出相邻小区在该用户的场强大小*该rb所占功率的比例就得到了相邻小区使用该RB对该用户的干扰
-				//邻区在该用户的场强
-				double powStrength = DBHelper::getAdjAreaGridStrength(iter->area.AId,user.gridId);
-				//取出对应rb的强度值
-				double adjPower = powStrength*iter->edgePowerRatio;
-				disturbPower += adjPower;
+	
+		int rbId = user.rbId.at(0); //取出第一个rbId的编号
+		vector<OldArea> adjCell = adjArea;
+		vector<OldArea>::iterator iter = adjCell.begin();
+		while(iter!=adjCell.end()) { //便利邻区
+			//判断邻区边缘用户的干扰 虽然对边缘用户而言，邻区的边缘用户无干扰，但是为了简化边缘和中心用户的程序，就合在一起了
+			//邻区边缘用户的干扰
+			vector<User>::iterator iterEdgeUser = iter->edgeUsers.begin();
+			while(iterEdgeUser!=iter->edgeUsers.end()) { //便利邻区的边缘用户
+				if(iterEdgeUser->rbId.at(0)==rbId) { //相邻小区也是用了该RB
+					//取出相邻小区在该用户的场强大小*该rb所占功率的比例就得到了相邻小区使用该RB对该用户的干扰
+					//邻区在该用户的场强
+					double powStrength = DBHelper::getAdjAreaGridStrength(iter->area.AId,user.gridId);
+					//取出对应rb的强度值
+				
+					double adjPower = (powStrength) - 10.0*(log(1.0/this->edgePowerRatio)-log(10.0));
+					disturbPower += adjPower;
+				}
+				iterEdgeUser++;
 			}
-			iterEdgeUser++;
-		}
-		//判断邻区中心用户的干扰
-		vector<User>::iterator iterCenterUser = iter->centerUsers.begin();
-		while(iterCenterUser!=iter->centerUsers.end()) {
-			if(iterCenterUser->rbId.at(0)==rbId) { //相邻小区也是用了该RB
-				//取出相邻小区在该用户的场强大小*该rb所占功率的比例就得到了相邻小区使用该RB对该用户的干扰
-				double powStrength = DBHelper::getAdjAreaGridStrength(iter->area.AId,user.gridId);
-				//取出对应rb的强度值
-				double adjPower = (iter->edgePowerRatio)*powStrength*ratio;
-				disturbPower += adjPower;
+			//判断邻区中心用户的干扰
+			vector<User>::iterator iterCenterUser = iter->centerUsers.begin();
+			while(iterCenterUser!=iter->centerUsers.end()) {
+				if(iterCenterUser->rbId.at(0)==rbId) { //相邻小区也是用了该RB
+					//取出相邻小区在该用户的场强大小*该rb所占功率的比例就得到了相邻小区使用该RB对该用户的干扰
+					double powStrength = DBHelper::getAdjAreaGridStrength(iter->area.AId,user.gridId);
+					//取出对应rb的强度值
+				
+					//double adjPower = (iter->edgePowerRatio)*powStrength*ratio;
+					double adjPower = (powStrength) - 10.0*(log(1.0/(this->edgePowerRatio*ratio))-log(10.0));
+					disturbPower += adjPower;
+				}
+				iterCenterUser++;
 			}
-			iterCenterUser++;
+			iter++;
 		}
-		iter++;
-	}
+	
 	return disturbPower;
 }

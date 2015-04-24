@@ -5,6 +5,7 @@
 #include "CreateSqlTool.h"
 #include "DataBase.h"
 #include "User.h"
+#include "UserANR.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -50,6 +51,13 @@ public:
 	static vector<User> getUser(int areaId,int userCnt);
 	static vector<int> getAdjAreaId(int areaId);
 	static double getAdjAreaGridStrength(int aid,int gridId);
+
+//ANR
+public:
+	static double getServerRSRP(int aid,int gid);
+	static double getGridMaxXY(int flag);
+	static vector<UserANR> getUserANR(int areaId,int userCnt);
+	static int getGidFromXY(double x,double y);
 };
 
 #endif

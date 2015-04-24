@@ -73,6 +73,11 @@ public:
 	static string getRandonUser(string tableName,int areaId,int userCnt);
 	static string getAdjAreaId(string tableName,int areaId);
 	static string getAdjAreaGridStrength(int aid,int gridId);
+	//ANR”≈ªØ
+	static string getServerRSRP(int aid,int gid);
+	static string getgetMaxGridXY(int flag);
+	static string getRandonUserANR(string tableName,int areaId,int userCnt);
+	static string getGidFromXY(double x,double y);
 };
 
 #endif

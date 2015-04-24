@@ -31,8 +31,8 @@ void NewArea::getMainSubRb() {
 
 void NewArea::setRbPower() {
 	//边缘用户使用mainRb 并且只能用mainRb
-	int edgeUserCnt = edgeUserCnt;
-	int centerUserCnt = userCnt - edgeUserCnt;
+	int edgeUserCnt = this->edgeUserCnt;
+	int centerUserCnt = this->userCnt - this->edgeUserCnt;
 	int edgeReal = 0;
 	int centerReal = 0;
 	if(edgeUserCnt*USERPERRB<=mainRb.size()) { //边缘用户够用，可以给一部分给中心用户
@@ -81,26 +81,30 @@ void NewArea::setRbPower() {
 		}
 		
 	}
-	edgePowerRatio = (edgeReal/ratio+centerReal)/ratio;
+
+	//edgePowerRatio = (edgeReal/ratio+centerReal)/ratio;
+	//按师兄建议应该是
+	edgePowerRatio = 1.0*USERPERRB/RBCNT/ratio; //因为有的RB就是分配了功率，但是没人用！
 }
 void NewArea::sortUser() {
-	vector<User> users = users;
+	vector<User> users = this->users;
 	//按照调度算法对user进行排序
 	//1.先考虑轮询算法
 	//先对边缘用户进行排序
 	int index = edgeUserIndex; //起始位置
 	//1.先将后面的添加到edgeUsers中
 	//2.将之前的再添加
+	vector<User> temp = edgeUsers;
 	edgeUsers.clear();//先清理之前的用户
-	vector<User>::iterator iter = users.begin()+index;
-	while(iter != users.end()) {
+	vector<User>::iterator iter = temp.begin()+index;
+	while(iter != temp.end()) {
 		if(iter->type==2) {
 			edgeUsers.push_back(*iter);
 		}
 		iter++;
 	}
-	iter = users.begin();
-	while(iter != users.begin()+index) {
+	iter = temp.begin();
+	while(iter != temp.begin()+index) {
 		if(iter->type==2) {
 			edgeUsers.push_back(*iter);
 		}
@@ -109,16 +113,17 @@ void NewArea::sortUser() {
 
 	//对中心用户进行排序
 	index = centerUserIndex;
+	temp = centerUsers;
 	centerUsers.clear();
-	iter = users.begin()+index;
-	while(iter != users.end()) {
+	iter = temp.begin()+index;
+	while(iter != temp.end()) {
 		if(iter->type==1) {
 			centerUsers.push_back(*iter);
 		}
 		iter++;
 	}
-	iter = users.begin();
-	while(iter != users.begin()+index) {
+	iter = temp.begin();
+	while(iter != temp.begin()+index) {
 		if(iter->type==1) {
 			centerUsers.push_back(*iter);
 		}
@@ -179,7 +184,7 @@ void NewArea::allocateRb() { //未完成
 			}
 		}
 		edgeUserIndex = (iter-edgeUsers.begin())%edgeUsers.size(); //遍历完成后，记录之后起始遍历的index  对主载波
-
+		
 		//然后判断optRb是否够用
 		int edgeUserLeft = edgeUserCnt - mainRb.size()/USERPERRB;
 		if(optRb.size()>=edgeUserLeft*USERPERRB) { //optRb够用
@@ -248,7 +253,12 @@ void NewArea::allocateRb() { //未完成
 			}
 			iter++;
 		}
-		centerUserIndex = (iter-centerUsers.begin())%centerUsers.size(); //遍历完成后，记录之后起始遍历的index
+		if(centerUsers.size()>0) {
+			centerUserIndex = (iter-centerUsers.begin())%centerUsers.size(); //遍历完成后，记录之后起始遍历的index
+		} else {
+			centerUserIndex = 0;
+		}
+		//centerUserIndex = (iter-centerUsers.begin())%centerUsers.size(); //遍历完成后，记录之后起始遍历的index
 	} else { //如果不够用  那就把全部分配给部分用户  大致和上面一样
 		map<int,int>::iterator iterMap = subRb.begin();
 		int cnt = 0;

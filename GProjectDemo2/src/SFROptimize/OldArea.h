@@ -7,8 +7,8 @@
 #include <math.h>
 #include <cmath>
 using namespace std;
-#define DISTANCEGATE 100  //不应该用绝对数值
-#define RSRPGATE -80 //不应该用绝对数值 应该用相对
+#define DISTANCEGATE 200  //不应该用绝对数值
+#define RSRPGATE -70 //不应该用绝对数值 应该用相对  
 #define SENDPOWER 43 //dBm  2w 此处需要问张喆 了解计算时使用的功率
 #define RATIO (1/3.0)
 #define NOISE -174 //	dbm/hz
@@ -69,7 +69,7 @@ public:
 	//计算小区中心的用户的吞吐量
 	double getCenterThroughPut();
 	//计算小区总的用户的吞吐量
-	double getAllThroughPut(v);
+	double getAllThroughPut();
 	double powerToThroughPut(double sinr);
 	//计算某个用户在邻区的干扰
 	double getAdjAreaPower(User user);

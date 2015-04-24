@@ -37,6 +37,12 @@ public:
 	 int getAreaCnt();
 	 int getGridCnt();
 	 double getAdjAreaGridStrength(int aid,int gridId);
+
+	 //ANR”≈ªØ
+	 double getServerRSRPFromDB(int aid,int gid);
+	 double getMaxGridXY(int flag);
+	 vector<vector<string>> getUserANRFromDb(string tableName,int areaId,int userCnt);
+	 int getGidFromXY(double x,double y);
 };
 
 #endif

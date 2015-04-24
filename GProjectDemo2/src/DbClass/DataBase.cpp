@@ -582,7 +582,7 @@ void DataBase::deletAllInfo(string TableName)
 		{
 			vector<string> userInfo;
 			int i=0;
-			for(;i<3;i++) {
+			for(;i<4;i++) {
 				vTmp = recordSet->GetCollect(_variant_t((long)i));//这儿给字段编号和字段名都可以 
 				string tmp;
 				if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
@@ -687,4 +687,160 @@ double DataBase::getAdjAreaGridStrength(int aid,int gridId) {
 		cout<<"failed";
 	}
 	return strength;
+}
+
+
+ /****************************************
+ ANR优化
+ *********************************************/
+double DataBase::getServerRSRPFromDB(int aid,int gid) {
+	double strength = 0;
+	string info = CreateSqlTool::getServerRSRP(aid,gid);
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		recordSet.CreateInstance(__uuidof(Recordset));
+		sqlString=info.c_str();
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vTmp = recordSet->GetCollect(_variant_t((long)0));
+		if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+			strength = 0;
+		} else {
+			strength = double(vTmp);//.dblVal;
+		}		
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		return strength;
+
+		//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		//dbCon.closeConnection(connection
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<"failed";
+	}
+	return strength;
+}
+
+//得到网格最大的XY
+double DataBase::getMaxGridXY(int flag) {
+	double strength = 0;
+	string info = CreateSqlTool::getgetMaxGridXY(flag);
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		recordSet.CreateInstance(__uuidof(Recordset));
+		sqlString=info.c_str();
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vTmp = recordSet->GetCollect(_variant_t((long)0));
+		if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+			strength = 0;
+		} else {
+			strength = double(vTmp);//.dblVal;
+		}		
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		return strength;
+
+		//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		//dbCon.closeConnection(connection
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<"failed";
+	}
+	return strength;
+}
+
+
+vector<vector<string>> DataBase::getUserANRFromDb(string tableName,int areaId,int userCnt) {
+	//GetDBConnTool dbCon;
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		sqlString = CreateSqlTool::getRandonUserANR(tableName,areaId,userCnt).c_str();
+		recordSet.CreateInstance(__uuidof(Recordset));
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vector<vector<string>> stringObject;
+		while(!recordSet->EndOfFile)
+		{
+			vector<string> userInfo;
+			int i=0;
+			for(;i<3;i++) {
+				vTmp = recordSet->GetCollect(_variant_t((long)i));//这儿给字段编号和字段名都可以 
+				string tmp;
+				if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+					tmp = (_bstr_t) vTmp;
+				} else {
+					tmp = (_bstr_t)vTmp;//.dblVal;
+				}
+				userInfo.push_back(tmp); 
+			}
+			stringObject.push_back(userInfo); 
+			recordSet->MoveNext(); ///移到下一条记录
+		}
+		return stringObject;
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<e.Description()<<endl;
+		cout<<"getRandomUser failed";
+	}
+}
+
+
+
+
+	//得到网格最大的XY
+	int DataBase::getGidFromXY(double x,double y) {
+		int strength = 0;
+		string info = CreateSqlTool::getGidFromXY(x,y);
+		_ConnectionPtr connection;
+		DBConnect* dbconnection;
+		_RecordsetPtr recordSet;
+		try {
+			dbconnection = DBConnPool::Instanse()->GetAConnection();
+			connection = dbconnection->_connection_ptr;
+			recordSet.CreateInstance(__uuidof(Recordset));
+			sqlString=info.c_str();
+			recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+			_variant_t vTmp;
+			vTmp = recordSet->GetCollect(_variant_t((long)0));
+			if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+				strength = 0;
+			} else {
+				strength = int(vTmp);//.dblVal;
+			}		
+			DBConnPool::Instanse()->CloseRecordSet(recordSet);
+			DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+			return strength;
+
+			//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		}catch(_com_error e) {
+			//dbCon.closeConnection(connection
+			//		DBConnPool::Instanse()->CloseConnection(connection);
+			//_CrtDumpMemoryLeaks();
+			DBConnPool::Instanse()->CloseRecordSet(recordSet);
+			DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+			cout<<"failed";
+		}
+		return strength;
 }
