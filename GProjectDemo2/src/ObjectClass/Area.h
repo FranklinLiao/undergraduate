@@ -31,6 +31,7 @@ public:
 	Area() {
 
 	}
+	
 	Area(vector<string> param){
 		vector<string>::iterator iter = param.begin();
 		this->setAId(ChangeTypeTool::stringToInt(*iter++));
@@ -49,7 +50,23 @@ public:
 		this->setAY(ChangeTypeTool::stringToDouble(*iter++));
 		this->setAZ(ChangeTypeTool::stringToDouble(*iter));
 	}
-
+	
+	Area(vector<string> param, int flag){
+		vector<string>::iterator iter = param.begin();
+		this->setAId(ChangeTypeTool::stringToInt(*iter++));
+		this->setASendPower(ChangeTypeTool::stringToDouble(*iter++));
+		this->setALongtitude(ChangeTypeTool::stringToDouble(*iter++));
+		this->setALatitude(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAHeight(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAAspectAngle(ChangeTypeTool::stringToDouble(*iter++));
+		this->setADeclineAngle(ChangeTypeTool::stringToDouble(*iter++));
+		this->setALength(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAPower(ChangeTypeTool::stringToDouble(*iter++));
+		this->setABaseStationAttr(ChangeTypeTool::stringToInt(*iter++));
+		this->setAX(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAY(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAZ(ChangeTypeTool::stringToDouble(*iter));
+	}
 	
 	/**
 	* @brief	得到Area的对象集

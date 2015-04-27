@@ -11,7 +11,8 @@ void ANROptimize::snrOptimize() {
 	vector<AreaANR> areaANRSet;
 	vector<vector<string>>::iterator iter = areaInfo.begin();
 	while(iter!=areaInfo.end()) {
-		AreaANR areaAnr = AreaANR(*iter,maxX,maxY);
+		Area area = Area(*iter,1);
+		AreaANR areaAnr = AreaANR(area,maxX,maxY);
 	//	AreaANR areaANR = AreaANR(area,maxX,maxY);
 		areaANRSet.push_back(areaAnr);
 		iter++;

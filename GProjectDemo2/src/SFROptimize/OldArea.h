@@ -7,13 +7,13 @@
 #include <math.h>
 #include <cmath>
 using namespace std;
-#define DISTANCEGATE 200  //不应该用绝对数值
-#define RSRPGATE -70 //不应该用绝对数值 应该用相对  
+#define DISTANCEGATE 500  //不应该用绝对数值  
+#define RSRPGATE -105 //不应该用绝对数值 应该用相对  
 #define SENDPOWER 43 //dBm  2w 此处需要问张喆 了解计算时使用的功率
 #define RATIO (1/3.0)
 #define NOISE -174 //	dbm/hz
 #define RBFREQLEN 180000.0
-#define USERCNT  60
+#define USERCNT  20
 class OldArea {
 //新增加的属性
 public:
@@ -41,9 +41,9 @@ public:
 	double edgePowerRatio;
 	double ratio;
 	//double rbCntReal; //以中心用户的RB功率为单位 应该有多少个RB
-	OldArea(Area area) {
+	OldArea(Area area,int simUsercnt) {
 		this->area = area;
-		this->userCnt = USERCNT;
+		this->userCnt = simUsercnt;
 		this->rsrpGate = RSRPGATE;
 		this->distanceGate = DISTANCEGATE;
 		this->edgeUserIndex = 0; //初始从0开始进行分配
@@ -61,7 +61,7 @@ public:
 	void getMainSubRb();
 	void setRbPower(); //根据用户使用的RB数，分配功率
 	//对用户进行排序（调度算法），之后再按顺序分配Rb就可以
-	void sortUser();
+	void sortUserAndClearRBMap();
 	//对用户进行分配Rb
 	void allocateRb();
 	//计算小区边缘用户的吞吐量
@@ -73,5 +73,7 @@ public:
 	double powerToThroughPut(double sinr);
 	//计算某个用户在邻区的干扰
 	double getAdjAreaPower(User user);
+	double getdbm2mw(double dbm);
+	double getmw2dbm(double mw);
 };
 #endif

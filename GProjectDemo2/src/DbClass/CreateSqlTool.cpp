@@ -345,11 +345,11 @@ string CreateSqlTool::createUpdateDistance(int size,int start) {
 	string updateString = "declare @id bigint \
 						  declare myCursor CURSOR FOR select top ";
 	stream << size;        
-	stream >> sizeString;   
+	sizeString = stream.str();   
 	updateString.append(sizeString);
 	updateString.append(" gid from Grid where gid >= ");
 	startStream << start;        //long型数据输入
-	startStream >> startString;   //转换 string
+	startString = startStream.str();   //转换 string
 	updateString.append(startString);
 	updateString.append(" order by gid \
 						open myCursor \
@@ -372,7 +372,7 @@ string CreateSqlTool::getAdjAreaGridStrength(int aid,int gridId) {
 	stringInfo<<" and gid = ";
 	stringInfo<<gridId;
 	stringInfo<<";";
-	stringInfo>>info;
+	info = stringInfo.str();
 	return info;
 }
 
@@ -384,7 +384,7 @@ string CreateSqlTool::getServerRSRP(int aid,int gid) {
 	stringInfo<<" and gid = ";
 	stringInfo<<gid;
 	stringInfo<<";";
-	stringInfo>>info;
+	info = stringInfo.str();
 	return info;
 }
 
@@ -399,7 +399,7 @@ string CreateSqlTool::getgetMaxGridXY(int flag) {
 	}
 	stringInfo<<" ) from grid ";
 	stringInfo<<";";
-	stringInfo>>info;
+	info = stringInfo.str();
 	return info;
 }
 

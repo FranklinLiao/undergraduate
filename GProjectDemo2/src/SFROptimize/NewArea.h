@@ -12,13 +12,13 @@ class NewArea : public OldArea{
 public:
 	map<int,int> optRb;
 	bool optRbOverFlag;
-	NewArea(Area area):OldArea(area) {
+	NewArea(Area area,int simUserCnt):OldArea(area,simUserCnt) {
 		
 	}
 	void init();
 	void getMainSubRb();
 	void setRbPower();
-	void sortUser();
+	void sortUserAndClearRBMap();
 	void allocateRb();
 };
 

@@ -86,7 +86,7 @@ void NewArea::setRbPower() {
 	//按师兄建议应该是
 	edgePowerRatio = 1.0*USERPERRB/RBCNT/ratio; //因为有的RB就是分配了功率，但是没人用！
 }
-void NewArea::sortUser() {
+void NewArea::sortUserAndClearRBMap() {
 	vector<User> users = this->users;
 	//按照调度算法对user进行排序
 	//1.先考虑轮询算法
@@ -99,6 +99,7 @@ void NewArea::sortUser() {
 	vector<User>::iterator iter = temp.begin()+index;
 	while(iter != temp.end()) {
 		if(iter->type==2) {
+			iter->rbId.clear();
 			edgeUsers.push_back(*iter);
 		}
 		iter++;
@@ -106,6 +107,7 @@ void NewArea::sortUser() {
 	iter = temp.begin();
 	while(iter != temp.begin()+index) {
 		if(iter->type==2) {
+			iter->rbId.clear();
 			edgeUsers.push_back(*iter);
 		}
 		iter++;
@@ -118,6 +120,7 @@ void NewArea::sortUser() {
 	iter = temp.begin()+index;
 	while(iter != temp.end()) {
 		if(iter->type==1) {
+			iter->rbId.clear();
 			centerUsers.push_back(*iter);
 		}
 		iter++;
@@ -125,11 +128,28 @@ void NewArea::sortUser() {
 	iter = temp.begin();
 	while(iter != temp.begin()+index) {
 		if(iter->type==1) {
+			iter->rbId.clear();
 			centerUsers.push_back(*iter);
 		}
 		iter++;
 	}
 
+	//清理rb的状态 全部标记为未使用
+	map<int,int>::iterator iterRb = mainRb.begin();
+	while(iterRb!=mainRb.end()) {
+		iterRb->second = 0;
+		iterRb++;
+	}
+	iterRb = subRb.begin();
+	while(iterRb!=subRb.end()) {
+		iterRb->second = 0;
+		iterRb++;
+	}
+	iterRb = optRb.begin();
+	while(iterRb!=optRb.end()) {
+		iterRb->second = 0;
+		iterRb++;
+	}
 }
 
 void NewArea::allocateRb() { //未完成
@@ -137,7 +157,7 @@ void NewArea::allocateRb() { //未完成
 	optRbOverFlag = false;
 	int optRbUsed = 0;
 	//首先将User进行调度
-	sortUser();
+	sortUserAndClearRBMap();
 	//先分配边缘用户，再分配中心用户 
 	//判断主载波是否够用 
 	if(edgeUserCnt*USERPERRB <= mainRb.size()){  //够用
@@ -163,7 +183,10 @@ void NewArea::allocateRb() { //未完成
 			}
 			iter++;
 		}
-		edgeUserIndex = (iter-edgeUsers.begin())%edgeUsers.size(); //遍历完成后，记录之后起始遍历的index
+		if(edgeUsers.size()>0)
+			edgeUserIndex = (iter-edgeUsers.begin())%edgeUsers.size(); //遍历完成后，记录之后起始遍历的index
+		else 
+			edgeUserIndex = 0;
 	} else { //如果不够用  那就把全部分配给部分用户  大致和上面一样
 		map<int,int>::iterator iterMap = mainRb.begin();
 		int cnt = 0;
@@ -362,7 +385,7 @@ void NewArea::allocateRb() { //未完成
 						map<int,int>::iterator rbLeft = optRb.begin(); //没有从上次分配结束的地方开始 原因同上
 						int cnt = 0;
 						vector<User>::iterator centeruserLeft = centerUsers.begin()+centerUserIndex;
-						while(rbLeft!=mainRb.end()) { 
+						while(rbLeft!=optRb.end()) { 
 							//只有部分用户可以分配到资源 所以用户没有通过while进行遍历
 							//分配可用的Rb
 							if(cnt<USERPERRB) { //给每个用户分配了设定的Rb数

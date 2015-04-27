@@ -1067,10 +1067,8 @@ void CGProjectDemo2View::OnSfr()
 	//先根据场强值，判断各个小区是否相邻
 	//RecordAdjAreaForSfrTool::recordAdjAreaForSfrTool();
 	MessageBox(_T("恭喜您，邻区关系已经处理完成!"),_T("通知"),MB_OK);
-
-	bool optimizeOld = SFROptimize::optimizeOld();
-	bool optimizeNew = SFROptimize::optimizeNew();
-	if(optimizeOld&&optimizeNew) {
+	bool flag = SFROptimize::opertion();
+	if(flag) {
 		MessageBox(_T("恭喜您，软频率复用优化完成!"),_T("通知"),MB_OK);
 	} else {
 		MessageBox(_T("很抱歉，软频率复用优化失败!"),_T("通知"),MB_OK);
