@@ -6,6 +6,7 @@
 #define _WEAKLAY_H
 #include "stdafx.h"
 #include "ChangeTypeTool.h"
+#include "DBHelper.h"
 #include <stdarg.h>
 #include <Windows.h>
 #include <iostream>
@@ -23,5 +24,7 @@ public:
 	//static string Count(string tableName,string key, string* whereKey, string* whereKeyValue, int whereCount);
 	static string WJudge(long Gid,double threshold);
 	static string AJudge(long minaid,long maxaid,double percent);
+	//显示出需要优化的小区
+	static string showArea();
 };
 #endif

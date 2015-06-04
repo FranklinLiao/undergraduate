@@ -2,6 +2,10 @@
 #include "stdafx.h"
 #include "DBConnPool.h"
 DBConnPool* DBConnPool::m_pInstanse = NULL;
+//需要在构造函数外初始化
+string DBConnPool::m_username = "sa";
+string DBConnPool::m_password = "123456";
+string DBConnPool::m_dbname = "LTE_OPT";
 DBConnPool::DBConnPool()
 {
 	m_bNeedStop = FALSE;
@@ -39,6 +43,7 @@ DBConnPool *DBConnPool::Instanse()
 {
 	if (NULL == m_pInstanse){
         m_pInstanse = new DBConnPool();
+		m_pInstanse->SetDBInfo("127.0.0.1",m_username.c_str(),m_password.c_str(),m_dbname.c_str(),30,50);
 	}
 	return m_pInstanse;
 }
@@ -273,3 +278,10 @@ DWORD WINAPI DBConnPool::thread_run( LPVOID pdata)
 	}
 	return 0;
 }
+
+void DBConnPool::SetInstanceNull() {
+	if(m_pInstanse!=NULL) {
+		DestroyAllDBConnections();
+		m_pInstanse = NULL;
+	}
+} 

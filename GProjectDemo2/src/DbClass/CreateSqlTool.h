@@ -9,7 +9,7 @@
 #include <iterator>
 #include <sstream>
 using namespace std;
-
+#define GRIDSIZE 5
 class CreateSqlTool {
 public:
 	static string queryAllGridString;
@@ -69,6 +69,8 @@ public:
 	static string createGetSpecialGridId(string tableName,double minLongitude,double maxLongitude,double minLatitude,double maxLatitude);
 	static string creategetRTDataId(string tablename,double x,double y);
 	static string createUpdateDistance(int size,int start);
+	//覆盖优化
+	static string getLayOptimizeAreaIdFromDb(string column);
 	//干扰优化
 	static string getRandonUser(string tableName,int areaId,int userCnt);
 	static string getAdjAreaId(string tableName,int areaId);
@@ -78,6 +80,7 @@ public:
 	static string getgetMaxGridXY(int flag);
 	static string getRandonUserANR(string tableName,int areaId,int userCnt);
 	static string getGidFromXY(double x,double y);
+	static string getGridAllRsrp(int gridId);
 };
 
 #endif

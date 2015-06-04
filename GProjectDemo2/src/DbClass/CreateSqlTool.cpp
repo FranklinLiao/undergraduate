@@ -336,7 +336,7 @@ string CreateSqlTool::createGetSpecialGridId(string tableName,double minLongitud
 	queryString.append(");");
 	return queryString;
 }
-
+/* //这个是用来更新小区到基站的距离的
 string CreateSqlTool::createUpdateDistance(int size,int start) {
 	stringstream stream;
 	stringstream startStream;
@@ -357,6 +357,38 @@ string CreateSqlTool::createUpdateDistance(int size,int start) {
 						while @@FETCH_STATUS=0 \
 						begin \
 						update Grid set GHeight = GLongitude + GLatitude where GId = @id \
+						fetch next from myCursor into @id \
+						end \
+						close myCursor \
+						deallocate myCursor");
+	return updateString;
+}
+*/
+
+/*****
+yuanman
+用来计算网格和基站的距离的  用于覆盖优化
+****/
+string CreateSqlTool::createUpdateDistance(int size,int start) {
+	stringstream stream;
+	stringstream startStream;
+	string startString;
+	string sizeString;
+	string updateString = "declare @id bigint \
+						  declare myCursor CURSOR FOR select top ";
+	stream << size;        
+	stream >> sizeString;   
+	updateString.append(sizeString);
+	updateString.append(" id from GridFieldStrength where id >= ");
+	startStream << start;        //long型数据输入
+	startStream >> startString;   //转换 string
+	updateString.append(startString);
+	updateString.append(" order by id \
+						open myCursor \
+						fetch next from myCursor into @id \
+						while @@FETCH_STATUS=0 \
+						begin \
+						update GridFieldStrength set DAtoG = ((power(((select AX from Area where AId = (select AId from GridFieldStrength where Id=@id))-(select GX from Grid where GId = (select GId from GridFieldStrength where Id = @id))),2)+ power(((select AY from Area where AId = (select AId from GridFieldStrength where Id=@id))-(select GY from Grid where GId = (select GId from GridFieldStrength where Id = @id))),2))) where Id = @id \
 						fetch next from myCursor into @id \
 						end \
 						close myCursor \
@@ -407,20 +439,51 @@ string CreateSqlTool::getgetMaxGridXY(int flag) {
 string CreateSqlTool::getRandonUserANR(string tableName,int areaId,int userCnt) {
 	//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
 	stringstream ss;
-	ss<<"select top "<<userCnt<<" GId,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
+	ss<<"select top "<<userCnt<<" GId,GAId,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
 	return ss.str();
 }
 
 
 
 
+//************************************  
+// 函数名称: getGidFromXY     
+// 函数说明： 将x,y转换到gridid  用于判断用户运动到了哪个网格    
+// 作者:Franklin     
+// 日期：2015/04/28     
+// 返 回 值: std::string     
+// 参    数: double x      
+// 参    数: double y      
+//************************************
 string CreateSqlTool::getGidFromXY(double x,double y) {
 		//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
-		stringstream ss; //判断绝对值在一定范围
-		ss<<"select gid from grid where x = "; 
+		stringstream ss; 
+		//将传入的数据进行处理 考虑到浮点数相加会有一定精度的损失  计算公式 2.5+（x/5）*5
+		x = 1.0*GRIDSIZE/2+(x/GRIDSIZE)*GRIDSIZE;  //x/gridsize 是进行整数计算  这样才能得到在哪个网格
+		y = 1.0*GRIDSIZE/2+(y/GRIDSIZE)*GRIDSIZE;  //y/gridsize 是进行整数计算
+		//此处考虑浮点数处理后会有0.2的偏移  
+		ss<<"select gid from grid where abs(gx - "; 
 		ss<<x;
-		ss<<" and y = ";
+		ss<<") < 0.2 and abs(gy - ";
 		ss<<y;
+		ss<<") < 0.2";
 		ss<<";";
 		return ss.str();
+}
+
+string CreateSqlTool::getGridAllRsrp(int gridId) {
+	stringstream ss;
+	ss<<"select AId,GRSRP from GridFieldStrenth where gid = ";
+	ss<<gridId;
+	ss<<";";
+	return ss.str();
+}
+
+string CreateSqlTool::getLayOptimizeAreaIdFromDb(string column) {
+	stringstream ss;
+	ss<<"select ";
+	ss<<column;
+	ss<<" = 1 from Area";
+	ss<<";";
+	return ss.str();
 }

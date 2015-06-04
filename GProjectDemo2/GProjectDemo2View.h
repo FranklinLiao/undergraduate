@@ -5,6 +5,7 @@
 #pragma once
 //#include "stdafx.h"
 //数据库连接的头文件
+#include "SetDb.h"
 #include "DBConnPool.h"
 #include "DataBase.h"
 #include "string.h"
@@ -30,6 +31,8 @@
 //软频率复用算法优化
 #include "SFROptimize.h"
 #include "RecordAdjAreaForSfrTool.h"
+//ANR
+#include "ANROptimize.h"
 class CGProjectDemo2View : public CView
 {
 protected: // 仅从序列化创建
@@ -107,6 +110,15 @@ private:
 	DWORD TId;
 public:
 	afx_msg void OnSfr();
+	afx_msg void OnAnr();
+	afx_msg void OnDbSet();
+
+private:
+	string m_username;
+	string m_password;
+	string m_dbname;
+public:
+	afx_msg void OnSetdb();
 };
 
 #ifndef _DEBUG  // GProjectDemo2View.cpp 中的调试版本

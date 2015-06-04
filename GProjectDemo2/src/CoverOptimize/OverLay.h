@@ -6,6 +6,7 @@
 #define _OVERLAY_H
 #include "stdafx.h"
 #include "ChangeTypeTool.h"
+#include "DBHelper.h"
 #include <stdarg.h>
 #include <Windows.h>
 #include <iostream>
@@ -17,5 +18,7 @@ class OverLay{
 public:
 	static string ojudge(long gid);
 	static string ajudge(long minaid,long maxaid,double percent);
+	//显示出需要优化的小区
+	static string showArea();
 };
 #endif

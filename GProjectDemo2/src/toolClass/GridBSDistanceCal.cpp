@@ -5,7 +5,7 @@ void GridBSDistanceCal::updateDistance() {
 	//得到grid的个数
 	string tableName = "Grid";
 	long rowCount = DBHelper::queryTableInfoNum(tableName);
-	rowCount = 1000;
+	//rowCount = 1000;
 	int time = rowCount / 100;
 	int left = rowCount % 100;
 	int index = 0;

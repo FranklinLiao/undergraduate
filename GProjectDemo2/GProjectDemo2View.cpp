@@ -40,7 +40,7 @@ BEGIN_MESSAGE_MAP(CGProjectDemo2View, CView)
 	ON_COMMAND(ID_BUTTON32793, &CGProjectDemo2View::OnButton32793)
 	ON_COMMAND(ID_BUTTON32794, &CGProjectDemo2View::OnButton32794)
 	ON_COMMAND(ID_BUTTON32795, &CGProjectDemo2View::OnButton32795)
-	ON_COMMAND(ID_32774, &CGProjectDemo2View::InitDataBase)
+	
 	ON_COMMAND(ID_TESTDBCONNECTION, &CGProjectDemo2View::OnTestdbconnection)
 	ON_COMMAND(ID_BINDDATA, &CGProjectDemo2View::OnBinddata)
 	ON_COMMAND(ID_GRIDMAKER, &CGProjectDemo2View::OnGridmaker)
@@ -58,20 +58,147 @@ BEGIN_MESSAGE_MAP(CGProjectDemo2View, CView)
 	ON_COMMAND(ID_WEAKLAY, &CGProjectDemo2View::OnWeaklay)
 	ON_COMMAND(ID_POLLUTION, &CGProjectDemo2View::OnPollution)
 	ON_COMMAND(ID_SFR, &CGProjectDemo2View::OnSfr)
+	ON_COMMAND(ID_ANR, &CGProjectDemo2View::OnAnr)
+	ON_COMMAND(ID_SETDB, &CGProjectDemo2View::OnSetdb)
 END_MESSAGE_MAP()
 
 // CGProjectDemo2View 构造/析构
 
+
+//************************************  
+// 函数名称: OnDbSet     
+// 函数说明： 用于设置Db的连接信息    
+// 作者:Franklin     
+// 日期：2015/06/01     
+// 返 回 值: void     
+//************************************
+void CGProjectDemo2View::OnSetdb()
+{
+	// TODO: 在此添加命令处理程序代码
+	//手动输入
+	CSetDb m_setDb(_T("数据库设置"));
+	int ret = m_setDb.DoModal();
+	if(IDOK==ret) {
+		m_username = m_setDb.m_username.Trim();
+		m_password = m_setDb.m_passwd.Trim();
+		m_dbname = m_setDb.m_dbname.Trim();
+		if(m_username==""||m_password==""||m_dbname=="") {
+			MessageBox(_T("数据库配置信息输入不完全，将采用默认配置"),_T("Warnning"),MB_OK);
+		} else {
+			DBConnPool::m_username = this->m_username;
+			DBConnPool::m_password = this->m_password;
+			DBConnPool::m_dbname = this->m_dbname;
+			DBConnPool::Instanse()->SetInstanceNull(); // 重新创建DBPOOL
+			MessageBox(_T("数据库配置信息输入完成"),_T("Warnning"),MB_OK);
+		}
+	} else {
+		MessageBox(_T("数据库连接将使用默认配置"),_T("Warnning"),MB_OK);
+	}
+	//DBConnPool::Instanse()->SetDBInfo("127.0.0.1",m_username.c_str(),m_password.c_str(),m_dbname.c_str(),30,50);
+}
+
 CGProjectDemo2View::CGProjectDemo2View()
 {
-	//配置数据库，创建连接
-	DBConnPool::Instanse()->SetDBInfo("127.0.0.1","sa","123456","LteArea",30,50);
+	//配置数据库，创建连接  放到了DBConnPool中
+	//m_username = "sa";
+	//m_password = "123456";
+	//m_dbname = "LTE_OPT";
+	//初始进入设定数据库连接
+	//OnSetdb();
+	//DBConnPool::Instanse()->SetDBInfo("127.0.0.1",m_username.c_str(),m_password.c_str(),m_dbname.c_str(),30,50);
+	//DBConnPool::Instanse()->SetDBInfo("127.0.0.1","sa","123456","LteArea",30,50);
 	//清空现有的数据
 	//DBHelper::deleteAllTable();
 }
 
 CGProjectDemo2View::~CGProjectDemo2View()
 {
+}
+
+
+//************************************  
+// 函数名称: OnTestdbconnection     
+// 函数说明： 测试数据库连接是否正常    
+// 作者:Franklin     
+// 日期：2015/03/24     
+// 返 回 值: void     
+//************************************
+void CGProjectDemo2View::OnTestdbconnection()
+{
+	// TODO: 在此添加命令处理程序代码
+	//按照传入的配置信息，进行数据库的连接，并返回结果 
+	DBConnect* dbconnection;
+	try {
+		//返回数据
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		if(dbconnection!=NULL) {
+			DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+			MessageBox(_T("数据库连接成功"),_T("数据库连接测试"),MB_OKCANCEL);
+		} else {
+			DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+			MessageBox(_T("数据库连接失败"),_T("数据库连接测试"),MB_OKCANCEL);
+		}
+	} catch(_com_error e) {
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<e.Description()<<endl;
+		MessageBox(_T("数据库连接失败"),_T("数据库连接测试"),MB_OKCANCEL);
+	}
+	//此处采用默认连接数据库的配置
+	/*
+	_ConnectionPtr connection;
+	_RecordsetPtr recordSet;
+	HRESULT hr = connection.CreateInstance(__uuidof(Connection));
+	recordSet.CreateInstance(__uuidof(Recordset));
+	string queryString = "select * from CUT;";
+	_bstr_t sqlString  = queryString.c_str();
+	connection->Open("Driver=SQL Server;Server=127.0.1;DATABASE=MapData","sa","123456",adModeUnknown) ;
+	if (FAILED(hr))
+		return;
+	recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+
+	MessageBox(_T("数据库连接成功"),_T("数据库连接测试"),MB_OKCANCEL);
+	if(recordSet->State) {
+		recordSet->Close();
+	}
+	if(connection->State) {
+		connection->Close();
+	}
+	*/
+	//制作主题地图
+	/*
+	CMapXTheme thm;
+	thm=m_ctrlMapX.GetDatasets().Item(1).GetThemes().Add(miThemeRanged,_T("x"),_T("value"));
+	*/
+
+
+	/*
+	CMapXFields field;
+	field.CreateDispatch(field.GetClsid());
+	field.AddNumericField(_T("x"),10,0);
+	field.AddNumericField(_T("y"),10,0);
+	CString name[2]={_T("x"),_T("y")};
+	
+	VARIANT vFlds;
+	vFlds.vt = VT_DISPATCH;
+	vFlds.pdispVal = field.m_lpDispatch;
+	*/
+	
+	//thm=m_ctrlMapX.GetDatasets().Item(1).GetThemes().Add(miThemeRanged,_T("y"),_T("value2"));
+	
+	/*
+	CMapXFeatures features;
+	CMapXFeature feature;
+	feature.set
+	*/
+	//尝试实现数据绑定  用途：用来将场强数据绑定到各个网格中
+	//现在尝试实现的是  将自己手动生成的数据绑定到建筑物中
+	/*
+	CMapXDatasets m_Datasets = m_ctrlMapX.GetDatasets();
+	CMapXFields m_Fields;
+	m_Fields.Add(2,_T("BuildingValue"),miAggregationAuto);
+	DataBase database;
+	string sqlString = "select * from BuildingBindTest;";
+	*/
 }
 
 BOOL CGProjectDemo2View::PreCreateWindow(CREATESTRUCT& cs)
@@ -274,95 +401,7 @@ void CGProjectDemo2View::OnButton32795()
 	m_ctrlMapX.GetLayers().LayersDlg();
 }
 
-//此函数想用来配置数据库的，应该调用一个对话框出来，可能之后不放在VIEW下，注意点。
-void CGProjectDemo2View::InitDataBase()
-{
-	// TODO: 在此添加命令处理程序代码
-	//现在采用默认连接，不提供外部的输入，之后需要改成可配置的
-	
 
-}
-
-
-//************************************  
-// 函数名称: OnTestdbconnection     
-// 函数说明： 测试数据库连接是否正常    
-// 作者:Franklin     
-// 日期：2015/03/24     
-// 返 回 值: void     
-//************************************
-void CGProjectDemo2View::OnTestdbconnection()
-{
-	// TODO: 在此添加命令处理程序代码
-	//按照传入的配置信息，进行数据库的连接，并返回结果 
-	DBConnect* dbconnection;
-	try {
-		//返回数据
-		dbconnection = DBConnPool::Instanse()->GetAConnection();
-		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
-		MessageBox(_T("数据库连接成功"),_T("数据库连接测试"),MB_OKCANCEL);
-	} catch(_com_error e) {
-		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
-		cout<<e.Description()<<endl;
-		MessageBox(_T("数据库连接失败"),_T("数据库连接测试"),MB_OKCANCEL);
-	}
-	//此处采用默认连接数据库的配置
-	/*
-	_ConnectionPtr connection;
-	_RecordsetPtr recordSet;
-	HRESULT hr = connection.CreateInstance(__uuidof(Connection));
-	recordSet.CreateInstance(__uuidof(Recordset));
-	string queryString = "select * from CUT;";
-	_bstr_t sqlString  = queryString.c_str();
-	connection->Open("Driver=SQL Server;Server=127.0.1;DATABASE=MapData","sa","123456",adModeUnknown) ;
-	if (FAILED(hr))
-		return;
-	recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
-
-	MessageBox(_T("数据库连接成功"),_T("数据库连接测试"),MB_OKCANCEL);
-	if(recordSet->State) {
-		recordSet->Close();
-	}
-	if(connection->State) {
-		connection->Close();
-	}
-	*/
-	//制作主题地图
-	/*
-	CMapXTheme thm;
-	thm=m_ctrlMapX.GetDatasets().Item(1).GetThemes().Add(miThemeRanged,_T("x"),_T("value"));
-	*/
-
-
-	/*
-	CMapXFields field;
-	field.CreateDispatch(field.GetClsid());
-	field.AddNumericField(_T("x"),10,0);
-	field.AddNumericField(_T("y"),10,0);
-	CString name[2]={_T("x"),_T("y")};
-	
-	VARIANT vFlds;
-	vFlds.vt = VT_DISPATCH;
-	vFlds.pdispVal = field.m_lpDispatch;
-	*/
-	
-	//thm=m_ctrlMapX.GetDatasets().Item(1).GetThemes().Add(miThemeRanged,_T("y"),_T("value2"));
-	
-	/*
-	CMapXFeatures features;
-	CMapXFeature feature;
-	feature.set
-	*/
-	//尝试实现数据绑定  用途：用来将场强数据绑定到各个网格中
-	//现在尝试实现的是  将自己手动生成的数据绑定到建筑物中
-	/*
-	CMapXDatasets m_Datasets = m_ctrlMapX.GetDatasets();
-	CMapXFields m_Fields;
-	m_Fields.Add(2,_T("BuildingValue"),miAggregationAuto);
-	DataBase database;
-	string sqlString = "select * from BuildingBindTest;";
-	*/
-	}
 
 
 
@@ -870,7 +909,9 @@ void CGProjectDemo2View::OnGridmif()
 		string fileNameString = FileName.GetBuffer(0);
 		fileNameString.append(".mif"); 
 		//将场强值和颜色进行对应的改变
-		SetGridColorTool::SetColor();
+
+		//中期数据展示，注释了下面一行
+		//SetGridColorTool::SetColor();
 		MessageBox(_T("恭喜您，颜色信息已经转换成功!"),_T("通知"),MB_OK);
 		//从数据库中取出网格的颜色信息进行展示
 		MakeGridFileTool::makeGridFile(fileNameString);
@@ -890,7 +931,7 @@ void CGProjectDemo2View::OnChange()
 {
 	// TODO: 在此添加命令处理程序代码
 	clock_t startTime = GetTickCount();
-	GridBSDistanceCal::updateDistance();
+	//GridBSDistanceCal::updateDistance();
 	clock_t endTime = GetTickCount();
 	DWORD lastTime = endTime-startTime;
 	cout<<lastTime;
@@ -1074,3 +1115,17 @@ void CGProjectDemo2View::OnSfr()
 		MessageBox(_T("很抱歉，软频率复用优化失败!"),_T("通知"),MB_OK);
 	}
 }
+
+
+void CGProjectDemo2View::OnAnr()
+{
+	// TODO: 在此添加命令处理程序代码
+	ANROptimize::snrOptimize();
+	MessageBox(_T("恭喜您，邻区优化ANR完成!"),_T("通知"),MB_OK);
+}
+
+
+
+
+
+

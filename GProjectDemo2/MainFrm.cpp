@@ -144,11 +144,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
+	m_strTitle   =   _T("TD-LTE网络小区优化系统"); //可以随意设置标题
 	if( !CFrameWndEx::PreCreateWindow(cs) )
 		return FALSE;
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
-
+	 cs.style &=~FWS_ADDTOTITLE; //这行是必要条件
 	return TRUE;
 }
 

@@ -32,10 +32,11 @@ public:
 	
 
 	void SetDBInfo(LPCSTR strDstAddress, LPCSTR strUsername, LPCSTR strPassword, LPCSTR strDBName,int minConn,int maxConn);
-
-public:
+	void SetInstanceNull();
+private:
 	// 唯一实例
 	static DBConnPool* m_pInstanse;
+private:
 	// 空闲数据库连接队列
 	DBConnectList m_listIdleConnection;
 	// 在使用的数据库连接
@@ -58,6 +59,10 @@ public:
 	BOOL m_bNeedConnection; // 需要创建连接的标志
 	static	DWORD	WINAPI	thread_run( LPVOID pdata);
 
+public:
+	static string m_username;
+	static string m_password;
+	static string m_dbname;
 private:
 	// 创建一个连接
 	int InitializeAConnection();

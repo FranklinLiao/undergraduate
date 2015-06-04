@@ -63,3 +63,15 @@ string OverLay::ajudge(long minaid,long maxaid,double percent){
 					 end");
 	return SqlString;
 }
+
+string OverLay::showArea() {
+	string column = "AOverLay";
+	stringstream info; 
+	vector<int> areaIdVector = DBHelper::getLayOptimizeAreaId(column);
+	vector<int>::iterator iter = areaIdVector.begin();
+	while(iter!=areaIdVector.end()) {
+		int areaId = *iter++;
+		info<<areaId<<",";
+	}
+	return info.str().substr(info.str().length()-1); //去除最后一个,
+}

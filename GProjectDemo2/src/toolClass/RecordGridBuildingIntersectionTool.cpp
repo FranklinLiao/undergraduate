@@ -91,31 +91,31 @@ void RecordGridBuildingIntersectionTool::recordGridBuildingIntersectionTool() {
 		while((!m_pRecordset1->EndOfFile))
 		{
 				
-			BDotsX.push_back(m_pRecordset1->GetCollect("PX"));
-			BDotsY.push_back(m_pRecordset1->GetCollect("PY"));
+			BDotsX.push_back(m_pRecordset1->GetCollect("PX")); //一个建筑物的所有折点X
+			BDotsY.push_back(m_pRecordset1->GetCollect("PY"));//一个建筑物的所有折点y
 			m_pRecordset1->MoveNext();
 		}
-		BDotsXs.push_back(BDotsX);
-		BDotsYs.push_back(BDotsY);
+		BDotsXs.push_back(BDotsX); //取出所有建筑物的所有折点的x
+		BDotsYs.push_back(BDotsY);//取出所有建筑物的所有折点的y
 		BDotsX.clear();
 		BDotsY.clear();
 	}
 	////////////////////////////////////////////////////////////////////
 	for(Bid=1;Bid<=BidM;Bid++)
 	{
-		for(int j=0;j<BDotsXs[Bid-1].size()-1;j++)
+		for(int j=0;j<BDotsXs[Bid-1].size()-1;j++) //某一个建筑物的所有折点
 		{
-			Y1=BDotsYs[Bid-1][j+1];
+			Y1=BDotsYs[Bid-1][j+1]; 
 			Y2=BDotsYs[Bid-1][j];
 			X1=BDotsXs[Bid-1][j+1];
 			X2=BDotsXs[Bid-1][j];
 			Xmed1.push_back(X1-X2);
-			Ymed1.push_back(Y1-Y2);
+			Ymed1.push_back(Y1-Y2); 
 			Xmed.push_back(1/(X1-X2));
 			Ymed.push_back(1/(Y1-Y2));
 			MED.push_back((X1*Y2-X2*Y1));
 		}
-		MEDs.push_back(MED);
+		MEDs.push_back(MED); //所有建筑物的所有折点
 		MED.clear();
 		Xmed1s.push_back(Xmed1);
 		Ymed1s.push_back(Ymed1);
@@ -128,15 +128,15 @@ void RecordGridBuildingIntersectionTool::recordGridBuildingIntersectionTool() {
 	}
 	int buildingGridId=1;
 	for(GDotX=0;GDotX<=XM;GDotX=GDotX+5){
-		for(GDotY=0;GDotY<=YM;GDotY=GDotY+5){
+		for(GDotY=0;GDotY<=YM;GDotY=GDotY+5){ //便利网格
 			cout<<id++<<"	";
-			for(Bid=1;Bid<=BidM;Bid++){
+			for(Bid=1;Bid<=BidM;Bid++){ //便利建筑物
 				n1=0;
 				n2=0;
 				m1=0;
 				m2=0;
 				count=0;
-				for(int j=0;j<BDotsXs[Bid-1].size()-1;j++){
+				for(int j=0;j<BDotsXs[Bid-1].size()-1;j++){  //便利某一个建筑物的所有折点
 					X1=BDotsXs[Bid-1][j+1];
 					X2=BDotsXs[Bid-1][j];
 					Y1=BDotsYs[Bid-1][j+1];

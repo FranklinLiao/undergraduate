@@ -210,22 +210,11 @@ int DBHelper::getRTDataId(string tableName,double x,double y){
 }
 
 //∏…»≈”≈ªØ
-vector<User> DBHelper::getUser(int areaId,int userCnt) {
+vector<vector<string>> DBHelper::getUser(int areaId,int userCnt) {
 	DataBase db;
 	string tableName = "Grid";
-	vector<User> users;
 	vector<vector<string>> userInfos = db.getUserFromDb(tableName,areaId,userCnt);
-	vector<vector<string>>::iterator iterout = userInfos.begin();
-	while(iterout!=userInfos.end()) {
-		vector<string>::iterator iterin = (*iterout++).begin();
-		int gridId = ChangeTypeTool::stringToInt(*iterin++);
-		double rsrp = ChangeTypeTool::stringToDouble(*iterin++);
-		double x = ChangeTypeTool::stringToDouble(*iterin++);
-		double y = ChangeTypeTool::stringToDouble(*iterin++);
-		User user = User(gridId,rsrp,x,y);
-		users.push_back(user);
-	}
-	return users;
+	return userInfos;
 }
 
 vector<int> DBHelper::getAdjAreaId(int areaId) {
@@ -254,21 +243,11 @@ double DBHelper::getGridMaxXY(int flag) {
 	return xy;
 }
 
-vector<UserANR> DBHelper::getUserANR(int areaId,int userCnt) {
+vector<vector<string>> DBHelper::getUserANR(int areaId,int userCnt) {
 	DataBase db;
 	string tableName = "Grid";
-	vector<UserANR> users;
 	vector<vector<string>> userInfos = db.getUserANRFromDb(tableName,areaId,userCnt);
-	vector<vector<string>>::iterator iterout = userInfos.begin();
-	while(iterout!=userInfos.end()) {
-		vector<string>::iterator iterin = (*iterout++).begin();
-		int gridId = ChangeTypeTool::stringToInt(*iterin++);
-		double x = ChangeTypeTool::stringToDouble(*iterin++);
-		double y = ChangeTypeTool::stringToDouble(*iterin++);
-		UserANR userANR = UserANR(gridId,x,y);
-		users.push_back(userANR);
-	}
-	return users;
+	return userInfos;
 }
 
 
@@ -277,4 +256,19 @@ int DBHelper::getGidFromXY(double x,double y) {
 	DataBase db;
 	int gid = db.getGidFromXY(x,y);
 	return gid;
+}
+
+
+vector<vector<string>> DBHelper::getGridAllRsrp(int gridId) {
+	DataBase db;
+	vector<vector<string>> gridAllRsrpInfo = db.getGridAllRsrpInfo(gridId);
+	//_CrtDumpMemoryLeaks();
+	return gridAllRsrpInfo;
+}
+
+vector<int> DBHelper::getLayOptimizeAreaId(string column) {
+	DataBase db;
+	vector<int> stringVector=db.getLayOptimizeAreaIdFromDb(CreateSqlTool::getLayOptimizeAreaIdFromDb(column));
+	//_CrtDumpMemoryLeaks();
+	return stringVector;
 }

@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="源文件\DbClass">
-      <UniqueIdentifier>{85637d4e-c6d5-43db-991f-99dca1bc2299}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\DbClass">
       <UniqueIdentifier>{df6eb752-b73c-4186-9c38-1991ebaa62e0}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,9 @@
     </Filter>
     <Filter Include="源文件\ANR">
       <UniqueIdentifier>{5c7507e5-9a79-485b-b5b9-f249dfa7d568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\CoverOptimize\DbClass">
+      <UniqueIdentifier>{85637d4e-c6d5-43db-991f-99dca1bc2299}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,14 +313,17 @@
     <ClInclude Include="src\SFROptimize\NewRbs.h">
       <Filter>头文件\SFROptimize</Filter>
     </ClInclude>
-    <ClInclude Include="UserANR.h">
+    <ClInclude Include="src\ANR\ANROptimize.h">
       <Filter>头文件\ANR</Filter>
     </ClInclude>
-    <ClInclude Include="ANROptimize.h">
+    <ClInclude Include="src\ANR\AreaANR.h">
       <Filter>头文件\ANR</Filter>
     </ClInclude>
-    <ClInclude Include="AreaANR.h">
+    <ClInclude Include="src\ANR\UserANR.h">
       <Filter>头文件\ANR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolClass\SetDb.h">
+      <Filter>头文件\ToolClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -340,19 +343,19 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\CreateSqlTool.cpp">
-      <Filter>源文件\DbClass</Filter>
+      <Filter>源文件\CoverOptimize\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\DataBase.cpp">
-      <Filter>源文件\DbClass</Filter>
+      <Filter>源文件\CoverOptimize\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\DBConnect.cpp">
-      <Filter>源文件\DbClass</Filter>
+      <Filter>源文件\CoverOptimize\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\DBConnPool.cpp">
-      <Filter>源文件\DbClass</Filter>
+      <Filter>源文件\CoverOptimize\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\DBHelper.cpp">
-      <Filter>源文件\DbClass</Filter>
+      <Filter>源文件\CoverOptimize\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\ExcelClass\OperateExcelFileTool.cpp">
       <Filter>源文件\ExcelClass</Filter>
@@ -507,8 +510,11 @@
     <ClCompile Include="src\SFROptimize\NewArea.cpp">
       <Filter>源文件\SFROptimize</Filter>
     </ClCompile>
-    <ClCompile Include="ANROptimize.cpp">
+    <ClCompile Include="src\ANR\ANROptimize.cpp">
       <Filter>源文件\ANR</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolClass\SetDb.cpp">
+      <Filter>源文件\ToolClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -4,8 +4,6 @@
 //#include "Grid.h"
 #include "CreateSqlTool.h"
 #include "DataBase.h"
-#include "User.h"
-#include "UserANR.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -46,9 +44,14 @@ public:
 	static vector<double> queryGridXY(int id);
 	static vector<double> queryRTDataXY(int id);
 	static int getRTDataId(string tableName,double x,double y);
+
+//覆盖优化
+public:
+	static vector<int> getLayOptimizeAreaId(string colum);
+
 //干扰优化
 public:
-	static vector<User> getUser(int areaId,int userCnt);
+	static vector<vector<string>> getUser(int areaId,int userCnt);
 	static vector<int> getAdjAreaId(int areaId);
 	static double getAdjAreaGridStrength(int aid,int gridId);
 
@@ -56,8 +59,9 @@ public:
 public:
 	static double getServerRSRP(int aid,int gid);
 	static double getGridMaxXY(int flag);
-	static vector<UserANR> getUserANR(int areaId,int userCnt);
+	static vector<vector<string>> getUserANR(int areaId,int userCnt);
 	static int getGidFromXY(double x,double y);
+	static vector<vector<string>> getGridAllRsrp(int gridId);
 };
 
 #endif

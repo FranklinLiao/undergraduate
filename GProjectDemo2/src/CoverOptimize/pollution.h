@@ -6,6 +6,7 @@
 #define _POLLUTION_H
 #include "stdafx.h"
 #include "ChangeTypeTool.h"
+#include "DBHelper.h"
 #include <stdarg.h>
 #include <Windows.h>
 #include <iostream>
@@ -17,5 +18,7 @@ class pollution {
 public:
 	static string PJudge(long gid,int count, double threshold,double difference );
 	static string APJudge(double percent,long minaid,long maxaid);
+	//显示出需要优化的小区
+	static string showArea();
 };
 #endif

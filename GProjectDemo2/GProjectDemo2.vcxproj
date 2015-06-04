@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\SFROptimize;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\GProjectDemo2\GProjectDemo2\src\ANR;E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\SFROptimize;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Franklin.LiTianjie-PC\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\GProjectDemo2;D:\Program Files\MATLAB\R2011a\extern\lib\win32\microsoft;$(LibraryPath)</LibraryPath>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -110,13 +110,14 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ANROptimize.h" />
-    <ClInclude Include="AreaANR.h" />
     <ClInclude Include="GProjectDemo2.h" />
     <ClInclude Include="GProjectDemo2Doc.h" />
     <ClInclude Include="GProjectDemo2View.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="src\ANR\ANROptimize.h" />
+    <ClInclude Include="src\ANR\AreaANR.h" />
+    <ClInclude Include="src\ANR\UserANR.h" />
     <ClInclude Include="src\CoverOptimize\OverLay.h" />
     <ClInclude Include="src\CoverOptimize\pollution.h" />
     <ClInclude Include="src\CoverOptimize\WeakLay.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="src\ToolClass\RecordGridBuildingIntersectionTool.h" />
     <ClInclude Include="src\ToolClass\RecordGridInfoTool.h" />
     <ClInclude Include="src\ToolClass\RecordRTData.h" />
+    <ClInclude Include="src\ToolClass\SetDb.h" />
     <ClInclude Include="src\ToolClass\SetGridColorTool.h" />
     <ClInclude Include="src\ToolClass\StringParser.h" />
     <ClInclude Include="src\zhangzheClass\complex.h" />
@@ -186,14 +188,13 @@
     <ClInclude Include="src\zhangzheClass\Staining.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="UserANR.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ANROptimize.cpp" />
     <ClCompile Include="GProjectDemo2.cpp" />
     <ClCompile Include="GProjectDemo2Doc.cpp" />
     <ClCompile Include="GProjectDemo2View.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="src\ANR\ANROptimize.cpp" />
     <ClCompile Include="src\CoverOptimize\OverLay.cpp" />
     <ClCompile Include="src\CoverOptimize\pollution.cpp" />
     <ClCompile Include="src\CoverOptimize\WeakLay.cpp" />
@@ -239,6 +240,7 @@
     <ClCompile Include="src\ToolClass\RecordGridBuildingIntersectionTool.cpp" />
     <ClCompile Include="src\ToolClass\RecordGridInfoTool.cpp" />
     <ClCompile Include="src\ToolClass\RecordRTData.cpp" />
+    <ClCompile Include="src\ToolClass\SetDb.cpp" />
     <ClCompile Include="src\ToolClass\SetGridColorTool.cpp" />
     <ClCompile Include="src\ToolClass\StringParser.cpp" />
     <ClCompile Include="src\zhangzheClass\complex.cpp" />

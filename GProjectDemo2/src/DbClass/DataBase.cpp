@@ -809,7 +809,7 @@ vector<vector<string>> DataBase::getUserANRFromDb(string tableName,int areaId,in
 
 
 
-	//得到网格最大的XY
+	//得到网格最大的XY  网格是先按Y方向划分，然后按照X方向划分
 	int DataBase::getGidFromXY(double x,double y) {
 		int strength = 0;
 		string info = CreateSqlTool::getGidFromXY(x,y);
@@ -843,4 +843,85 @@ vector<vector<string>> DataBase::getUserANRFromDb(string tableName,int areaId,in
 			cout<<"failed";
 		}
 		return strength;
+}
+
+vector<vector<string>> DataBase::getGridAllRsrpInfo(int gridId) {
+	//GetDBConnTool dbCon;
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		sqlString = CreateSqlTool::getGridAllRsrp(gridId).c_str();
+		recordSet.CreateInstance(__uuidof(Recordset));
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vector<vector<string>> stringObject;
+		while(!recordSet->EndOfFile)
+		{
+			vector<string> userInfo;
+			int i=0;
+			for(;i<2;i++) { //取出aid,rsrp
+				vTmp = recordSet->GetCollect(_variant_t((long)i));//这儿给字段编号和字段名都可以 
+				string tmp;
+				if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+					tmp = (_bstr_t) vTmp;
+				} else {
+					tmp = (_bstr_t)vTmp;//.dblVal;
+				}
+				userInfo.push_back(tmp); 
+			}
+			stringObject.push_back(userInfo); 
+			recordSet->MoveNext(); ///移到下一条记录
+		}
+		return stringObject;
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<e.Description()<<endl;
+		cout<<"getGridAllRsrp failed";
+	}
+}
+
+
+vector<int> DataBase::getLayOptimizeAreaIdFromDb(string sqlInfo) {
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		sqlString = sqlInfo.c_str();
+		recordSet.CreateInstance(__uuidof(Recordset));
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vector<int> stringObject;
+		while(!recordSet->EndOfFile)
+		{
+			int userInfo;
+			int i=0;
+			
+			vTmp = recordSet->GetCollect(_variant_t((long)i));//这儿给字段编号和字段名都可以 
+			int tmp;
+			if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+				tmp = 0;
+			} else {
+				tmp = (int)vTmp;//.dblVal;
+			}
+			
+			stringObject.push_back(tmp); 
+			recordSet->MoveNext(); ///移到下一条记录
+		}
+		return stringObject;
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<e.Description()<<endl;
+		cout<<"getRandomUser failed";
+	}
 }

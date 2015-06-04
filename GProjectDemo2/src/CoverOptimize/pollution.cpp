@@ -53,3 +53,15 @@ string pollution::APJudge(double percent,long minaid,long maxaid){
                       end");
 	return SqlString;
 }
+
+string pollution::showArea() {
+	string column = "APollution";
+	stringstream info; 
+	vector<int> areaIdVector = DBHelper::getLayOptimizeAreaId(column);
+	vector<int>::iterator iter = areaIdVector.begin();
+	while(iter!=areaIdVector.end()) {
+		int areaId = *iter++;
+		info<<areaId<<",";
+	}
+	return info.str().substr(info.str().length()-1); //去除最后一个,
+}

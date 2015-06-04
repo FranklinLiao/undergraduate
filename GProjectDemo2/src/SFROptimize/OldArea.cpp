@@ -26,8 +26,17 @@ void OldArea::init() {
 }
 vector<User> OldArea::generateUser() { 
 	int areaId = this->area.AId;
-	vector<User> users = DBHelper::getUser(areaId,this->userCnt); //从该小区所包括的网格中随机选择userCnt个，即认为随机选择了分布在该小区中的用户
-	this->users = users;
+	vector<vector<string>> userInfos = DBHelper::getUser(areaId,this->userCnt); //从该小区所包括的网格中随机选择userCnt个，即认为随机选择了分布在该小区中的用户
+	vector<vector<string>>::iterator iterout = userInfos.begin();
+	while(iterout!=userInfos.end()) {
+		vector<string>::iterator iterin = (*iterout++).begin();
+		int gridId = ChangeTypeTool::stringToInt(*iterin++);
+		double rsrp = ChangeTypeTool::stringToDouble(*iterin++);
+		double x = ChangeTypeTool::stringToDouble(*iterin++);
+		double y = ChangeTypeTool::stringToDouble(*iterin++);
+		User user = User(gridId,rsrp,x,y);
+		this->users.push_back(user);
+	}
 	return users;
 }
 

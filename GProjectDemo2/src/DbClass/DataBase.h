@@ -28,6 +28,7 @@ public:
 	 //覆盖优化中弱覆盖的方法
 	 long MaxId(string maxidString);
 	 long MinId(string minidString);
+	 vector<int> getLayOptimizeAreaIdFromDb(string sqlInfo);
 
 	 //干扰优化的方法
 	 vector<vector<string>> getUserFromDb(string tableName,int areaId,int userCnt);
@@ -43,6 +44,7 @@ public:
 	 double getMaxGridXY(int flag);
 	 vector<vector<string>> getUserANRFromDb(string tableName,int areaId,int userCnt);
 	 int getGidFromXY(double x,double y);
+	 vector<vector<string>> getGridAllRsrpInfo(int gridId);
 };
 
 #endif
