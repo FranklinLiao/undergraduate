@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Projects\GProjectDemo2\GProjectDemo2\src\ANR;E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\SFROptimize;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\ogr;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\mitab;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\cpl;E:\Projects\GProjectDemo2\GProjectDemo2\src\ANR;E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\SFROptimize;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Franklin.LiTianjie-PC\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\GProjectDemo2;D:\Program Files\MATLAB\R2011a\extern\lib\win32\microsoft;$(LibraryPath)</LibraryPath>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -61,6 +61,14 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ogr.lib;cpl.lib;mitab_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <HeapReserveSize>
+      </HeapReserveSize>
+      <HeapCommitSize>
+      </HeapCommitSize>
+      <StackReserveSize>32768</StackReserveSize>
+      <StackCommitSize>
+      </StackCommitSize>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -120,6 +128,7 @@
     <ClInclude Include="src\ANR\UserANR.h" />
     <ClInclude Include="src\CoverOptimize\OverLay.h" />
     <ClInclude Include="src\CoverOptimize\pollution.h" />
+    <ClInclude Include="src\CoverOptimize\SetCellDialog.h" />
     <ClInclude Include="src\CoverOptimize\WeakLay.h" />
     <ClInclude Include="src\DbClass\CreateSqlTool.h" />
     <ClInclude Include="src\DbClass\DataBase.h" />
@@ -134,6 +143,10 @@
     <ClInclude Include="src\ExcelClass\CWorksheets.h" />
     <ClInclude Include="src\ExcelClass\OperateExcelFileTool.h" />
     <ClInclude Include="src\MapxClass\MAPX.H" />
+    <ClInclude Include="src\Mif2Tab\Mif2Tab.h" />
+    <ClInclude Include="src\Mif2Tab\SHFileInfo.h" />
+    <ClInclude Include="src\Mif2Tab\TAB2MIF.h" />
+    <ClInclude Include="src\Mif2Tab\Tab2Shp.h" />
     <ClInclude Include="src\ObjectClass\AntannaTypeDefine.h" />
     <ClInclude Include="src\ObjectClass\Area.h" />
     <ClInclude Include="src\ObjectClass\AreaGrid.h" />
@@ -173,7 +186,10 @@
     <ClInclude Include="src\ToolClass\RecordRTData.h" />
     <ClInclude Include="src\ToolClass\SetDb.h" />
     <ClInclude Include="src\ToolClass\SetGridColorTool.h" />
+    <ClInclude Include="src\ToolClass\ShowGridArea.h" />
+    <ClInclude Include="src\ToolClass\ShowInfoMB.h" />
     <ClInclude Include="src\ToolClass\StringParser.h" />
+    <ClInclude Include="src\ToolClass\WriteTxt.h" />
     <ClInclude Include="src\zhangzheClass\complex.h" />
     <ClInclude Include="src\zhangzheClass\findGrid.h" />
     <ClInclude Include="src\zhangzheClass\firstReflectionNew.h" />
@@ -197,6 +213,7 @@
     <ClCompile Include="src\ANR\ANROptimize.cpp" />
     <ClCompile Include="src\CoverOptimize\OverLay.cpp" />
     <ClCompile Include="src\CoverOptimize\pollution.cpp" />
+    <ClCompile Include="src\CoverOptimize\SetCellDialog.cpp" />
     <ClCompile Include="src\CoverOptimize\WeakLay.cpp" />
     <ClCompile Include="src\DbClass\CreateSqlTool.cpp" />
     <ClCompile Include="src\DbClass\DataBase.cpp" />
@@ -205,6 +222,8 @@
     <ClCompile Include="src\DbClass\DBHelper.cpp" />
     <ClCompile Include="src\ExcelClass\OperateExcelFileTool.cpp" />
     <ClCompile Include="src\MapxClass\MAPX.CPP" />
+    <ClCompile Include="src\Mif2Tab\Mif2Tab.cpp" />
+    <ClCompile Include="src\Mif2Tab\SHFileInfo.cpp" />
     <ClCompile Include="src\ObjectClass\AntannaTypeDefine.cpp" />
     <ClCompile Include="src\ObjectClass\Area.cpp" />
     <ClCompile Include="src\ObjectClass\AreaGrid.cpp" />
@@ -242,7 +261,10 @@
     <ClCompile Include="src\ToolClass\RecordRTData.cpp" />
     <ClCompile Include="src\ToolClass\SetDb.cpp" />
     <ClCompile Include="src\ToolClass\SetGridColorTool.cpp" />
+    <ClCompile Include="src\ToolClass\ShowGridArea.cpp" />
+    <ClCompile Include="src\ToolClass\ShowInfoMB.cpp" />
     <ClCompile Include="src\ToolClass\StringParser.cpp" />
+    <ClCompile Include="src\ToolClass\WriteTxt.cpp" />
     <ClCompile Include="src\zhangzheClass\complex.cpp" />
     <ClCompile Include="src\zhangzheClass\findGrid.cpp" />
     <ClCompile Include="src\zhangzheClass\firstReflectionNew.cpp" />

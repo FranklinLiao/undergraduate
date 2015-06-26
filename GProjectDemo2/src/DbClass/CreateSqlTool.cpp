@@ -364,7 +364,6 @@ string CreateSqlTool::createUpdateDistance(int size,int start) {
 	return updateString;
 }
 */
-
 /*****
 yuanman
 用来计算网格和基站的距离的  用于覆盖优化
@@ -379,7 +378,7 @@ string CreateSqlTool::createUpdateDistance(int size,int start) {
 	stream << size;        
 	stream >> sizeString;   
 	updateString.append(sizeString);
-	updateString.append(" id from GridFieldStrength where id >= ");
+	updateString.append(" id from GridFieldStrenth where id >= ");
 	startStream << start;        //long型数据输入
 	startStream >> startString;   //转换 string
 	updateString.append(startString);
@@ -388,7 +387,7 @@ string CreateSqlTool::createUpdateDistance(int size,int start) {
 						fetch next from myCursor into @id \
 						while @@FETCH_STATUS=0 \
 						begin \
-						update GridFieldStrength set DAtoG = ((power(((select AX from Area where AId = (select AId from GridFieldStrength where Id=@id))-(select GX from Grid where GId = (select GId from GridFieldStrength where Id = @id))),2)+ power(((select AY from Area where AId = (select AId from GridFieldStrength where Id=@id))-(select GY from Grid where GId = (select GId from GridFieldStrength where Id = @id))),2))) where Id = @id \
+						update GridFieldStrenth set DAtoG = ((power(((select AX from Area where AId = (select AId from GridFieldStrenth where Id=@id))-(select GX from Grid where GId = (select GId from GridFieldStrenth where Id = @id))),2)+ power(((select AY from Area where AId = (select AId from GridFieldStrenth where Id=@id))-(select GY from Grid where GId = (select GId from GridFieldStrenth where Id = @id))),2))) where Id = @id \
 						fetch next from myCursor into @id \
 						end \
 						close myCursor \
@@ -481,9 +480,9 @@ string CreateSqlTool::getGridAllRsrp(int gridId) {
 
 string CreateSqlTool::getLayOptimizeAreaIdFromDb(string column) {
 	stringstream ss;
-	ss<<"select ";
+	ss<<"select AId from Area where ";
 	ss<<column;
-	ss<<" = 1 from Area";
-	ss<<";";
+	ss<<" = 1 ";
+	ss<<"order by AId;";
 	return ss.str();
 }

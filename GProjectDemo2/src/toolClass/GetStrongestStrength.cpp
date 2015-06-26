@@ -8,7 +8,7 @@ from GridFieldStrenthAddBaseNum
 where gid = 2
 ORDER BY
 dbo.GridFieldStrenthAddBaseNum.GId ASC,
-dbo.GridFieldStrenthAddBaseNum.GFieldStrength DESC*/
+dbo.GridFieldStrenthAddBaseNum.GRSRP DESC*/
 	DataBase db;
 	//此处的判断条件有问题，gid和表中的行数并不对应，应该用id来进行索引
 	//因此改成了到grid表中，查找grid的个数来判断
@@ -17,9 +17,9 @@ dbo.GridFieldStrenthAddBaseNum.GFieldStrength DESC*/
 		if(852==id) {
 			int kk = 1;
 		}
-		string sqlString = "SELECT top 1  GId,AId,GFieldStrength from GridFieldStrenthAddBaseNum where gid = ";
+		string sqlString = "SELECT top 1  GId,AId,GRSRP from GridFieldStrenthAddBaseNum where gid = ";
 		sqlString.append(ChangeTypeTool::intToString(id));
-		sqlString.append(" ORDER BY GId ASC, GFieldStrength DESC;");
+		sqlString.append(" ORDER BY GId ASC, GRSRP DESC;");
 		vector<vector<string>> vectorString = db.getObjectInfo(sqlString);
 		if(vectorString.size()>=1) {
 			vector<vector<string>>::iterator iter = vectorString.begin();

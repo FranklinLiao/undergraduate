@@ -64,7 +64,13 @@
     <Filter Include="源文件\ANR">
       <UniqueIdentifier>{5c7507e5-9a79-485b-b5b9-f249dfa7d568}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\CoverOptimize\DbClass">
+    <Filter Include="头文件\Mif2Tab">
+      <UniqueIdentifier>{ab6e0215-9fab-4526-930a-804e135444dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Mif2Tab">
+      <UniqueIdentifier>{5de4c69f-bea6-4940-9219-d7c2405a32ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DbClass">
       <UniqueIdentifier>{85637d4e-c6d5-43db-991f-99dca1bc2299}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -325,6 +331,30 @@
     <ClInclude Include="src\ToolClass\SetDb.h">
       <Filter>头文件\ToolClass</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mif2Tab\SHFileInfo.h">
+      <Filter>头文件\Mif2Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mif2Tab\TAB2MIF.h">
+      <Filter>头文件\Mif2Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mif2Tab\Tab2Shp.h">
+      <Filter>头文件\Mif2Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolClass\WriteTxt.h">
+      <Filter>头文件\ToolClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolClass\ShowInfoMB.h">
+      <Filter>头文件\ToolClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolClass\ShowGridArea.h">
+      <Filter>头文件\ToolClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mif2Tab\Mif2Tab.h">
+      <Filter>头文件\Mif2Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoverOptimize\SetCellDialog.h">
+      <Filter>头文件\CoverOptimize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GProjectDemo2.cpp">
@@ -343,19 +373,19 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\CreateSqlTool.cpp">
-      <Filter>源文件\CoverOptimize\DbClass</Filter>
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\DataBase.cpp">
-      <Filter>源文件\CoverOptimize\DbClass</Filter>
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\DBConnect.cpp">
-      <Filter>源文件\CoverOptimize\DbClass</Filter>
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\DBConnPool.cpp">
-      <Filter>源文件\CoverOptimize\DbClass</Filter>
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\DbClass\DBHelper.cpp">
-      <Filter>源文件\CoverOptimize\DbClass</Filter>
+      <Filter>源文件\DbClass</Filter>
     </ClCompile>
     <ClCompile Include="src\ExcelClass\OperateExcelFileTool.cpp">
       <Filter>源文件\ExcelClass</Filter>
@@ -515,6 +545,24 @@
     </ClCompile>
     <ClCompile Include="src\ToolClass\SetDb.cpp">
       <Filter>源文件\ToolClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mif2Tab\SHFileInfo.cpp">
+      <Filter>源文件\Mif2Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolClass\WriteTxt.cpp">
+      <Filter>源文件\ToolClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolClass\ShowInfoMB.cpp">
+      <Filter>源文件\ToolClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolClass\ShowGridArea.cpp">
+      <Filter>源文件\ToolClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoverOptimize\SetCellDialog.cpp">
+      <Filter>源文件\CoverOptimize</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mif2Tab\Mif2Tab.cpp">
+      <Filter>源文件\Mif2Tab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -46,7 +46,7 @@ void Staining::PutColor(void)
 			{
 				id++;
 				medium="Pen (1, 2, 0) Brush (2, ";
-				medm=m_pRecordset->GetCollect("GFieldStrength");
+				medm=m_pRecordset->GetCollect("GRSRP");
 				med=(_bstr_t)medm;
 				medium.append(med);
 				medium.append(", 16777215)");

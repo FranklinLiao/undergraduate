@@ -67,6 +67,7 @@ bool MakeGridFileTool::makeGridFile(string fileNameString) {
 	_ConnectionPtr sqlSp;
 	DBConnect* dbconnection;
 	_RecordsetPtr m_pRecordset;
+	int Gnum=0;
 	dbconnection = DBConnPool::Instanse()->GetAConnection();
 	sqlSp = dbconnection->_connection_ptr;	
 	if(FAILED(m_pRecordset.CreateInstance( _uuidof(Recordset)))){
@@ -74,12 +75,14 @@ bool MakeGridFileTool::makeGridFile(string fileNameString) {
 		return false;
 	}
 	try{
-		m_pRecordset->Open("SELECT * FROM  Grid",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);
+		m_pRecordset->Open("SELECT count(*) as cnt FROM  Grid",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);
+		
+		Gnum=m_pRecordset->GetCollect("cnt");
 	}
 	catch (_com_error &e){
 		cout << e.Description()<<endl;
 	}
-	int Gnum=0;
+	/*
 	int count=0;
 	//m_pRecordset->MoveFirst();
 	while(!m_pRecordset->EndOfFile)
@@ -87,6 +90,7 @@ bool MakeGridFileTool::makeGridFile(string fileNameString) {
 		Gnum++;
 		m_pRecordset->MoveNext();
 	}
+	*/
 	m_pRecordset->Close();
 
 	string ext;
@@ -94,6 +98,8 @@ bool MakeGridFileTool::makeGridFile(string fileNameString) {
 	double longitude;
 	double latitude;
 	ofstream file2(fileNameString,ios::out);
+	string midpath = fileNameString.substr(0,fileNameString.length()-3)+"mid";
+	ofstream filemid(midpath,ios::out);
 	file2<<"Version   300"<<endl;
 	file2<<"Charset \"WindowsSimpChinese\""<<endl;
 	file2<<"Delimiter \",\""<<endl;
@@ -135,6 +141,7 @@ bool MakeGridFileTool::makeGridFile(string fileNameString) {
 		file2<<"    Brush (2,"<<int(m_pRecordset->GetCollect("GColor"))<<",16777215)"<<endl;
 		file2<<"    Center ";
 		file2<<fixed<<setprecision(6)<<longitude<<" "<<latitude<<endl;
+		filemid<<"0,0,\"\",0.00000000,0.00000000"<<endl;
 		ss.str("");
 		ss.clear();
 		ext.clear();

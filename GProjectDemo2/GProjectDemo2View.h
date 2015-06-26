@@ -24,10 +24,14 @@
 #include "RecordAreaInfoTool.h"
 #include "SetGridColorTool.h"
 #include "GridBSDistanceCal.h"
+#include "SetCellDialog.h"
+//mif2tab
+#include "Mif2Tab.h"
 //覆盖优化
 #include "WeakLay.h"
 #include "OverLay.h"
 #include "pollution.h"
+#include "ShowGridArea.h"
 //软频率复用算法优化
 #include "SFROptimize.h"
 #include "RecordAdjAreaForSfrTool.h"
@@ -119,6 +123,9 @@ private:
 	string m_dbname;
 public:
 	afx_msg void OnSetdb();
+	afx_msg void OnWeakmodify();
+	afx_msg void OnOvermodify();
+	afx_msg void OnPollutionmodify();
 };
 
 #ifndef _DEBUG  // GProjectDemo2View.cpp 中的调试版本

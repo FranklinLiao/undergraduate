@@ -7,7 +7,7 @@
 #include <math.h>
 #include <cmath>
 using namespace std;
-#define DISTANCEGATE 500  //不应该用绝对数值  
+#define DISTANCEGATE 450  //不应该用绝对数值  
 #define RSRPGATE -105 //不应该用绝对数值 应该用相对  
 #define SENDPOWER 43 //dBm  2w 此处需要问张喆 了解计算时使用的功率
 #define RATIO (1/3.0)
@@ -48,6 +48,7 @@ public:
 		this->distanceGate = DISTANCEGATE;
 		this->edgeUserIndex = 0; //初始从0开始进行分配
 		this->centerUserIndex = 0; //初始从0开始分配
+		this->edgeThroughput = 0;
 		this->mainRbIndex = 0; //分配一个不存在的RbIndex
 	}
 public:

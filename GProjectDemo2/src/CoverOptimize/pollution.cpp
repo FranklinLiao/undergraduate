@@ -13,20 +13,26 @@ using namespace std;
 
 string pollution::PJudge(long gid,int count, double threshold,double difference ){
 	string SqlString ="declare @kk bigint \
-                       select GID,GFieldStrength,ROW_NUMBER() over(order by GID,GFieldStrength DESC) as rows into ##temp1 from GridFieldStrength";
-	SqlString.append(" if (select COUNT(*) from GridFieldStrength where GId = ");
+					  if exists(select * from tempdb..sysobjects where id=object_id('tempdb..##temp1'))\
+					  begin\
+					  drop table ##temp1\
+					  end\
+                       select GID,GRSRP,ROW_NUMBER() over(order by GID,GRSRP DESC) as rows into ##temp1 from GridFieldStrenth";
+	SqlString.append(" if (select COUNT(*) from GridFieldStrenth where GId = ");
 	SqlString.append(ChangeTypeTool::longToString(gid));
-	SqlString.append(" and GFieldStrength> ");
+	SqlString.append(" and GRSRP> ");
 	SqlString.append(ChangeTypeTool::doubleToString(threshold));
 	SqlString.append(" )> ");
 	SqlString.append(ChangeTypeTool::intToString(count));
 	SqlString.append(" begin\
                        set @kk = (select TOP 1 rows from ##temp1 where GId = ");
 	SqlString.append(ChangeTypeTool::longToString(gid));
-	SqlString.append(" and GFieldStrength =(select MAX(GFieldStrength) FROM GridFieldStrength where GId =");
+	SqlString.append(" and GRSRP =(select MAX(GRSRP) FROM GridFieldStrenth where GId =");
 	SqlString.append(ChangeTypeTool::longToString(gid));
 	SqlString.append(" ) ) \
-                     update Grid set GPollution = 1 where (abs((select GFieldStrength from ##temp1 where rows = @kk) - (select GFieldStrength from ##temp1 where rows = (@kk+3)))< ");
+                     update Grid set GPollution = 1 where (abs((select GRSRP from ##temp1 where rows = @kk) - (select GRSRP from ##temp1 where rows = (@kk+");
+	SqlString.append(ChangeTypeTool::intToString(count));
+	SqlString.append(")))< ");
 	SqlString.append(ChangeTypeTool::doubleToString(difference));
 	SqlString.append(" ) and GId=");
 	SqlString.append(ChangeTypeTool::longToString(gid));
@@ -63,5 +69,20 @@ string pollution::showArea() {
 		int areaId = *iter++;
 		info<<areaId<<",";
 	}
-	return info.str().substr(info.str().length()-1); //去除最后一个,
+	return info.str().substr(0,info.str().length()-1); //去除最后一个,
+}
+
+void pollution::updatePollutionCell() {
+	string column = "APollution";
+	stringstream info; 
+	vector<int> areaIdVector = DBHelper::getLayOptimizeAreaId(column);
+	SetCellDialog setCellDialog;
+	setCellDialog.CellDialogcellVector = areaIdVector;
+	if(IDOK==setCellDialog.DoModal()) {
+		if(setCellDialog.flag) {
+			MessageBox(NULL,_T("恭喜您，存在导频污染小区参数修改完成!"),_T("通知"),MB_OK);
+		} else {
+			MessageBox(NULL,_T("未修改小区参数!"),_T("通知"),MB_OK);
+		}
+	}
 }

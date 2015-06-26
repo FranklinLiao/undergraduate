@@ -340,6 +340,40 @@ void DataBase::deletAllInfo(string TableName)
 	}
 }
 
+
+void DataBase::clearOneCol(string TableName,string col)
+{
+	//GetDBConnTool dbCon;
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	string sqlString="update ";
+	sqlString.append(TableName);
+	sqlString.append(" set ");
+	sqlString.append(col);
+	sqlString.append("=0");
+	sqlString.append(";");
+	dbconnection = DBConnPool::Instanse()->GetAConnection();
+	connection = dbconnection->_connection_ptr;
+	recordSet.CreateInstance(__uuidof(Recordset));
+	try{	
+		recordSet->Open(sqlString.c_str(),(IDispatch*)connection,adOpenDynamic,adLockOptimistic, adCmdText);
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//_CrtDumpMemoryLeaks();
+		recordSet->Close();
+	}
+	catch (_com_error &e)
+	{
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//_CrtDumpMemoryLeaks();
+		cout << e.Description()<<endl;
+	}
+}
+
 	////得到数据的结果集
 	//_RecordsetPtr DataBase::getObjectInfoRecordset(string queryString) {
 	//	//GetDBConnTool dbCon;
@@ -925,3 +959,76 @@ vector<int> DataBase::getLayOptimizeAreaIdFromDb(string sqlInfo) {
 		cout<<"getRandomUser failed";
 	}
 }
+
+void DataBase::setWeakLay() {  //将没有场强的网格判定为弱覆盖网格
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	string weakLayString = "update Grid set GWeakLay = 0 where GAId is null";
+	try {
+		//connection=GetDBConnTool::getMyConnection();
+		//GetDBConnTool dbCon;
+		//dbCon.getMyConnection(connection);
+		//connection.CreateInstance(__uuidof(Connection));
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		sqlString = weakLayString.c_str();
+		connection->Execute(sqlString,0,0); 
+		//dbCon.closeConnection(connection);
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//_CrtDumpMemoryLeaks();
+	}catch(_com_error e) {
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<e.Description()<<endl;
+		cout<<"weaklay failed";
+	}
+
+}
+
+//得到小区的下倾角，方位角，发射功率
+vector<float> DataBase::getCellInfo(int cellId) {
+	vector<float> cellInfos;
+	float cellInfo = 0;
+	string info;
+	stringstream ss;
+	ss<<"select ADeclineAngle,AAspectAngle,ASendPower from Area where AId = ";
+	ss<<cellId;
+	ss<<";";
+	info = ss.str();
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		recordSet.CreateInstance(__uuidof(Recordset));
+		sqlString=info.c_str();
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		int i=0;
+		for(;i<3;i++) { //取出aid,rsrp
+			vTmp = recordSet->GetCollect(_variant_t((long)i));//这儿给字段编号和字段名都可以 
+			if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+				cellInfo = 0;
+			} else {
+				cellInfo = float(vTmp);//.dblVal;
+			}	
+			cellInfos.push_back(cellInfo); 
+		}
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		//dbCon.closeConnection(connection
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<"failed";
+	}
+	return cellInfos;
+}
+
+

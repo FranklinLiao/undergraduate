@@ -15,7 +15,7 @@ void DBHelper::deleteAllTable() {
 	deleteData("BuildingPoint");
 	deleteData("BuildingPointParam");
 	deleteData("Grid");
-	deleteData("GridFieldStrength");
+	deleteData("GridFieldStrenth");
 	deleteData("RTData");
 	//_CrtDumpMemoryLeaks();
 }
@@ -25,6 +25,11 @@ void DBHelper::deleteData(string tableName) {
 	db.deletAllInfo(tableName);
 }
 
+
+void DBHelper::clearOneCol(string tableName,string col) {
+	DataBase db;
+	db.clearOneCol(tableName,col);
+}
 //void DBHelper::insertBuildingInfoToDB(string tableName,int bId,double longitude,double latitude) {
 //	string sqlString = CreateSqlTool::createInsertSql(tableName,CreateSqlTool::createBuildingSqlInfoPart(bId,longitude,latitude));
 //	DataBase db;
@@ -272,3 +277,14 @@ vector<int> DBHelper::getLayOptimizeAreaId(string column) {
 	//_CrtDumpMemoryLeaks();
 	return stringVector;
 }
+
+void DBHelper::setWeakLay() {
+	DataBase db;
+	db.setWeakLay();
+}
+
+vector<float> DBHelper::getCellInfo(int cellId) {
+	DataBase db;
+	return db.getCellInfo(cellId);
+}
+

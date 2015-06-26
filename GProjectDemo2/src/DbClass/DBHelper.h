@@ -12,6 +12,7 @@ class DBHelper{
 public:
 	static void deleteAllTable();
 	static void deleteData(string tableName);
+	static void clearOneCol(string tableName,string col);
 public:
 	//static void insertBuildingInfoToDB(string tableName,int bId,double longitude,double latitude);
 	//static void insertBuildingPointToDB(string tableName,int pId,double longitude,double latitude,int BId);
@@ -29,7 +30,6 @@ public:
 	static void insertInfo(string tableName,string* key,string* value,int count);
 	static void updateInfo(string tableName,string* key,string* value,int count,string* whereKey,string* whereValue,int whereCount);
 	static vector<vector<string>>  queryInfo(string tableName,string* whereKey,string* whereValue,int whereCount);
-	
 	//传入sql语句直接调用
 	static void insertStringInfo(string SqlString);
 	static void updateStringInfo(string SqlString);
@@ -48,7 +48,8 @@ public:
 //覆盖优化
 public:
 	static vector<int> getLayOptimizeAreaId(string colum);
-
+	static void setWeakLay();//将没有收到场强的网格判定为弱覆盖
+	static vector<float> getCellInfo(int cellId);
 //干扰优化
 public:
 	static vector<vector<string>> getUser(int areaId,int userCnt);

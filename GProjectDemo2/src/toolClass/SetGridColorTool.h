@@ -20,6 +20,9 @@ using namespace std;
 #define COLOR8 9315107
 #define COLOR9 5123887
 
+//normal 为绿色   unnormal 为红色
+#define NORMALCOLOR  510737   
+#define UNNORMALCOLOR   15539236
 class SetGridColorTool
 	/*  新建类：RecordBuildingPoint
      *  类功能：读取.MIF文件信息，并将网格信息录入数据库中，构造函数中仅放入了默认文件路径
@@ -34,7 +37,7 @@ public:
 	SetGridColorTool(void);
 	~SetGridColorTool(void);
 	
-	static bool SetColor(void);
+	static bool SetColor(bool flag,string col);
 };
 
 #endif

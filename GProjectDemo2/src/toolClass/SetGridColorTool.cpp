@@ -15,7 +15,16 @@ SetGridColorTool::~SetGridColorTool(void)
 
 
 
-bool SetGridColorTool::SetColor(void)
+//************************************  
+// 函数名称: SetColor     
+// 函数说明： flag用于标识是否按场强显示 
+// true:不按场强，按Grid的状态（弱覆盖、过覆盖、导频污染）  false:按场强    
+// 作者:Franklin     
+// 日期：2015/06/09     
+// 返 回 值: bool     
+// 参    数: bool flag      
+//************************************
+bool SetGridColorTool::SetColor(bool flag,string col)
 {
 	DBConnect* dbconnection;
 	_ConnectionPtr  sqlSp;
@@ -35,39 +44,61 @@ bool SetGridColorTool::SetColor(void)
 	{
 		cout << e.Description()<<endl;
 	}
-	double GStrength;
-	double Min=10000,Max=-10000;
-	double range;
-	//m_pRecordset->MoveFirst();
-	//找出最大最小的场强
-	while(!m_pRecordset->EndOfFile)
-	{
-		//var.vt==VT_NULL || var.vt==VT_EMPTY
-		//if(((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_NULL)&&((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_EMPTY)) {
-		//本来准备没有得到场强数据的网格的GRealRSRP用NULL来替代 后来决定用0来替代
-		GStrength=m_pRecordset->GetCollect("GRealRSRP");
-
-			if(GStrength>Max&&GStrength!=0)
-				Max=GStrength;
-			if(GStrength<Min)
-				Min=GStrength;
-			m_pRecordset->MoveNext();
-		//}
-	}
-	range=Max-Min;
-	m_pRecordset->MoveFirst();
-	//开始进行赋值
-	while(!m_pRecordset->EndOfFile)
-	{
-		//if(((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_NULL)&&((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_EMPTY)) {
-			GStrength=double(m_pRecordset->GetCollect("GRealRSRP"));
-			if(GStrength!=0)
+	if(flag) {  //falg为真  那么就为覆盖优化
+		//bool
+		bool status = false;
+		m_pRecordset->MoveFirst();
+		//开始进行赋值
+		while(!m_pRecordset->EndOfFile)
+		{
+			//if(((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_NULL)&&((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_EMPTY)) {
+			status=bool(m_pRecordset->GetCollect(col.c_str()));
+			if(status) //为1  那么这个网格有问题
 			{
-				m_pRecordset->PutCollect("GColor",_variant_t(int(255*256*256+int(255-(abs((GStrength-Min))/range*255))*256)));
+				m_pRecordset->PutCollect("GColor",_variant_t(UNNORMALCOLOR));
+				m_pRecordset->Update();
+			} else {
+				m_pRecordset->PutCollect("GColor",_variant_t(NORMALCOLOR));
 				m_pRecordset->Update();
 			}
 			m_pRecordset->MoveNext();
-		//}
+			//}
+		}
+	} else {
+		double GStrength;
+		double Min=10000,Max=-10000;
+		double range;
+		//m_pRecordset->MoveFirst();
+		//找出最大最小的场强
+		while(!m_pRecordset->EndOfFile)
+		{
+			//var.vt==VT_NULL || var.vt==VT_EMPTY
+			//if(((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_NULL)&&((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_EMPTY)) {
+			//本来准备没有得到场强数据的网格的GRealRSRP用NULL来替代 后来决定用0来替代
+			GStrength=m_pRecordset->GetCollect("GRealRSRP");
+
+				if(GStrength>Max&&GStrength!=0)
+					Max=GStrength;
+				if(GStrength<Min)
+					Min=GStrength;
+				m_pRecordset->MoveNext();
+			//}
+		}
+		range=Max-Min;
+		m_pRecordset->MoveFirst();
+		//开始进行赋值
+		while(!m_pRecordset->EndOfFile)
+		{
+			//if(((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_NULL)&&((m_pRecordset->GetCollect("GRealRSRP")).vt!=VT_EMPTY)) {
+				GStrength=double(m_pRecordset->GetCollect("GRealRSRP"));
+				if(GStrength>=0.01||GStrength<=-0.01) //GStrength！=0
+				{
+					m_pRecordset->PutCollect("GColor",_variant_t(int(255*256*256+int(255-(abs((GStrength-Min))/range*255))*256)));
+					m_pRecordset->Update();
+				}
+				m_pRecordset->MoveNext();
+			//}
+		}
 	}
 	DBConnPool::Instanse()->CloseRecordSet(m_pRecordset);
 	DBConnPool::Instanse()->RestoreAConnection(dbconnection);

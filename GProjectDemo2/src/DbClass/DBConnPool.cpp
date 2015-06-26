@@ -5,7 +5,7 @@ DBConnPool* DBConnPool::m_pInstanse = NULL;
 //需要在构造函数外初始化
 string DBConnPool::m_username = "sa";
 string DBConnPool::m_password = "123456";
-string DBConnPool::m_dbname = "LTE_OPT";
+string DBConnPool::m_dbname = "LteArea";
 DBConnPool::DBConnPool()
 {
 	m_bNeedStop = FALSE;

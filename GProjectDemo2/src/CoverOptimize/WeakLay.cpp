@@ -35,7 +35,7 @@ string WeakLay::Min(string tableName,string columnName){
 
 
 string WeakLay::GetGAId(long gid){
-	string SqlString = "update Grid set GAId = (select MIN(AId) from GridFieldStrength where AId in (select AId from GridFieldStrength where DAtoG in (select MIN(DAtoG) from GridFieldStrength where GId =";
+	string SqlString = "update Grid set GAId = (select MIN(AId) from GridFieldStrenth where AId in (select AId from GridFieldStrenth where DAtoG in (select MIN(DAtoG) from GridFieldStrenth where GId =";
 	SqlString.append(ChangeTypeTool::longToString(gid));
 	SqlString.append(")))where GId = ");
 	SqlString.append(ChangeTypeTool::longToString(gid));
@@ -64,11 +64,11 @@ string WeakLay::GetGAId(long gid){
 
 
 string WeakLay::WJudge(long Gid,double threshold){
-       string sqlString = "update Grid set GWeakLay = (select count(*) from GridFieldStrength where GId =  ";
+       string sqlString = "update Grid set GWeakLay = (select count(*) from GridFieldStrenth where GId =  ";
        sqlString.append(ChangeTypeTool::longToString(Gid));
        sqlString.append(" and AId = (select GAId from Grid where GId = ");
        sqlString.append(ChangeTypeTool::longToString(Gid));
-       sqlString.append(" ) and GFieldStrength<");
+       sqlString.append(" ) and GRSRP<");
 	   sqlString.append(ChangeTypeTool::doubleToString(threshold));
 	   sqlString.append(" ) where GId =  ");
 	   sqlString.append(ChangeTypeTool::longToString(Gid));
@@ -108,5 +108,22 @@ string WeakLay::showArea() {
 		int areaId = *iter++;
 		info<<areaId<<",";
 	}
-	return info.str().substr(info.str().length()-1); //去除最后一个,
+	return info.str().substr(0,info.str().length()-1); //去除最后一个,
 }
+
+void WeakLay::updateWeakCell() {
+	string column = "AWeakLay";
+	stringstream info; 
+	vector<int> areaIdVector = DBHelper::getLayOptimizeAreaId(column);
+	SetCellDialog setCellDialog;
+	setCellDialog.CellDialogcellVector = areaIdVector;
+	if(IDOK==setCellDialog.DoModal()) {
+		if(setCellDialog.flag) {
+			MessageBox(NULL,_T("恭喜您，存在弱覆盖小区参数修改完成!"),_T("通知"),MB_OK);
+		} else {
+			MessageBox(NULL,_T("未修改小区参数!"),_T("通知"),MB_OK);
+		}
+	}
+}
+
+

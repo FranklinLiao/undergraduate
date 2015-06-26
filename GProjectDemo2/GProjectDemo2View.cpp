@@ -60,6 +60,9 @@ BEGIN_MESSAGE_MAP(CGProjectDemo2View, CView)
 	ON_COMMAND(ID_SFR, &CGProjectDemo2View::OnSfr)
 	ON_COMMAND(ID_ANR, &CGProjectDemo2View::OnAnr)
 	ON_COMMAND(ID_SETDB, &CGProjectDemo2View::OnSetdb)
+	ON_COMMAND(ID_WEAKMODIFY, &CGProjectDemo2View::OnWeakmodify)
+	ON_COMMAND(ID_OVERMODIFY, &CGProjectDemo2View::OnOvermodify)
+	ON_COMMAND(ID_POLLUTIONMODIFY, &CGProjectDemo2View::OnPollutionmodify)
 END_MESSAGE_MAP()
 
 // CGProjectDemo2View 构造/析构
@@ -886,8 +889,8 @@ void CGProjectDemo2View::OnCalculate()
 {
 	// TODO: 在此添加命令处理程序代码
 	//调用张喆的模块，进行场强的计算
-	GetStrongestStrength::getStrongestStrength();
-	MessageBox(_T("恭喜您，场强计算成功!"),_T("通知"),MB_OK);
+	//GetStrongestStrength::getStrongestStrength();
+	//MessageBox(_T("恭喜您，场强计算成功!"),_T("通知"),MB_OK);
 }
 
 
@@ -901,7 +904,7 @@ void CGProjectDemo2View::OnCalculate()
 void CGProjectDemo2View::OnGridmif()
 {
 	// TODO: 在此添加命令处理程序代码
-	CString OpenFilter = _T("网格文件(*.mif)|*.mif;*.MIF|所有文件(*.*)|*.*||");
+	CString OpenFilter = _T("网格文件(*.tab)|*.tab;*.TAB|所有文件(*.*)|*.*||");
 	CFileDialog FileDlgOpen(FALSE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, OpenFilter);
 	if(IDOK == FileDlgOpen.DoModal())
 	{
@@ -911,11 +914,21 @@ void CGProjectDemo2View::OnGridmif()
 		//将场强值和颜色进行对应的改变
 
 		//中期数据展示，注释了下面一行
-		//SetGridColorTool::SetColor();
+		SetGridColorTool::SetColor(FALSE,"");
 		MessageBox(_T("恭喜您，颜色信息已经转换成功!"),_T("通知"),MB_OK);
 		//从数据库中取出网格的颜色信息进行展示
 		MakeGridFileTool::makeGridFile(fileNameString);
-		MessageBox(_T("恭喜您，已经生成网格MIF文件!"),_T("通知"),MB_OK);
+
+		//在后面加上mif2tab
+		Mif2Tab mif2Tab;
+		CString path = FileDlgOpen.GetFolderPath();
+		mif2Tab.Convert0(path,path);
+		//删除目录中的.mif .mid
+		//string cmdLine = "cd " + path;
+		//system(cmdLine.c_str());
+		//cmdLine = "del *.mif *.mid";
+		//system(cmdLine.c_str());
+		MessageBox(_T("恭喜您，已经生成网格TAB文件!"),_T("通知"),MB_OK);
 	}
 }
 
@@ -953,7 +966,8 @@ void CGProjectDemo2View::OnOverlay()
 	long Gid;
 	long Aid;
 	long maxid,maxgid,maxaid,minaid;
-
+	DBHelper::clearOneCol("Grid","GOverLay");
+	DBHelper::clearOneCol("Area","AOverLay");
 	//获取gid的范围
 	string maxGid = WeakLay::Max("Grid","GId");
 	DataBase Maxgid;
@@ -978,6 +992,11 @@ void CGProjectDemo2View::OnOverlay()
 	string ajudge = OverLay::ajudge(minaid,maxaid,0.1);
 	DataBase aj;
 	aj.updateInfo(ajudge);
+	
+
+	ShowGridArea::showGridArea("GOverLay");
+	string overArea = OverLay::showArea();
+	ShowGridArea::showAreaMb("OverLayCell:",overArea);
 	MessageBox(_T("恭喜您，已经完成过覆盖的判断!"),_T("通知"),MB_OK);
 }
 
@@ -992,6 +1011,9 @@ void CGProjectDemo2View::OnOverlay()
 void CGProjectDemo2View::OnWeaklay()
 {
 	// TODO: 在此添加命令处理程序代码
+	
+	DBHelper::clearOneCol("Grid","GWeakLay");
+	DBHelper::clearOneCol("Area","AWeakLay");
 	long Gid;
 	long Aid;
 	long maxid,maxgid,maxaid,minaid;
@@ -1005,34 +1027,44 @@ void CGProjectDemo2View::OnWeaklay()
 	DataBase Minaid,Maxaid;
 	minaid = Minaid.MinId(minAid);
 	maxaid = Maxaid.MaxId(maxAid);
-
+	//下面用于调试  最后应该打开
+	
 	////更新小区到网格的距离
 	//clock_t startTime = GetTickCount();
 	GridBSDistanceCal::updateDistance();
 	////clock_t endTime = GetTickCount();
 	//DWORD lastTime = endTime - startTime;
 	//cout<<lastTime;
-
+	
 	////更新GAId   根据gid的位置，找到离它最近的小区，从而得到它归属的小区的id（GAID)
 	for(long gid = 1;gid<=maxgid;gid++){
 		string updateGAId = WeakLay::GetGAId(gid);
 		DataBase db;
 		db.updateInfo(updateGAId);
 	}
-
+	
 	//更新GWeakLay  根据给定的阈值，判断在此阈值下，grid是否处于弱覆盖
 	for(long gid = 1;gid<=maxgid;gid++){
 		//long gid = 35;
-		string wjudge = WeakLay::WJudge(gid,-60);
+		string wjudge = WeakLay::WJudge(gid,-105);
 		DataBase wj;
 		wj.updateInfo(wjudge);
 	}
+	//对于网格中没有计算到场强值的网格，将他们判定为弱覆盖网格
+	DBHelper::setWeakLay();
 
 	//更新AWeaklay 通过比例，判断area是否是弱覆盖的区域
-	string ajudge = WeakLay::AJudge(minaid,maxaid,0.1);
+	string ajudge = WeakLay::AJudge(minaid,maxaid,0.3);
 	DataBase aj;
 	aj.updateInfo(ajudge);
 	MessageBox(_T("恭喜您，已经完成弱覆盖的判断!"),_T("通知"),MB_OK);
+
+	
+	//上面完成了弱覆盖的判断，下面用于显示弱覆盖的区域和弱覆盖的小区
+	//生成弱覆盖区域的tab
+	ShowGridArea::showGridArea("GWeakLay");
+	string weakArea = WeakLay::showArea();
+	ShowGridArea::showAreaMb("WeakLayCell:",weakArea);
 }
 
 
@@ -1050,7 +1082,9 @@ void ThreadFunc(){
 	long maxgid;
 	long minaid;
 	long maxaid;
-
+	
+	DBHelper::clearOneCol("Grid","GPollution");
+	DBHelper::clearOneCol("Area","APollution");
 	//获取gid的范围
 	string maxGid = WeakLay::Max("Grid","GId");
 	DataBase Maxgid;
@@ -1062,18 +1096,24 @@ void ThreadFunc(){
 	DataBase Minaid,Maxaid;
 	minaid = Minaid.MinId(minAid);
 	maxaid = Maxaid.MaxId(maxAid);
-
+	
 	for (long gid = 1;gid<=maxgid;gid++){
 		if (gid == 175){
 			int kk = 1;
 		}
-		string pj = pollution::PJudge( gid , 3 ,-60 ,20 );
+		string pj = pollution::PJudge( gid , 4 ,-90 ,6 );  //4  -90  6
 		DataBase db;
 		db.updateInfo(pj);	
 	}
-	string ajudge = pollution::APJudge(0,minaid,maxaid);
+	
+	string ajudge = pollution::APJudge(0.2,minaid,maxaid); //0.2
 	DataBase aj;
 	aj.updateInfo(ajudge);
+	
+	ShowGridArea::showGridArea("GPollution");
+	string pollutionArea = pollution::showArea();
+	ShowGridArea::showAreaMb("PollutionCell:",pollutionArea);
+	MessageBox(NULL,_T("恭喜您，已经完成导频污染的判断!"),_T("通知"),MB_OK);
 }
 
 //************************************  
@@ -1090,7 +1130,7 @@ void CGProjectDemo2View::OnPollution()
 	THandle = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)ThreadFunc,NULL,0,&TId);
 	int kk = 1;
 	CloseHandle(THandle);
-	MessageBox(_T("恭喜您，已经完成导频污染的判断!"),_T("通知"),MB_OK);
+	
 }
 
 
@@ -1129,3 +1169,27 @@ void CGProjectDemo2View::OnAnr()
 
 
 
+
+
+void CGProjectDemo2View::OnWeakmodify()
+{
+	// TODO: 在此添加命令处理程序代码
+	WeakLay::updateWeakCell();
+
+}
+
+
+void CGProjectDemo2View::OnOvermodify()
+{
+	// TODO: 在此添加命令处理程序代码
+	OverLay::updateOverCell();
+
+}
+
+
+void CGProjectDemo2View::OnPollutionmodify()
+{
+	// TODO: 在此添加命令处理程序代码
+	pollution::updatePollutionCell();
+	
+}

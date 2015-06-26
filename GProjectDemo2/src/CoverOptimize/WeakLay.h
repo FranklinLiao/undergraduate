@@ -7,6 +7,7 @@
 #include "stdafx.h"
 #include "ChangeTypeTool.h"
 #include "DBHelper.h"
+#include "SetCellDialog.h"
 #include <stdarg.h>
 #include <Windows.h>
 #include <iostream>
@@ -26,5 +27,6 @@ public:
 	static string AJudge(long minaid,long maxaid,double percent);
 	//显示出需要优化的小区
 	static string showArea();
+	static void updateWeakCell();
 };
 #endif

@@ -9,7 +9,7 @@
 #include <vector>
 #include <string>
 using namespace std;
-#define SIMCNT 1
+#define SIMCNT 2
 //整体偏移  -55    >-85 偏移  23（最大62  以85为分界线）
 class SFROptimize {
 public :

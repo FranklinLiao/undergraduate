@@ -24,7 +24,7 @@ using namespace std;
 // 参    数: long gid      
 //************************************
 string OverLay::ojudge(long gid){
-	string SqlString = "update Grid set GOverLay = 1 where (SELECT AID FROM GridFieldStrength WHERE GFieldStrength = (select MAX(GFieldStrength) from GridFieldStrength where GId = ";
+	string SqlString = "update Grid set GOverLay = 1 where (SELECT AID FROM GridFieldStrenth WHERE GRSRP = (select MAX(GRSRP) from GridFieldStrenth where GId = ";
 	SqlString.append(ChangeTypeTool::longToString(gid));
 	SqlString.append(" ) AND GID =");
 	SqlString.append(ChangeTypeTool::longToString(gid));
@@ -73,5 +73,20 @@ string OverLay::showArea() {
 		int areaId = *iter++;
 		info<<areaId<<",";
 	}
-	return info.str().substr(info.str().length()-1); //去除最后一个,
+	return info.str().substr(0,info.str().length()-1); //去除最后一个,
+}
+
+void OverLay::updateOverCell() {
+	string column = "AOverLay";
+	stringstream info; 
+	vector<int> areaIdVector = DBHelper::getLayOptimizeAreaId(column);
+	SetCellDialog setCellDialog;
+	setCellDialog.CellDialogcellVector = areaIdVector;
+	if(IDOK==setCellDialog.DoModal()) {
+		if(setCellDialog.flag) {
+			MessageBox(NULL,_T("恭喜您，存在过覆盖小区参数修改完成!"),_T("通知"),MB_OK);
+		} else {
+			MessageBox(NULL,_T("未修改小区参数!"),_T("通知"),MB_OK);
+		}
+	}
 }

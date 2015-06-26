@@ -9,8 +9,18 @@ string SFROptimize::optimizeOld(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 	vector<vector<string>> areaInfo = DBHelper::queryAreaInfoFromDB();
 	vector<OldArea> oldAreaSet;
 	vector<vector<string>>::iterator iter = areaInfo.begin();
+	int i = 1;
 	while(iter!=areaInfo.end()) {
 		Area area = Area(*iter,1); //1ÓÃÀ´±êÊ¶ÊÇSFRµÄArea
+		//ÓÃÓÚ¿Æ¼¼ÂÛÎÄµÄ½á¹û  Ö®ºóÒªÉ¾³ı
+		//****************************************/
+		switch(i) {
+		case 1:
+		case 4:
+		case 9:simUserCnt = 80;break;
+		default:simUserCnt = 10;break;
+		}
+		i++;
 		OldArea oldArea = OldArea(area,simUserCnt);
 		oldAreaSet.push_back(oldArea);
 		iter++;
@@ -141,6 +151,7 @@ string SFROptimize::optimizeOld(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 		vector<OldArea>::iterator iterArea5 = oldAreaSet.begin();
 		while(iterArea5!=oldAreaSet.end()) {
 			double edgeOutPut = iterArea5->getEdgeThroughPut();
+			iterArea5->edgeThroughput += edgeOutPut; //´æ´¢Ã¿´ÎµÄ±ßÔµÍÌÍÂÁ¿
 			double sumOutput = iterArea5->getCenterThroughPut()+edgeOutPut;
 			sumAllOutput += 1.0*sumOutput/1000;  //kbs
 			sumEdgeOutput += 1.0*edgeOutPut/1000; //kbs
@@ -148,6 +159,13 @@ string SFROptimize::optimizeOld(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 			//TRACE("the oldsumput :%s\n",sumOutput);
 			iterArea5++;
 		}
+	}
+	//·ÂÕæ100´Îºó ½«100´ÎµÄ½á¹ûÇóÆ½¾ù
+	vector<OldArea>::iterator iterArea5 = oldAreaSet.begin();
+	while(iterArea5!=oldAreaSet.end()) {
+		double edgeOutPut = iterArea5->edgeThroughput;
+		iterArea5->edgeThroughput = 1.0*edgeOutPut / SIMCNT; //´æ´¢Ã¿´ÎµÄ±ßÔµÍÌÍÂÁ¿
+		iterArea5++;
 	}
 	avgAllOutput = sumAllOutput / SIMCNT;
 	avgEdageOutput = sumEdgeOutput / SIMCNT;
@@ -169,8 +187,16 @@ string SFROptimize::optimizeNew(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 	vector<vector<string>> areaInfo = DBHelper::queryAreaInfoFromDB();
 	vector<NewArea> newAreaSet;
 	vector<vector<string>>::iterator iter = areaInfo.begin();
+	int i = 1;
 	while(iter!=areaInfo.end()) {
 		Area area = Area(*iter++,1);
+		switch(i) {
+		case 1:
+		case 4:
+		case 9:simUserCnt = 80;break;
+		default:simUserCnt = 10;break;
+		}
+		i++;
 		NewArea newArea = NewArea(area,simUserCnt);
 		newAreaSet.push_back(newArea);
 	}
@@ -324,11 +350,19 @@ string SFROptimize::optimizeNew(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 		vector<NewArea>::iterator iterArea5 = newAreaSet.begin();
 		while(iterArea5!=newAreaSet.end()) {
 			double edgeOutPut = iterArea5->getEdgeThroughPut();
+			iterArea5->edgeThroughput += edgeOutPut; //´æ´¢Ã¿´ÎµÄ±ßÔµÍÌÍÂÁ¿
 			double sumOutput = iterArea5->getCenterThroughPut()+edgeOutPut;
 			sumAllOutput += 1.0*sumOutput/1000; //kbs
 			sumEdgeOutput += 1.0*edgeOutPut/1000; //kbs
 			iterArea5++;
 		}
+	}
+	//·ÂÕæ100´Îºó ½«100´ÎµÄ½á¹ûÇóÆ½¾ù
+	vector<NewArea>::iterator iterArea5 = newAreaSet.begin();
+	while(iterArea5!=newAreaSet.end()) {
+		double edgeOutPut = iterArea5->edgeThroughput;
+		iterArea5->edgeThroughput = 1.0*edgeOutPut / SIMCNT; //´æ´¢Ã¿´ÎµÄ±ßÔµÍÌÍÂÁ¿
+		iterArea5++;
 	}
 	avgAllOutput = sumAllOutput / SIMCNT;
 	avgEdageOutput = sumEdgeOutput / SIMCNT;
@@ -343,7 +377,7 @@ string SFROptimize::optimizeNew(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 
 bool SFROptimize::opertion() {
 	vector<int> userCnt;
-	userCnt.push_back(50);
+	userCnt.push_back(5);
 	//userCnt.push_back(40);
 	//userCnt.push_back(60);
 	//vector<string> oldThroughput;

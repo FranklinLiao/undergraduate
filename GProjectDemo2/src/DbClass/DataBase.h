@@ -16,6 +16,7 @@ public:
 public:
 	//删除数据
 	void deletAllInfo(string TableName);
+	void clearOneCol(string TableName,string col);
 	//插入数据
 	 void insertInfo(string insertString);
 	//更新数据
@@ -29,6 +30,8 @@ public:
 	 long MaxId(string maxidString);
 	 long MinId(string minidString);
 	 vector<int> getLayOptimizeAreaIdFromDb(string sqlInfo);
+	 void setWeakLay();//将没有收到场强的网格判定为弱覆盖
+	 vector<float> getCellInfo(int cellId);
 
 	 //干扰优化的方法
 	 vector<vector<string>> getUserFromDb(string tableName,int areaId,int userCnt);

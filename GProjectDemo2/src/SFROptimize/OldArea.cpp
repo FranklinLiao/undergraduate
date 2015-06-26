@@ -79,10 +79,10 @@ void OldArea::getCenterEdgeUser() {
 
 bool OldArea::isEdgeUser(double userX,double userY,double userRsrp) {
 	double dist = sqrt(pow((this->area.aX-userX),2)+pow((this->area.aY-userY),2));
-	if(dist<=distanceGate||userRsrp>=rsrpGate) { //中心用户条件
-		return false;
-	} else {
+	if(dist>=distanceGate||userRsrp<=rsrpGate) { //边缘用户条件
 		return true;
+	} else {
+		return false;
 	}
 }
 
