@@ -24,8 +24,8 @@ string CreateSqlTool::getRTDataXY = "select RX,RY from RTData where RId = ";
 //************************************
 string CreateSqlTool::getRandonUser(string tableName,int areaId,int userCnt) {
 	//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
-	stringstream ss;
-	ss<<"select top "<<userCnt<<" GId,GRealRSRP,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
+	stringstream ss;  //加入GColor!=0 避免选到和建筑物相交的网格
+	ss<<"select top "<<userCnt<<" GId,GRealRSRP,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" and GColor != 0 and GRealRSRP !=0 order by NEWID()";
 	return ss.str();
 }
 
@@ -40,7 +40,7 @@ string CreateSqlTool::getRandonUser(string tableName,int areaId,int userCnt) {
 //************************************
 string CreateSqlTool::getAdjAreaId(string tableName,int areaId) {
 	stringstream sqlString;
-	sqlString<<"select ANeighbourCellId  from "<<tableName<<" where Aid = "<<areaId;
+	sqlString<<"select ANeiCellId  from "<<tableName<<" where Aid = "<<areaId;
 	return sqlString.str();
 }
 //string CreateSqlTool::createInsertSql(string tableName,string sqlInfo) {
@@ -424,9 +424,9 @@ string CreateSqlTool::getgetMaxGridXY(int flag) {
 	string info;
 	stringInfo<<"select max( ";
 	if(flag ==1) { 
-		stringInfo<<"X";
+		stringInfo<<"GX";
 	} else {
-		stringInfo<<"Y";
+		stringInfo<<"GY";
 	}
 	stringInfo<<" ) from grid ";
 	stringInfo<<";";
@@ -437,8 +437,8 @@ string CreateSqlTool::getgetMaxGridXY(int flag) {
 
 string CreateSqlTool::getRandonUserANR(string tableName,int areaId,int userCnt) {
 	//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
-	stringstream ss;
-	ss<<"select top "<<userCnt<<" GId,GAId,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" order by NEWID()";
+	stringstream ss; //加入GColor!=0 避免选择相交的网格
+	ss<<"select top "<<userCnt<<" GId,GAId,GX,GY from "<<tableName<<" where GAId = "<<areaId<<" and GColor != 0 and GRealRSRP !=0 order by NEWID()";
 	return ss.str();
 }
 
@@ -457,9 +457,9 @@ string CreateSqlTool::getRandonUserANR(string tableName,int areaId,int userCnt) 
 string CreateSqlTool::getGidFromXY(double x,double y) {
 		//select TOP 5 GId  from Grid where GAId = 8 order by NEWID();
 		stringstream ss; 
-		//将传入的数据进行处理 考虑到浮点数相加会有一定精度的损失  计算公式 2.5+（x/5）*5
-		x = 1.0*GRIDSIZE/2+(x/GRIDSIZE)*GRIDSIZE;  //x/gridsize 是进行整数计算  这样才能得到在哪个网格
-		y = 1.0*GRIDSIZE/2+(y/GRIDSIZE)*GRIDSIZE;  //y/gridsize 是进行整数计算
+		//将传入的数据进行处理 考虑到浮点数相加会有一定精度的损失  计算公式 2.5+（x/5）*5  传入的是id时，才需要这样  传入的是xy，则不用
+		//x = 1.0*GRIDSIZE/2+(x/GRIDSIZE)*GRIDSIZE;  //x/gridsize 是进行整数计算  这样才能得到在哪个网格
+		//y = 1.0*GRIDSIZE/2+(y/GRIDSIZE)*GRIDSIZE;  //y/gridsize 是进行整数计算
 		//此处考虑浮点数处理后会有0.2的偏移  
 		ss<<"select gid from grid where abs(gx - "; 
 		ss<<x;
@@ -484,5 +484,16 @@ string CreateSqlTool::getLayOptimizeAreaIdFromDb(string column) {
 	ss<<column;
 	ss<<" = 1 ";
 	ss<<"order by AId;";
+	return ss.str();
+}
+
+
+string  CreateSqlTool::judgeGridFromXY(double x,double y) {
+	stringstream ss;
+	ss<<"select GColor,GRealRSRP from Grid where ABS(GX - ";
+	ss<<x;
+	ss<<" ) < 0.5 and ABS(GY - ";
+	ss<<y;
+	ss<<") < 0.5";
 	return ss.str();
 }

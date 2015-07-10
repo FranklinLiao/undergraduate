@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -22,7 +30,20 @@
     <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -35,18 +56,34 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\ogr;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\mitab;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\cpl;E:\Projects\GProjectDemo2\GProjectDemo2\src\ANR;E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\SFROptimize;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Franklin.LiTianjie-PC\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\GProjectDemo2;D:\Program Files\MATLAB\R2011a\extern\lib\win32\microsoft;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\program86\MATLAB\extern\include;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\ogr;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\mitab;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\cpl;E:\Projects\GProjectDemo2\GProjectDemo2\src\ANR;E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\SFROptimize;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\program86\MATLAB\extern\lib\win32\microsoft;C:\Users\Franklin.LiTianjie-PC\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\GProjectDemo2;D:\Program Files\MATLAB\R2011a\extern\lib\win32\microsoft;$(LibraryPath)</LibraryPath>
+    <EmbedManifest>false</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\program86\MATLAB\R2011a\extern\include;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\ogr;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\mitab;E:\Projects\GProjectDemo2\GProjectDemo2\src\Mif2Tab\cpl;E:\Projects\GProjectDemo2\GProjectDemo2\src\ANR;E:\Projects\GProjectDemo2\GProjectDemo2\src\CoverOptimize;E:\Projects\GProjectDemo2\GProjectDemo2;E:\Projects\GProjectDemo2\GProjectDemo2\src\zhangzheClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ToolClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\SFROptimize;E:\Projects\GProjectDemo2\GProjectDemo2\src\ObjectClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\MapxClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\ExcelClass;E:\Projects\GProjectDemo2\GProjectDemo2\src\DbClass;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\program86\MATLAB\R2011a\extern\lib\win64\microsoft;C:\Users\Franklin.LiTianjie-PC\Documents\Visual Studio 2010\Projects\GProjectDemo2\GProjectDemo2\GProjectDemo2;D:\Program Files\MATLAB\R2011a\extern\lib\win32\microsoft;$(LibraryPath)</LibraryPath>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -81,6 +118,37 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ogr.lib;cpl.lib;mitab_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <HeapReserveSize>
+      </HeapReserveSize>
+      <HeapCommitSize>
+      </HeapCommitSize>
+      <StackReserveSize>32768</StackReserveSize>
+      <StackCommitSize>
+      </StackCommitSize>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -107,6 +175,31 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="ReadMe.txt" />
@@ -122,10 +215,13 @@
     <ClInclude Include="GProjectDemo2Doc.h" />
     <ClInclude Include="GProjectDemo2View.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MyProcess.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="src\ANR\ANROptimize.h" />
     <ClInclude Include="src\ANR\AreaANR.h" />
+    <ClInclude Include="src\anr\DrawAnrPic.h" />
     <ClInclude Include="src\ANR\UserANR.h" />
+    <ClInclude Include="src\ANR\XCFileStream.h" />
     <ClInclude Include="src\CoverOptimize\OverLay.h" />
     <ClInclude Include="src\CoverOptimize\pollution.h" />
     <ClInclude Include="src\CoverOptimize\SetCellDialog.h" />
@@ -162,6 +258,7 @@
     <ClInclude Include="src\ObjectClass\Grid.h" />
     <ClInclude Include="src\ObjectClass\GridStrengthObject.h" />
     <ClInclude Include="src\ObjectClass\RTData.h" />
+    <ClInclude Include="src\SFROptimize\DrawPic.h" />
     <ClInclude Include="src\SFROptimize\NewArea.h" />
     <ClInclude Include="src\SFROptimize\NewRbs.h" />
     <ClInclude Include="src\SFROptimize\OldArea.h" />
@@ -176,6 +273,7 @@
     <ClInclude Include="src\ToolClass\InsertRTGridIdTool.h" />
     <ClInclude Include="src\ToolClass\MakeGrid.h" />
     <ClInclude Include="src\ToolClass\MakeGridFileTool.h" />
+    <ClInclude Include="src\ToolClass\MyProcess.h" />
     <ClInclude Include="src\ToolClass\PutXY.h" />
     <ClInclude Include="src\ToolClass\RecordAdjAreaForSfrTool.h" />
     <ClInclude Include="src\ToolClass\RecordAreaGridIntersectionTool.h" />
@@ -211,6 +309,8 @@
     <ClCompile Include="GProjectDemo2View.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="src\ANR\ANROptimize.cpp" />
+    <ClCompile Include="src\ANR\DrawAnrPic.cpp" />
+    <ClCompile Include="src\ANR\XCFileStream.cpp" />
     <ClCompile Include="src\CoverOptimize\OverLay.cpp" />
     <ClCompile Include="src\CoverOptimize\pollution.cpp" />
     <ClCompile Include="src\CoverOptimize\SetCellDialog.cpp" />
@@ -239,6 +339,7 @@
     <ClCompile Include="src\ObjectClass\Grid.cpp" />
     <ClCompile Include="src\ObjectClass\GridStrengthObject.cpp" />
     <ClCompile Include="src\ObjectClass\RTData.cpp" />
+    <ClCompile Include="src\SFROptimize\DrawPic.cpp" />
     <ClCompile Include="src\SFROptimize\NewArea.cpp" />
     <ClCompile Include="src\SFROptimize\OldArea.cpp" />
     <ClCompile Include="src\SFROptimize\SFROptimize.cpp" />
@@ -251,6 +352,7 @@
     <ClCompile Include="src\ToolClass\InsertRTGridIdTool.cpp" />
     <ClCompile Include="src\ToolClass\MakeGrid.cpp" />
     <ClCompile Include="src\ToolClass\MakeGridFileTool.cpp" />
+    <ClCompile Include="src\ToolClass\MyProcess.cpp" />
     <ClCompile Include="src\ToolClass\PutXY.cpp" />
     <ClCompile Include="src\ToolClass\RecordAdjAreaForSfrTool.cpp" />
     <ClCompile Include="src\ToolClass\RecordAreaGridIntersectionTool.cpp" />
@@ -276,7 +378,9 @@
     <ClCompile Include="src\zhangzheClass\Staining.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

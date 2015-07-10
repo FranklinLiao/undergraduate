@@ -5,11 +5,17 @@
 #include "MakeGridFileTool.h"
 #include "Mif2Tab.h"
 #include "ShowInfoMB.h"
+#include "MyProcess.h"
 #include <string>
 using namespace std;
 class ShowGridArea {
 public:
-	static void showGridArea(CString title);
-	static void showAreaMb(string infoHead,string infoBody);
+	void showGridArea(CString title,CString name);
+	void showAreaMb(string infoHead,string infoBody);
+	//static void openProcess();
+	//static void closeProcess();
+	MyProcess* process;
+	void openProcess();
+	void closeProcess();
 };
 #endif

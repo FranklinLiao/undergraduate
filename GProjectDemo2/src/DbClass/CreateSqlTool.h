@@ -81,6 +81,7 @@ public:
 	static string getRandonUserANR(string tableName,int areaId,int userCnt);
 	static string getGidFromXY(double x,double y);
 	static string getGridAllRsrp(int gridId);
+	static string judgeGridFromXY(double x,double y);
 };
 
 #endif

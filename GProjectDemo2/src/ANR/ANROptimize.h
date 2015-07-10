@@ -4,15 +4,28 @@
 #include "Area.h"
 #include "UserANR.h"
 #include "AreaANR.h"
+#include "XCFileStream.h"
+#include "DrawAnrPic.h"
+#include "MyProcess.h"
 #include <iterator>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 using namespace std;
 typedef pair<int,int> PAIR;//
-#define RUNTIME 100  //仿真次数
+#define RUNTIME 200  //仿真次数
 class ANROptimize {
 public:
-	static void snrOptimize();
+	MyProcess* process;
+
+	void openProcess();
+	void closeProcess();
+public:
+	static bool snrOptimize(string fileName);
+	static double getSwitchPercent(string tableName);
+	static double getCnt(string tableName);
+	static void getCompareResult();
+public:
 	static int mapCmp(const PAIR& x,const PAIR& y) {
 		return x.second > y.second;
 	}
@@ -31,5 +44,6 @@ public:
 			mapAdjArea.insert(make_pair(adjAreaTmpIter->first,adjAreaTmpIter->second));
 		}
 	}
+	
 };
 #endif

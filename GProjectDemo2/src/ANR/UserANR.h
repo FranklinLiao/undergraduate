@@ -11,11 +11,15 @@
 //偏置 0-6db
 #define HYST   4 //迟滞参数
 #define CELLOFFSET 2 //偏置参数
-#define TIMELAST 4
+#define TIMELAST 2
+#define TIMELASTCMP 3
 #define AREARSRPGATE   -90 //A2事件   服务小区的信号电平低于某一值  此处不确定，需要再好好了解A3
 //用户的移动方向
 #define DIRECTIONS 4
 #define RAND4 (rand()%DIRECTIONS)
+//用户死去的XY 
+#define DIEX -100
+#define DIEY -100
 class UserANR {
 public:
 	double maxX;
@@ -24,6 +28,8 @@ public:
 	int aid;
 	double x;
 	double y;
+	double tempx;
+	double tempy;
 	map<int,double> otherAreaRsrp;
 	map<int,int> areaCalCnt;// 存放相邻小区的A3事件成立次数  用于判断相邻小区是否可以进行切换
 public:
@@ -37,6 +43,8 @@ public:
 	void init(double maxX,double maxY) {
 		this->maxX = maxX;
 		this->maxY = maxY;
+		this->tempx = 0;
+		this->tempy = 0;
 	}
 	void move(double x,double y) {
 		vector<double> nextPosition;
@@ -61,6 +69,30 @@ public:
 		}
 		if(y>maxY) {
 			y = maxY;
+		}
+		this->tempx = x;
+		this->tempy = y;
+	}
+
+	void moveAndModify(double x,double y) {
+		int cnt = 0; 
+		bool flag = false;
+		while(cnt<8) {  //统计而言 4次就把所有方向都走过 取8次基本可以达到这个目的
+			bool errGridflag= DBHelper::judgeGrid(this->tempx,this->tempy);
+			if(errGridflag) {
+				move(x,y);
+			} else {
+				flag =true;//用户移动到了合适的网格
+				break;
+			}
+			cnt++;
+		}
+		if(flag) {
+			this->x = this->tempx;
+			this->y = this->tempy;
+		} else {
+			this->x = DIEX;
+			this->y = DIEY;
 		}
 	}
 

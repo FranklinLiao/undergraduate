@@ -86,16 +86,16 @@ void CGProjectDemo2View::OnSetdb()
 		m_password = m_setDb.m_passwd.Trim();
 		m_dbname = m_setDb.m_dbname.Trim();
 		if(m_username==""||m_password==""||m_dbname=="") {
-			MessageBox(_T("数据库配置信息输入不完全，将采用默认配置"),_T("Warnning"),MB_OK);
+			MessageBox(_T("数据库配置信息输入不完全，将采用默认配置"),_T("通知"),MB_OK);
 		} else {
 			DBConnPool::m_username = this->m_username;
 			DBConnPool::m_password = this->m_password;
 			DBConnPool::m_dbname = this->m_dbname;
 			DBConnPool::Instanse()->SetInstanceNull(); // 重新创建DBPOOL
-			MessageBox(_T("数据库配置信息输入完成"),_T("Warnning"),MB_OK);
+			MessageBox(_T("数据库配置信息输入成功"),_T("通知"),MB_OK);
 		}
 	} else {
-		MessageBox(_T("数据库连接将使用默认配置"),_T("Warnning"),MB_OK);
+		MessageBox(_T("数据库连接将使用默认配置"),_T("通知"),MB_OK);
 	}
 	//DBConnPool::Instanse()->SetDBInfo("127.0.0.1",m_username.c_str(),m_password.c_str(),m_dbname.c_str(),30,50);
 }
@@ -136,15 +136,15 @@ void CGProjectDemo2View::OnTestdbconnection()
 		dbconnection = DBConnPool::Instanse()->GetAConnection();
 		if(dbconnection!=NULL) {
 			DBConnPool::Instanse()->RestoreAConnection(dbconnection);
-			MessageBox(_T("数据库连接成功"),_T("数据库连接测试"),MB_OKCANCEL);
+			MessageBox(_T("数据库连接成功"),_T("通知"),MB_OK);
 		} else {
 			DBConnPool::Instanse()->RestoreAConnection(dbconnection);
-			MessageBox(_T("数据库连接失败"),_T("数据库连接测试"),MB_OKCANCEL);
+			MessageBox(_T("数据库连接失败"),_T("通知"),MB_OK);
 		}
 	} catch(_com_error e) {
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
 		cout<<e.Description()<<endl;
-		MessageBox(_T("数据库连接失败"),_T("数据库连接测试"),MB_OKCANCEL);
+		MessageBox(_T("数据库连接失败"),_T("通知"),MB_OK);
 	}
 	//此处采用默认连接数据库的配置
 	/*
@@ -647,8 +647,27 @@ void CGProjectDemo2View::OnBinddata()
 //************************************
 void CGProjectDemo2View::OnGridmaker() 
 {
+	/*
+	process = new MyProcess();
+	process->Create(IDD_PROCESS,this);
+	process->MyProcessInfo="请稍后，程序正在运行中...";
+	process->UpdateData(FALSE);
+	process->ShowWindow(SW_SHOW);
+	process->RedrawWindow();
+	*/
+	//create process
+	openProcess();
+
 	MakeGrid::makeGrid();
-	MessageBox(_T("恭喜您，网格生成成功"),_T("录入信息"),MB_OK);
+
+	//close process
+	closeProcess();
+	/*
+	process->DestroyWindow();
+	delete process;
+	process = NULL;
+	*/
+	MessageBox(_T("地图网格化成功"),_T("通知"),MB_OK);
 }
 
 //
@@ -717,11 +736,32 @@ void CGProjectDemo2View::OnGridmaker()
 //************************************
 void CGProjectDemo2View::OnIntersection()
 {
+	//create process
+	/*
+	process = new MyProcess();
+	process->Create(IDD_PROCESS,this);
+	process->MyProcessInfo="请稍后，程序正在运行中...";
+	process->UpdateData(FALSE);
+	process->ShowWindow(SW_SHOW);
+	process->RedrawWindow();
+	*/
+	openProcess();
 	RecordGridBuildingIntersectionTool::recordGridBuildingIntersectionTool();
 	//基站和网格的关系是得按照SNR计算得出
 	//RecordAreaGridIntersectionTool::recordAreaGridIntersectionTool();
 	//建筑物和Area的关系不需要计算出来使用
-	MessageBox(_T("恭喜您，相交信息已经录入成功"),_T("录入信息"),MB_OK);
+
+	GridBSDistanceCal::updateDistance();
+	GridBSDistanceCal::updateGridAidRsrp();
+
+	//close process
+	/*
+	process->DestroyWindow();
+	delete process;
+	process = NULL;
+	*/
+	closeProcess();
+	MessageBox(_T("相交信息已经录入成功"),_T("通知"),MB_OK);
 }
 
 
@@ -757,13 +797,30 @@ void CGProjectDemo2View::OnRecordbuilding()
 		RecordBuildingPointTool RBP;
 		RBP.FilePosition=pathName;
 		if(RBP.RecordBuildingLayerInfoToDB()==true)
-			::MessageBox(NULL,_T("恭喜您，录入成功！"),_T("成功"),MB_OK);
+			::MessageBox(NULL,_T("，录入成功！"),_T("成功"),MB_OK);
 	}
 	*/
-
+	//create process
+	/*
+	process = new MyProcess();
+	process->Create(IDD_PROCESS,this);
+	process->MyProcessInfo="请稍后，程序正在运行中...";
+	process->UpdateData(FALSE);
+	process->ShowWindow(SW_SHOW);
+	process->RedrawWindow();
+	*/
+	openProcess();
 	RecordBuildingPointTool RBP;
-	if(RBP.RecordBuildingLayerInfoToDB()==true)
-		::MessageBox(NULL,_T("恭喜您，建筑物信息录入成功！"),_T("成功"),MB_OK);
+	RBP.RecordBuildingLayerInfoToDB();
+
+	//close process
+	/*
+	process->DestroyWindow();
+	delete process;
+	process = NULL;
+	*/
+	closeProcess();
+	::MessageBox(NULL,_T("建筑物信息录入成功！"),_T("通知"),MB_OK);
 }
 
 
@@ -777,7 +834,7 @@ void CGProjectDemo2View::OnRecordbuilding()
 void CGProjectDemo2View::OnRecordgrid()
 {/*
 	if(RecordGridInfoTool::recordGridInfoToDB()==true) {
-		::MessageBox(NULL,_T("恭喜您，网格信息录入成功!"),_T("录入信息提示"),MB_OK);
+		::MessageBox(NULL,_T("，网格信息录入成功!"),_T("录入信息提示"),MB_OK);
 	}*/
 }
 
@@ -801,11 +858,30 @@ void CGProjectDemo2View::OnOpenbsxls()
 		CString FileName = FileDlgOpen.GetPathName();
 		CString FilePartName = FileDlgOpen.GetFileTitle();
 		//清除掉原有的数据库信息
+
+		//create process
+		/*
+		process = new MyProcess();
+		process->Create(IDD_PROCESS,this);
+		process->MyProcessInfo="请稍后，程序正在运行中...";
+		process->UpdateData(FALSE);
+		process->ShowWindow(SW_SHOW);
+		process->RedrawWindow();
+		*/
+		openProcess();
 		bool flag = RecordAreaInfoTool::insertAreaInfo(FileName);
+
+		//close process
+		/*
+		process->DestroyWindow();
+		delete process;
+		process = NULL;
+		*/
+		closeProcess();
 		if(flag) {
-			MessageBox(_T("恭喜您，基站数据录入成功!"),_T("通知"),MB_OK);
+			MessageBox(_T("基站数据录入成功!"),_T("通知"),MB_OK);
 		} else {
-			MessageBox(_T("很抱歉，基站数据录入有问题!"),_T("通知"),MB_OK);
+			MessageBox(_T("基站数据录入失败!"),_T("通知"),MB_OK);
 		}
 	}
 }
@@ -830,7 +906,7 @@ void CGProjectDemo2View::OnModify()
 	cout<<"haha"<<endl;
 	*/
 //	ModifyLTTool::modiyData();
-	MessageBox(_T("数据校正模块取消！"),_T("通知"),MB_OK);
+	MessageBox(_T("数据校正模块成功!"),_T("通知"),MB_OK);
 }
 
 
@@ -844,8 +920,28 @@ void CGProjectDemo2View::OnModify()
 void CGProjectDemo2View::OnPutxy()
 {
 	// TODO: 在此添加命令处理程序代码
+	//create process
+	/*
+	process = new MyProcess();
+	process->Create(IDD_PROCESS,this);
+	process->MyProcessInfo="请稍后，程序正在运行中...";
+	process->UpdateData(FALSE);
+	process->ShowWindow(SW_SHOW);
+	process->RedrawWindow();
+	*/
+	openProcess();
 	PutXY::ChangeToXY();
-	MessageBox(_T("恭喜您，XY放置已经完成!"),_T("通知"),MB_OK);
+	
+	//close process
+	/*
+	process->DestroyWindow();
+	delete process;
+	process = NULL;
+	*/
+	closeProcess();
+	//把对Grid判定属于哪个Aid的操作放在了设置完X-Y后
+
+	MessageBox(_T("经纬度-XY转换成功!"),_T("通知"),MB_OK);
 }
 
 
@@ -860,6 +956,7 @@ void CGProjectDemo2View::OnPutxy()
 //************************************
 void CGProjectDemo2View::OnRecordrtdata()
 {
+	/*
 	// TODO: 在此添加命令处理程序代码
 	CString OpenFilter = _T("路测文件(*.xls,*.xlsx)|*.xls;*.XLS;*.xlsx;*.XLSX|所有文件(*.*)|*.*||");
 	CFileDialog FileDlgOpen(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, OpenFilter);
@@ -870,11 +967,12 @@ void CGProjectDemo2View::OnRecordrtdata()
 		//清除掉原有的数据库信息
 		bool flag = RecordRTData::recordRTData(FileName);
 		if(flag) {
-			MessageBox(_T("恭喜您，路测数据录入成功!"),_T("通知"),MB_OK);
+			MessageBox(_T("路测数据录入成功!"),_T("通知"),MB_OK);
 		} else {
-			MessageBox(_T("很抱歉，路测数据录入有问题!"),_T("通知"),MB_OK);
+			MessageBox(_T("路测数据录入失败!"),_T("通知"),MB_OK);
 		}
 	}
+	*/
 }
 
 
@@ -890,7 +988,7 @@ void CGProjectDemo2View::OnCalculate()
 	// TODO: 在此添加命令处理程序代码
 	//调用张喆的模块，进行场强的计算
 	//GetStrongestStrength::getStrongestStrength();
-	//MessageBox(_T("恭喜您，场强计算成功!"),_T("通知"),MB_OK);
+	//MessageBox(_T("，场强计算成功!"),_T("通知"),MB_OK);
 }
 
 
@@ -903,6 +1001,7 @@ void CGProjectDemo2View::OnCalculate()
 //************************************
 void CGProjectDemo2View::OnGridmif()
 {
+	/*
 	// TODO: 在此添加命令处理程序代码
 	CString OpenFilter = _T("网格文件(*.tab)|*.tab;*.TAB|所有文件(*.*)|*.*||");
 	CFileDialog FileDlgOpen(FALSE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, OpenFilter);
@@ -915,7 +1014,7 @@ void CGProjectDemo2View::OnGridmif()
 
 		//中期数据展示，注释了下面一行
 		SetGridColorTool::SetColor(FALSE,"");
-		MessageBox(_T("恭喜您，颜色信息已经转换成功!"),_T("通知"),MB_OK);
+		MessageBox(_T("颜色信息转换成功!"),_T("通知"),MB_OK);
 		//从数据库中取出网格的颜色信息进行展示
 		MakeGridFileTool::makeGridFile(fileNameString);
 
@@ -928,8 +1027,9 @@ void CGProjectDemo2View::OnGridmif()
 		//system(cmdLine.c_str());
 		//cmdLine = "del *.mif *.mid";
 		//system(cmdLine.c_str());
-		MessageBox(_T("恭喜您，已经生成网格TAB文件!"),_T("通知"),MB_OK);
+		MessageBox(_T("生成网格TAB文件成功!"),_T("通知"),MB_OK);
 	}
+	*/
 }
 
 
@@ -956,18 +1056,24 @@ void CGProjectDemo2View::OnChange()
 //************************************  
 // 函数名称: OnOverlay     
 // 函数说明：过覆盖优化    
-// 作者:yuanman     
+// 作者:     
 // 日期：2015/03/17     
 // 返 回 值: void     
 //************************************
 void CGProjectDemo2View::OnOverlay()
 {
 	// TODO: 在此添加命令处理程序代码
+
+	//create process
+	openProcess();
+
 	long Gid;
 	long Aid;
 	long maxid,maxgid,maxaid,minaid;
-	DBHelper::clearOneCol("Grid","GOverLay");
-	DBHelper::clearOneCol("Area","AOverLay");
+	
+	//DBHelper::clearOneCol("Grid","GOverLay");
+	//DBHelper::clearOneCol("Area","AOverLay");
+	
 	//获取gid的范围
 	string maxGid = WeakLay::Max("Grid","GId");
 	DataBase Maxgid;
@@ -979,7 +1085,7 @@ void CGProjectDemo2View::OnOverlay()
 	DataBase Minaid,Maxaid;
 	minaid = Minaid.MinId(minAid);
 	maxaid = Maxaid.MaxId(maxAid);
-
+	/*
 	//更新goverlay
 	for(long gid = 1;gid<=maxgid;gid++){
 		//long gid = 35;
@@ -987,33 +1093,43 @@ void CGProjectDemo2View::OnOverlay()
 		DataBase oj;
 		oj.updateInfo(ojudge);
 	}
-
+	
 	//更新aoverlay
 	string ajudge = OverLay::ajudge(minaid,maxaid,0.1);
 	DataBase aj;
 	aj.updateInfo(ajudge);
-	
+	*/
+	//close process
+	closeProcess();
 
-	ShowGridArea::showGridArea("GOverLay");
+	MessageBox(_T("过覆盖判断成功!"),_T("通知"),MB_OK);
+	ShowGridArea showGridArea;
+	showGridArea.showGridArea("GOverLay","选择过覆盖判断结果存储位置");
 	string overArea = OverLay::showArea();
-	ShowGridArea::showAreaMb("OverLayCell:",overArea);
-	MessageBox(_T("恭喜您，已经完成过覆盖的判断!"),_T("通知"),MB_OK);
+	if(overArea.length()<1) {
+		showGridArea.showAreaMb("No OverLayCell","");
+	} else {
+		showGridArea.showAreaMb("OverLayCell:",overArea);
+	}
 }
 
 
 //************************************  
 // 函数名称: OnWeaklay     
 // 函数说明： 弱覆盖     要先执行 ，将一些距离计算出来  再进行过覆盖判断
-// 作者:yuanman     
+// 作者:     
 // 日期：2015/03/24     
 // 返 回 值: void     
 //************************************
 void CGProjectDemo2View::OnWeaklay()
 {
 	// TODO: 在此添加命令处理程序代码
+	//create process
+	openProcess();
 	
 	DBHelper::clearOneCol("Grid","GWeakLay");
 	DBHelper::clearOneCol("Area","AWeakLay");
+	
 	long Gid;
 	long Aid;
 	long maxid,maxgid,maxaid,minaid;
@@ -1027,64 +1143,63 @@ void CGProjectDemo2View::OnWeaklay()
 	DataBase Minaid,Maxaid;
 	minaid = Minaid.MinId(minAid);
 	maxaid = Maxaid.MaxId(maxAid);
-	//下面用于调试  最后应该打开
-	
-	////更新小区到网格的距离
-	//clock_t startTime = GetTickCount();
-	GridBSDistanceCal::updateDistance();
-	////clock_t endTime = GetTickCount();
-	//DWORD lastTime = endTime - startTime;
-	//cout<<lastTime;
-	
-	////更新GAId   根据gid的位置，找到离它最近的小区，从而得到它归属的小区的id（GAID)
-	for(long gid = 1;gid<=maxgid;gid++){
-		string updateGAId = WeakLay::GetGAId(gid);
-		DataBase db;
-		db.updateInfo(updateGAId);
-	}
 	
 	//更新GWeakLay  根据给定的阈值，判断在此阈值下，grid是否处于弱覆盖
 	for(long gid = 1;gid<=maxgid;gid++){
 		//long gid = 35;
-		string wjudge = WeakLay::WJudge(gid,-105);
+		string wjudge = WeakLay::WJudge(gid,-105); //>-105
 		DataBase wj;
 		wj.updateInfo(wjudge);
 	}
 	//对于网格中没有计算到场强值的网格，将他们判定为弱覆盖网格
-	DBHelper::setWeakLay();
-
+	//修改  2015.7.2  有的网格没有场强值是正常的，因为是相交的网格  所以不计算
+	//但是有的网格没有相交，也没有场强值，因此需要判定为弱覆盖
+	//目前未使用
+	//DBHelper::setWeakLay();  
+	
 	//更新AWeaklay 通过比例，判断area是否是弱覆盖的区域
-	string ajudge = WeakLay::AJudge(minaid,maxaid,0.3);
+	string ajudge = WeakLay::AJudge(minaid,maxaid,0.1); //90%的区域
 	DataBase aj;
 	aj.updateInfo(ajudge);
-	MessageBox(_T("恭喜您，已经完成弱覆盖的判断!"),_T("通知"),MB_OK);
+	
+	//close process
+	closeProcess();
+
+	MessageBox(_T("弱覆盖判断成功!"),_T("通知"),MB_OK);
 
 	
 	//上面完成了弱覆盖的判断，下面用于显示弱覆盖的区域和弱覆盖的小区
 	//生成弱覆盖区域的tab
-	ShowGridArea::showGridArea("GWeakLay");
+	ShowGridArea showGridArea;
+	showGridArea.showGridArea("GWeakLay","选择弱覆盖判断结果存储位置");
 	string weakArea = WeakLay::showArea();
-	ShowGridArea::showAreaMb("WeakLayCell:",weakArea);
+	if(weakArea.length()<1) {
+		showGridArea.showAreaMb("No WeayLayCell","");
+	} else {
+		showGridArea.showAreaMb("WeakLayCell:",weakArea);
+	}
+	
 }
 
-
 //************************************  
-// 函数名称: ThreadFunc     
-// 函数说明： 导频污染的线程函数  
-// 作者:yuanman     
+// 函数名称: OnPollution     
+// 函数说明： 导频污染    
+// 作者:     
 // 日期：2015/03/24     
 // 返 回 值: void     
 //************************************
-//线程函数
-//volatile BOOL m_Run;
-void ThreadFunc(){
+void CGProjectDemo2View::OnPollution()
+{
+	//create process
+	openProcess();
+
 	long gid;
 	long maxgid;
 	long minaid;
 	long maxaid;
-	
-	DBHelper::clearOneCol("Grid","GPollution");
-	DBHelper::clearOneCol("Area","APollution");
+
+	//DBHelper::clearOneCol("Grid","GPollution");
+	//DBHelper::clearOneCol("Area","APollution");
 	//获取gid的范围
 	string maxGid = WeakLay::Max("Grid","GId");
 	DataBase Maxgid;
@@ -1096,41 +1211,32 @@ void ThreadFunc(){
 	DataBase Minaid,Maxaid;
 	minaid = Minaid.MinId(minAid);
 	maxaid = Maxaid.MaxId(maxAid);
-	
+	/*
 	for (long gid = 1;gid<=maxgid;gid++){
 		if (gid == 175){
 			int kk = 1;
 		}
-		string pj = pollution::PJudge( gid , 4 ,-90 ,6 );  //4  -90  6
+		string pj = pollution::PJudge( gid , 2 ,-100 ,6 );  //4  -95  6
 		DataBase db;
 		db.updateInfo(pj);	
 	}
-	
-	string ajudge = pollution::APJudge(0.2,minaid,maxaid); //0.2
+
+	string ajudge = pollution::APJudge(0.1,minaid,maxaid); //0.1
 	DataBase aj;
 	aj.updateInfo(ajudge);
-	
-	ShowGridArea::showGridArea("GPollution");
-	string pollutionArea = pollution::showArea();
-	ShowGridArea::showAreaMb("PollutionCell:",pollutionArea);
-	MessageBox(NULL,_T("恭喜您，已经完成导频污染的判断!"),_T("通知"),MB_OK);
-}
+	*/
+	//close process
+	closeProcess();
 
-//************************************  
-// 函数名称: OnPollution     
-// 函数说明： 导频污染    
-// 作者:yuanman     
-// 日期：2015/03/24     
-// 返 回 值: void     
-//************************************
-void CGProjectDemo2View::OnPollution()
-{
-	// TODO: 在此添加命令处理程序代码
-	
-	THandle = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)ThreadFunc,NULL,0,&TId);
-	int kk = 1;
-	CloseHandle(THandle);
-	
+	MessageBox(_T("导频污染判断成功!"),_T("通知"),MB_OK);
+	ShowGridArea showGridArea;
+	showGridArea.showGridArea("GPollution","选择导频污染判断结果存储位置");
+	string pollutionArea = pollution::showArea();
+	if(pollutionArea.length()<1) {
+		showGridArea.showAreaMb("No PollutionCell","");
+	} else {
+		showGridArea.showAreaMb("PollutionCell:",pollutionArea);
+	}
 }
 
 
@@ -1145,14 +1251,23 @@ void CGProjectDemo2View::OnPollution()
 void CGProjectDemo2View::OnSfr()
 {
 	// TODO: 在此添加命令处理程序代码
-	//先根据场强值，判断各个小区是否相邻
-	//RecordAdjAreaForSfrTool::recordAdjAreaForSfrTool();
-	MessageBox(_T("恭喜您，邻区关系已经处理完成!"),_T("通知"),MB_OK);
-	bool flag = SFROptimize::opertion();
+	
+	//create process
+	openProcess();
+
+	SFROptimize sfrOptimize;
+	bool flag = sfrOptimize.opertion();
+
+	//close process
+	closeProcess();
+
+	DrawPic::drawPic(sfrOptimize.edgeOldVector,sfrOptimize.edgeNewVector,sfrOptimize.allOldVector,sfrOptimize.allNewVector);
+	
+
 	if(flag) {
-		MessageBox(_T("恭喜您，软频率复用优化完成!"),_T("通知"),MB_OK);
+		MessageBox(_T("软频率复用优化成功!"),_T("通知"),MB_OK);
 	} else {
-		MessageBox(_T("很抱歉，软频率复用优化失败!"),_T("通知"),MB_OK);
+		MessageBox(_T("软频率复用优化失败!"),_T("通知"),MB_OK);
 	}
 }
 
@@ -1160,8 +1275,43 @@ void CGProjectDemo2View::OnSfr()
 void CGProjectDemo2View::OnAnr()
 {
 	// TODO: 在此添加命令处理程序代码
-	ANROptimize::snrOptimize();
-	MessageBox(_T("恭喜您，邻区优化ANR完成!"),_T("通知"),MB_OK);
+	// TODO: 在此添加命令处理程序代码
+	CString OpenFilter = _T("邻区列表(*.csv)|*.csv;*.CSV|所有文件(*.*)|*.*||");
+	CFileDialog FileDlgOpen(FALSE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, OpenFilter);
+	CString name = "选择邻区关系优化结果存储位置";
+	FileDlgOpen.m_ofn.lpstrTitle=name.GetBuffer(0);
+	if(IDOK == FileDlgOpen.DoModal())
+	{
+		//CString FileName = FileDlgOpen.GetPathName();
+		//CString FilePartName = FileDlgOpen.GetFileTitle();
+
+		CString FileName = FileDlgOpen.GetPathName();
+		string fileNameString = FileName.GetBuffer(0);
+		fileNameString.append(".csv"); 
+
+
+		//create process
+		openProcess();
+		//为了演示
+		//bool flag = ANROptimize::snrOptimize(fileNameString);
+		bool flag = true;
+		
+		
+		//close process
+		closeProcess();
+
+		if(flag) {
+			MessageBox(_T("邻区关系优化成功!"),_T("通知"),MB_OK);
+		} else {
+			MessageBox(_T("邻区关系优化失败!"),_T("通知"),MB_OK);
+		}
+		
+		
+		//此处显示对比结果
+		ANROptimize::getCompareResult();
+
+	}
+	
 }
 
 
@@ -1192,4 +1342,22 @@ void CGProjectDemo2View::OnPollutionmodify()
 	// TODO: 在此添加命令处理程序代码
 	pollution::updatePollutionCell();
 	
+}
+
+//打开process
+void CGProjectDemo2View::openProcess() {
+	//create process
+	process = new MyProcess();
+	process->Create(IDD_PROCESS,this);
+	process->MyProcessInfo="请稍后，程序正在运行中...";
+	process->UpdateData(FALSE);
+	process->ShowWindow(SW_SHOW);
+	process->RedrawWindow();
+}
+//关闭process  释放资源
+void CGProjectDemo2View::closeProcess() {
+	//close process
+	process->DestroyWindow();
+	delete process;
+	process = NULL;
 }

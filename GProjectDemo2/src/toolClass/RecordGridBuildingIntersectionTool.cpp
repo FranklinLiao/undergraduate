@@ -188,7 +188,9 @@ void RecordGridBuildingIntersectionTool::recordGridBuildingIntersectionTool() {
 							m_pRecordset->Open(Ext.c_str(),(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);
 							Ext.clear();
 							//1.记录相交性信息
-							//2.相交网格颜色变成白色
+							//2015.7.2
+							//2.相交网格颜色变成黑色  0 为黑色  ffffff为白色
+
 							int gId = m_pRecordset->GetCollect("GId");
 							int bId = BBid;
 							string tableBuildingName = "BuildingGridId";
@@ -199,7 +201,7 @@ void RecordGridBuildingIntersectionTool::recordGridBuildingIntersectionTool() {
 							buildingGridId++;
 
 							//m_pRecordset->PutCollect("GBId",_variant_t(RBid.c_str()));
-							m_pRecordset->PutCollect("GRealRSRP",_variant_t(double(0)));
+							//m_pRecordset->PutCollect("GRealRSRP",_variant_t(double(0)));
 							m_pRecordset->PutCollect("GColor",_variant_t(int(0)));
 							m_pRecordset->Update();
 							RBid.clear();

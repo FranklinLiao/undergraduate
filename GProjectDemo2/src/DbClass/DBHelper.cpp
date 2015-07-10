@@ -4,11 +4,11 @@
 void DBHelper::deleteAllTable() {
 	deleteData("ANeighbourCell");
 	deleteData("Area");
-	deleteData("AreaFreq");
+	//deleteData("AreaFreq");
 	deleteData("AreaGridId");
 	deleteData("AtennaGain");
 	deleteData("Building");
-	deleteData("BuildingAreaId");
+	//deleteData("BuildingAreaId");
 	deleteData("BuildingBuildingPointId");
 	deleteData("BuildingGridId");
 	deleteData("BuildingMaterial");
@@ -222,9 +222,8 @@ vector<vector<string>> DBHelper::getUser(int areaId,int userCnt) {
 	return userInfos;
 }
 
-vector<int> DBHelper::getAdjAreaId(int areaId) {
+vector<int> DBHelper::getAdjAreaId(string tableName,int areaId) {
 	DataBase db;
-	string tableName="ANeighbourCell";
 	vector<int> adjAreaId = db.getAdjAreaIdFromDb(tableName,areaId);
 	return adjAreaId;
 }
@@ -288,3 +287,27 @@ vector<float> DBHelper::getCellInfo(int cellId) {
 	return db.getCellInfo(cellId);
 }
 
+vector<int> DBHelper::getDirectNeighArea(double x,double y) {
+	DataBase db;
+	return db.getDirectNeighAreaFromDb(x,y);
+}
+
+bool DBHelper::judgeGrid(double x,double y) {
+	DataBase db;
+	return db.judgeGrid(x,y);
+}
+
+void DBHelper::resetGridColor() {
+	DataBase db;
+	db.resetGridColorFromDb();
+}
+
+ bool DBHelper::isExistsNRT(int aid,int adjCellId) {
+	 DataBase db;
+	 return db.isExistsNRTFromDb(aid,adjCellId);
+ }
+
+ double DBHelper::getNRTAvgCnt(string tableName) {
+	 DataBase db;
+	 return db.getNRTAvgCntFromDb(tableName);
+ }

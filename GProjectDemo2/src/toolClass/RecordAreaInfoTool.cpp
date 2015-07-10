@@ -6,7 +6,7 @@
 
 bool RecordAreaInfoTool::insertAreaInfo(CString FileName) {
 	DBHelper::deleteData("Area");
-	DBHelper::deleteData("AreaFreq");
+	//DBHelper::deleteData("AreaFreq");
 	int rowCount=0;
 	int columnCount=0;
 	bool returnFlag = false;//用来标识读取小区信息时，是否出现了异常
@@ -146,9 +146,9 @@ bool RecordAreaInfoTool::insertAreaInfo(CString FileName) {
 			} else {
 				//上面一行用来提取和北航有关的数据
 				string tableName = "Area";
-				string key[] = {"AId","ALongitude","ALatitude","AHeight","AAspectAngle","ADeclineAngle","APCI","AName","ACellId"};
+				string key[] = {"AId","ALongitude","ALatitude","AHeight","AAspectAngle","ADeclineAngle","APCI","AName"};
 				string keyValue[] = {ChangeTypeTool::intToString(id),valueString[0],valueString[1],valueString[2],valueString[3],
-					valueString[4],valueString[5],"'"+ valueString[6]+"'",ChangeTypeTool::intToString(cellId)};
+					valueString[4],valueString[5],"'"+ valueString[6]+"'"};
 				DBHelper::insertInfo(tableName,key,keyValue,sizeof(key)/sizeof(key[0]));
 				id++;
 				if(id==1200) {

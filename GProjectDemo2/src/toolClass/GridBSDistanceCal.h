@@ -4,4 +4,5 @@
 class GridBSDistanceCal {
 public:
 	static void updateDistance();
+	static void updateGridAidRsrp();
 };

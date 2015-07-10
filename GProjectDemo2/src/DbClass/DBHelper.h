@@ -50,10 +50,11 @@ public:
 	static vector<int> getLayOptimizeAreaId(string colum);
 	static void setWeakLay();//将没有收到场强的网格判定为弱覆盖
 	static vector<float> getCellInfo(int cellId);
+	static void resetGridColor();
 //干扰优化
 public:
 	static vector<vector<string>> getUser(int areaId,int userCnt);
-	static vector<int> getAdjAreaId(int areaId);
+	static vector<int> getAdjAreaId(string tableName,int areaId);
 	static double getAdjAreaGridStrength(int aid,int gridId);
 
 //ANR
@@ -63,6 +64,10 @@ public:
 	static vector<vector<string>> getUserANR(int areaId,int userCnt);
 	static int getGidFromXY(double x,double y);
 	static vector<vector<string>> getGridAllRsrp(int gridId);
+	static vector<int> getDirectNeighArea(double x,double y);
+	static bool judgeGrid(double x,double y);
+	static bool isExistsNRT(int aid,int adjCellId);
+	static double getNRTAvgCnt(string tableName);
 };
 
 #endif

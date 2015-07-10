@@ -6,15 +6,23 @@
 #include "NewArea.h"
 #include "time.h"
 #include "stdlib.h"
+
+
 #include <vector>
 #include <string>
 using namespace std;
 #define SIMCNT 2
-//整体偏移  -55    >-85 偏移  23（最大62  以85为分界线）
 class SFROptimize {
 public :
-	static string optimizeOld(int simUserCnt);
-	static string optimizeNew(int simUserCnt); 
-	static bool opertion();
+	string optimizeOld(int simUserCnt);
+	string optimizeNew(int simUserCnt); 
+	bool opertion();
+public:
+	vector<double> edgeOldVector;
+	vector<double> edgeNewVector;
+	vector<double> allOldVector;
+	vector<double> allNewVector;
+public:
+
 };
 #endif

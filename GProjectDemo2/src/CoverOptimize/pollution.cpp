@@ -36,6 +36,7 @@ string pollution::PJudge(long gid,int count, double threshold,double difference 
 	SqlString.append(ChangeTypeTool::doubleToString(difference));
 	SqlString.append(" ) and GId=");
 	SqlString.append(ChangeTypeTool::longToString(gid));
+	SqlString.append(" and GColor!=0 and GRealRSRP !=0 ");
 	SqlString.append(" end\
                        drop table ##temp1");
 	return SqlString;
@@ -50,8 +51,8 @@ string pollution::APJudge(double percent,long minaid,long maxaid){
                         while @aid<");
 	SqlString.append(ChangeTypeTool::longToString(maxaid));
 	SqlString.append(" begin\
-                       set @acount = (select COUNT (*) from Grid where GAId = @aid)\
-                       set @ocount = (select COUNT (*) from Grid where GAId = @aid and GPollution = 1)\
+                       set @acount = (select COUNT (*) from Grid where GAId = @aid and GColor!=0 and GRealRSRP !=0 )\
+                       set @ocount = (select COUNT (*) from Grid where GAId = @aid and GPollution = 1 and GColor!=0 and GRealRSRP !=0 )\
                        update Area set APollution = 1 where AId = @aid and ( @ocount/@acount> ");
 	SqlString.append(ChangeTypeTool::doubleToString(percent));
 	SqlString.append(" )\
@@ -80,7 +81,7 @@ void pollution::updatePollutionCell() {
 	setCellDialog.CellDialogcellVector = areaIdVector;
 	if(IDOK==setCellDialog.DoModal()) {
 		if(setCellDialog.flag) {
-			MessageBox(NULL,_T("恭喜您，存在导频污染小区参数修改完成!"),_T("通知"),MB_OK);
+			MessageBox(NULL,_T("存在导频污染小区参数修改完成!"),_T("通知"),MB_OK);
 		} else {
 			MessageBox(NULL,_T("未修改小区参数!"),_T("通知"),MB_OK);
 		}

@@ -83,11 +83,11 @@ string WeakLay::AJudge(long minaid,long maxaid,double percent){
 					 declare @wcount decimal(9,3)\
                      declare @acount decimal(9,3)\
 					 while @aid<");
-	SqlString.append(ChangeTypeTool::longToString((maxaid+1)));
+	SqlString.append(ChangeTypeTool::longToString((maxaid+1)));  //Gcolor=0 为相交网格  黑色  
 	SqlString.append(" \
 					 begin\
-                     set @acount = (select COUNT (*) from Grid where GAId = @aid)\
-                     set @wcount = (select COUNT (*) from Grid where GAId = @aid and GWeakLay = 1)\
+                     set @acount = (select COUNT (*) from Grid where GAId = @aid and GColor!=0 and GRealRSRP !=0  )\
+                     set @wcount = (select COUNT (*) from Grid where GAId = @aid and GWeakLay = 1 and GColor!=0 and GRealRSRP !=0  )\
                      update Area set AWeakLay = 1 where AId = @aid and ( @wcount/@acount> ");
     SqlString.append(ChangeTypeTool::doubleToString(percent));
 	SqlString.append(" )\
@@ -119,7 +119,7 @@ void WeakLay::updateWeakCell() {
 	setCellDialog.CellDialogcellVector = areaIdVector;
 	if(IDOK==setCellDialog.DoModal()) {
 		if(setCellDialog.flag) {
-			MessageBox(NULL,_T("恭喜您，存在弱覆盖小区参数修改完成!"),_T("通知"),MB_OK);
+			MessageBox(NULL,_T("存在弱覆盖小区参数修改完成!"),_T("通知"),MB_OK);
 		} else {
 			MessageBox(NULL,_T("未修改小区参数!"),_T("通知"),MB_OK);
 		}

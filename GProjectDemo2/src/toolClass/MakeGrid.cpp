@@ -12,6 +12,7 @@ void MakeGrid::makeGrid() {
 	sqlSp = dbconnection->_connection_ptr;
 	//dbCon.getMyConnection(connection);
 	m_pRecordset.CreateInstance(__uuidof(Recordset));
+	//只是表示下面操作的Grid的表 而不是从这个表中取出范围
 	m_pRecordset->Open("SELECT * FROM  Grid",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);
 	//m_pRecordset->MoveFirst();
 	//得到经纬度范围
@@ -43,7 +44,7 @@ void MakeGrid::makeGrid() {
 				m_pRecordset->PutCollect("GLongitude",_variant_t(longitude));
 				m_pRecordset->PutCollect("GLatitude",_variant_t(latitude));
 				m_pRecordset->PutCollect("GColor",_variant_t(255*256*256+255*256+255)); //白色
-				m_pRecordset->PutCollect("GRealSNR",_variant_t(double(0)));
+				//m_pRecordset->PutCollect("GRealSNR",_variant_t(double(0)));
 				m_pRecordset->Update();
 			}catch (_com_error &e){
 				cout << e.Description()<<endl;

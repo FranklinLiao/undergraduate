@@ -26,6 +26,8 @@ SetGridColorTool::~SetGridColorTool(void)
 //************************************
 bool SetGridColorTool::SetColor(bool flag,string col)
 {
+	//将原来的颜色擦除  将颜色不为0的全部变成白色
+	DBHelper::resetGridColor();
 	DBConnect* dbconnection;
 	_ConnectionPtr  sqlSp;
 	dbconnection = DBConnPool::Instanse()->GetAConnection();
@@ -38,7 +40,8 @@ bool SetGridColorTool::SetColor(bool flag,string col)
 	}
 	try
 	{
-		m_pRecordset->Open("SELECT * FROM  Grid",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);
+		//不处理那些相交性的网格
+		m_pRecordset->Open("SELECT * FROM  Grid where GColor!=0",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);
 	}
 	catch (_com_error &e)
 	{

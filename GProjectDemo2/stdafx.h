@@ -71,6 +71,6 @@
 #define LONGIREDUENCY (0.005*(1/0.76)) //cose40°  0.76
 */
 
-//考虑到减小基站的数目  只设定100m
-#define LATIREDUENCY 0.001 //   
-#define LONGIREDUENCY 0.001 //
+//考虑到减小基站的数目  只设定100m  0.001
+#define LATIREDUENCY 0.001    
+#define LONGIREDUENCY 0.001 

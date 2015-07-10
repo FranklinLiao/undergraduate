@@ -12,20 +12,17 @@ using namespace std;
 class Area {
 public:
 	int AId;
-	double ASendPower;
+	string AName;
 	double ALongtitude;
 	double ALatitude;
-	double AHeight;  
-	double AFreq;
-	double AAspectAngle;
+	double AHeight; 
 	double ADeclineAngle;
-	double ALength;
-	int AType;
-	double APower;
-	int ABaseStationAttr;
+	double AAspectAngle;
+	double ASendPower;
+	int APci;
 	float aX;
 	float aY;
-	float aZ;
+	
 public:
 	//构造函数
 	Area() {
@@ -35,37 +32,37 @@ public:
 	Area(vector<string> param){
 		vector<string>::iterator iter = param.begin();
 		this->setAId(ChangeTypeTool::stringToInt(*iter++));
-		this->setASendPower(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAName(*iter++);
+		
 		this->setALongtitude(ChangeTypeTool::stringToDouble(*iter++));
 		this->setALatitude(ChangeTypeTool::stringToDouble(*iter++));
 		this->setAHeight(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAFreq(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAAspectAngle(ChangeTypeTool::stringToDouble(*iter++));
 		this->setADeclineAngle(ChangeTypeTool::stringToDouble(*iter++));
-		this->setALength(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAType(ChangeTypeTool::stringToInt(*iter++));
-		this->setAPower(ChangeTypeTool::stringToDouble(*iter++));
-		this->setABaseStationAttr(ChangeTypeTool::stringToInt(*iter++));
+		this->setAAspectAngle(ChangeTypeTool::stringToDouble(*iter++));
+		
+		this->setASendPower(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAPci(ChangeTypeTool::stringToInt(*iter++));
 		this->setAX(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAY(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAZ(ChangeTypeTool::stringToDouble(*iter));
+		this->setAY(ChangeTypeTool::stringToDouble(*iter));
+	\
 	}
 	
 	Area(vector<string> param, int flag){
 		vector<string>::iterator iter = param.begin();
 		this->setAId(ChangeTypeTool::stringToInt(*iter++));
-		this->setASendPower(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAName(*iter++);
+
 		this->setALongtitude(ChangeTypeTool::stringToDouble(*iter++));
 		this->setALatitude(ChangeTypeTool::stringToDouble(*iter++));
 		this->setAHeight(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAAspectAngle(ChangeTypeTool::stringToDouble(*iter++));
 		this->setADeclineAngle(ChangeTypeTool::stringToDouble(*iter++));
-		this->setALength(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAPower(ChangeTypeTool::stringToDouble(*iter++));
-		this->setABaseStationAttr(ChangeTypeTool::stringToInt(*iter++));
+		this->setAAspectAngle(ChangeTypeTool::stringToDouble(*iter++));
+
+		this->setASendPower(ChangeTypeTool::stringToDouble(*iter++));
+		this->setAPci(ChangeTypeTool::stringToInt(*iter++));
 		this->setAX(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAY(ChangeTypeTool::stringToDouble(*iter++));
-		this->setAZ(ChangeTypeTool::stringToDouble(*iter));
+		this->setAY(ChangeTypeTool::stringToDouble(*iter));
+		
 	}
 	
 	/**
@@ -121,8 +118,8 @@ public:
 		this->AHeight = AHeight;
 	}
 
-	void setAFreq(double AFreq) {
-		this->AFreq = AFreq;
+	void setAName(string AName) {
+		this->AName = AName;
 	}
 
 	void setAAspectAngle(double AAspectAngle) {
@@ -133,20 +130,11 @@ public:
 		this->ADeclineAngle=ADeclineAngle;
 	}
 
-	void setALength(double ALength) {
-		this->ALength=ALength;
-	}
 
-	void setAType(int AType) {
-		this->AType=AType;
-	}
 
-	void setAPower(double transmitPower) {
-		this->APower = APower;
-	}
 
-	void setABaseStationAttr(int ABaseStationAttr) {
-		this->ABaseStationAttr=ABaseStationAttr;
+	void setAPci(int APci) {
+		this->APci=APci;
 	}
 
 	void setAX(float aX) {
@@ -157,9 +145,7 @@ public:
 		this->aY = aY;
 	}
 
-	void setAZ(float aZ) {
-		this->aZ = aZ;
-	}
+	
 	//get方法
 	int getAId() {
 		return this->AId;
@@ -181,8 +167,8 @@ public:
 		return this->AHeight;
 	}
 	
-	double getAFreq() {
-		return this->AFreq;
+	string getAName() {
+		return this->AName;
 	}
 
 	double getAAspectAngle() {
@@ -193,21 +179,11 @@ public:
 		return this->ADeclineAngle;
 	}
 
-	double getALength() {
-		return this->ALength;
+	int getAPci() {
+		return this->APci;
 	}
 
-	int getAType() {
-		return this->AType;
-	}
 
-	double getAPower() {
-		return this->APower;
-	}
-
-	int getABaseStationAttr() {
-		return this->ABaseStationAttr;
-	}
 
 	float getAX() {
 		return this->aX;
@@ -217,9 +193,7 @@ public:
 		return this->aY;
 	}
 
-	float getAZ() {
-		return this->aZ;
-	}
+	
 };
 
 #endif

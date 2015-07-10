@@ -17,7 +17,7 @@ private:
 	int buildingId;
 	double px;
 	double py;
-	double pz;
+	
 public:
 	//构造函数
 	BuildingPoint(){};
@@ -30,8 +30,8 @@ public:
 		this->setGridId(ChangeTypeTool::stringToInt(*iter++));
 		this->setBuildingId(ChangeTypeTool::stringToInt(*iter++));
 		this->setPx(ChangeTypeTool::stringToDouble(*iter++));
-		this->setPy(ChangeTypeTool::stringToDouble(*iter++));
-		this->setPz(ChangeTypeTool::stringToDouble(*iter));
+		this->setPy(ChangeTypeTool::stringToDouble(*iter));
+	
 	}
 
 	/**
@@ -100,9 +100,7 @@ public:
 		this->py=py;
 	}
 
-	void setPz(double pz) {
-		this->pz = pz;
-	}
+	
 	//get方法
 	int getId() {
 		return this->id;
@@ -136,9 +134,7 @@ public:
 		return this->py;
 	}
 
-	double getPz() {
-		return this->pz;
-	}
+	
 };
 
 #endif

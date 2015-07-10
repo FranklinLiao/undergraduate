@@ -103,9 +103,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="MainFrm.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -355,6 +352,24 @@
     <ClInclude Include="src\CoverOptimize\SetCellDialog.h">
       <Filter>头文件\CoverOptimize</Filter>
     </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>源文件\ANR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ANR\XCFileStream.h">
+      <Filter>头文件\ANR</Filter>
+    </ClInclude>
+    <ClInclude Include="MyProcess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFROptimize\DrawPic.h">
+      <Filter>头文件\SFROptimize</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolClass\MyProcess.h">
+      <Filter>头文件\ToolClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\anr\DrawAnrPic.h">
+      <Filter>头文件\ANR</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GProjectDemo2.cpp">
@@ -563,6 +578,18 @@
     </ClCompile>
     <ClCompile Include="src\Mif2Tab\Mif2Tab.cpp">
       <Filter>源文件\Mif2Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ANR\XCFileStream.cpp">
+      <Filter>源文件\ANR</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolClass\MyProcess.cpp">
+      <Filter>源文件\ToolClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SFROptimize\DrawPic.cpp">
+      <Filter>源文件\SFROptimize</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ANR\DrawAnrPic.cpp">
+      <Filter>源文件\ANR</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

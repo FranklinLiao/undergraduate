@@ -431,7 +431,7 @@ double OldArea::powerToThroughPut(double sinr) {
 	sinr = pow(10,1.0*sinr/10); //将dbm转化为比值
 	double B = USERPERRB*180000.0;
 	double throughPut = B*(1.0*log(1.0+sinr)/log(2.0));
-	return throughPut;
+	return throughPut/4.0;
 }
 
 double OldArea::getAdjAreaPower(User user) {

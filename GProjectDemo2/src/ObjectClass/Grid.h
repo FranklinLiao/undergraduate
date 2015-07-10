@@ -15,13 +15,10 @@ public:
 	int gId;
 	double gLongitude;
 	double gLatitude;
-	double gHeight;
 	int gAId;
-	double gRealSNR;
-	double gRTSNR;
+	double gRealRSRP;
 	float gX;
 	float gY;
-	float gZ;
 	int gColor;
 public:
 	//¹¹Ôìº¯Êý
@@ -32,13 +29,13 @@ public:
 			this->setGId(ChangeTypeTool::stringToInt(*iter++));
 			this->setGLongtitude(ChangeTypeTool::stringToDouble(*iter++));
 			this->setGLatitude(ChangeTypeTool::stringToDouble(*iter++));
-			this->setGHeight(ChangeTypeTool::stringToDouble(*iter++));
+			
 			this->setGAId(ChangeTypeTool::stringToInt(*iter++));
-			this->setGRealSNR(ChangeTypeTool::stringToDouble(*iter++));
-			this->setGRTSNR(ChangeTypeTool::stringToDouble(*iter++));
+			this->setGRealRSRP(ChangeTypeTool::stringToDouble(*iter++));
+		
 			this->setGX(ChangeTypeTool::stringToDouble(*iter++));
 			this->setGY(ChangeTypeTool::stringToDouble(*iter++));
-			this->setGZ(ChangeTypeTool::stringToDouble(*iter++));
+		
 			this->setGColor(ChangeTypeTool::stringToInt(*iter));
 		}
 	}
@@ -68,21 +65,17 @@ public:
 		this->gLatitude = gLatitude;
 	}
 
-	void setGHeight(double gHeight) {
-		this->gHeight=gHeight;
-	}
+	
 
 	void setGAId(int gAId) {
 		this->gAId=gAId;
 	}
 
-	void setGRealSNR(double gRealSNR) {
-		this->gRealSNR = gRealSNR;
+	void setGRealRSRP(double gRealRSRP) {
+		this->gRealRSRP = gRealRSRP;
 	}
 	
-	void setGRTSNR(double gRTSNR) {
-		this->gRTSNR=gRTSNR;
-	}
+
 	
 	void setGX(float gX) {
 		this->gX = gX;
@@ -92,9 +85,7 @@ public:
 		this->gY = gY;
 	}
 
-	void setGZ(float gZ) {
-		this->gZ = gZ;
-	}
+
 
 	void setGColor(int gColor) {
 		this->gColor = gColor;
@@ -111,21 +102,17 @@ public:
 		return this->gLatitude;
 	}
 
-	int getGHeight() {
-		return this->gHeight;
-	}
+	
 
 	int getGAid() {
 		return this->gAId;
 	}
 
-	double getGRealSNR() {
-		return this->gRealSNR;
+	double getGRealRSRP() {
+		return this->gRealRSRP;
 	}
 
-	double getGRTSNR() {
-		return this->gRTSNR;
-	}
+	
 	
 	float getGX() {
 		return this->gX;
@@ -135,9 +122,7 @@ public:
 		return this->gY;
 	}
 	
-	float getGZ() {
-		return this->gZ;
-	}
+	
 
 	int getGColor() {
 		return this->gColor;

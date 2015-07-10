@@ -245,7 +245,7 @@ void CGProjectDemo2App::TestDBConnect()
 			::MessageBox(NULL,e.Description(),_T("警告"),MB_OK);
 			return;
 		}
-	::MessageBox(NULL,_T("恭喜您，连接成功！"),_T("成功"),MB_OK);
+	::MessageBox(NULL,_T("，连接成功！"),_T("成功"),MB_OK);
 }
 
 */
@@ -273,6 +273,6 @@ void CGProjectDemo2App::Record_BPoint()
 	RecordBuildingPointTool RBP;
 	RBP.FilePosition=pathName;
 	if(RBP.RecordBuildingLayerInfoToDB()==true)
-	::MessageBox(NULL,_T("恭喜您，录入成功！"),_T("成功"),MB_OK);
+	::MessageBox(NULL,_T("，录入成功！"),_T("成功"),MB_OK);
 }
 */

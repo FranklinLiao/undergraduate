@@ -32,6 +32,7 @@ string OverLay::ojudge(long gid){
 	SqlString.append(ChangeTypeTool::longToString(gid));
 	SqlString.append(" ) and GId = ");
 	SqlString.append(ChangeTypeTool::longToString(gid));
+	SqlString.append(" and GColor != 0"); //避免相交网格判断为过覆盖
 	return SqlString;
 }
 
@@ -84,7 +85,7 @@ void OverLay::updateOverCell() {
 	setCellDialog.CellDialogcellVector = areaIdVector;
 	if(IDOK==setCellDialog.DoModal()) {
 		if(setCellDialog.flag) {
-			MessageBox(NULL,_T("恭喜您，存在过覆盖小区参数修改完成!"),_T("通知"),MB_OK);
+			MessageBox(NULL,_T("存在过覆盖小区参数修改完成!"),_T("通知"),MB_OK);
 		} else {
 			MessageBox(NULL,_T("未修改小区参数!"),_T("通知"),MB_OK);
 		}

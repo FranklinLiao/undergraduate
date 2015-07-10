@@ -20,7 +20,7 @@ SetCellDialog::SetCellDialog(CWnd* pParent /*=NULL*/)
 	, oldSendPower(_T(""))
 	, newSendPower(_T(""))
 {
-
+	
 }
 
 SetCellDialog::~SetCellDialog()

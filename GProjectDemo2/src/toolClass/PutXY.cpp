@@ -38,19 +38,19 @@ void PutXY::ChangeToXY(void)
 	_RecordsetPtr m_pRecordset;
 	_RecordsetPtr m_pRecordset1;
 	_RecordsetPtr m_pRecordset2;
-	_RecordsetPtr m_pRecordset3;
+	//_RecordsetPtr m_pRecordset3;
 	dbconnection = DBConnPool::Instanse()->GetAConnection();
 	sqlSp = dbconnection->_connection_ptr;
 	m_pRecordset.CreateInstance(__uuidof(Recordset));
 	m_pRecordset1.CreateInstance(__uuidof(Recordset));
 	m_pRecordset2.CreateInstance(__uuidof(Recordset));
-	m_pRecordset3.CreateInstance(__uuidof(Recordset));
+	//m_pRecordset3.CreateInstance(__uuidof(Recordset));
 
 	try {
 			m_pRecordset->Open("SELECT * FROM  BuildingPoint Order By PId",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);//打开数据库，执行SQL语句
 			m_pRecordset1->Open("SELECT * FROM  Grid Order By GId",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);
 			m_pRecordset2->Open("SELECT * FROM  Area Order By AId",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic, adCmdText);
-			m_pRecordset3->Open("SELECT * FROM RTData Order By RId",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic,adCmdText);
+			//m_pRecordset3->Open("SELECT * FROM RTData Order By RId",(IDispatch*)sqlSp,adOpenDynamic,adLockOptimistic,adCmdText);
 	}
 	catch (_com_error &e)
 		{
@@ -126,7 +126,7 @@ void PutXY::ChangeToXY(void)
 		{
 			cout << e.Description()<<endl;
 		}
-		
+		/*
 		//将路测数据的经纬度转化为XY
 		try
 		{
@@ -147,13 +147,12 @@ void PutXY::ChangeToXY(void)
 		{
 			cout << e.Description()<<endl;
 		}
-		
 		//将RTData的经纬度转换为xy后，再根据XY获得对应的网格
 		InsertRTGridIdTool::insertRTGridIdTool();
-
+		*/
 		DBConnPool::Instanse()->CloseRecordSet(m_pRecordset);
 		DBConnPool::Instanse()->CloseRecordSet(m_pRecordset1);
 		DBConnPool::Instanse()->CloseRecordSet(m_pRecordset2);
-		DBConnPool::Instanse()->CloseRecordSet(m_pRecordset3);
+		//DBConnPool::Instanse()->CloseRecordSet(m_pRecordset3);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
 }

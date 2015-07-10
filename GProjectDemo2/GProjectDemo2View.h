@@ -25,6 +25,8 @@
 #include "SetGridColorTool.h"
 #include "GridBSDistanceCal.h"
 #include "SetCellDialog.h"
+//process
+#include "MyProcess.h"
 //mif2tab
 #include "Mif2Tab.h"
 //覆盖优化
@@ -35,6 +37,7 @@
 //软频率复用算法优化
 #include "SFROptimize.h"
 #include "RecordAdjAreaForSfrTool.h"
+#include "DrawPic.h"
 //ANR
 #include "ANROptimize.h"
 class CGProjectDemo2View : public CView
@@ -126,6 +129,11 @@ public:
 	afx_msg void OnWeakmodify();
 	afx_msg void OnOvermodify();
 	afx_msg void OnPollutionmodify();
+public:
+	MyProcess* process;
+
+	void openProcess();
+	void closeProcess();
 };
 
 #ifndef _DEBUG  // GProjectDemo2View.cpp 中的调试版本

@@ -328,7 +328,7 @@ void DataBase::deletAllInfo(string TableName)
 //		DBConnPool::Instanse()->CloseConnection(connection);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
 		//_CrtDumpMemoryLeaks();
-		recordSet->Close();
+		//recordSet->Close();
 	}
 	catch (_com_error &e)
 	{
@@ -362,7 +362,7 @@ void DataBase::clearOneCol(string TableName,string col)
 		//		DBConnPool::Instanse()->CloseConnection(connection);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
 		//_CrtDumpMemoryLeaks();
-		recordSet->Close();
+		//recordSet->Close();
 	}
 	catch (_com_error &e)
 	{
@@ -629,9 +629,9 @@ void DataBase::clearOneCol(string TableName,string col)
 			stringObject.push_back(userInfo); 
 			recordSet->MoveNext(); ///移到下一条记录
 		}
-		return stringObject;
 		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		return stringObject;
 	}catch(_com_error e) {
 		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
@@ -674,9 +674,9 @@ void DataBase::clearOneCol(string TableName,string col)
 			 intObject.push_back(tmp); 
 			 recordSet->MoveNext(); ///移到下一条记录
 		 }
-		 return intObject;
 		 DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		 DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		 return intObject;
 	 }catch(_com_error e) {
 		 DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		 DBConnPool::Instanse()->RestoreAConnection(dbconnection);
@@ -816,7 +816,7 @@ vector<vector<string>> DataBase::getUserANRFromDb(string tableName,int areaId,in
 		{
 			vector<string> userInfo;
 			int i=0;
-			for(;i<3;i++) {
+			for(;i<4;i++) {
 				vTmp = recordSet->GetCollect(_variant_t((long)i));//这儿给字段编号和字段名都可以 
 				string tmp;
 				if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
@@ -829,9 +829,10 @@ vector<vector<string>> DataBase::getUserANRFromDb(string tableName,int areaId,in
 			stringObject.push_back(userInfo); 
 			recordSet->MoveNext(); ///移到下一条记录
 		}
-		return stringObject;
+		
 		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		return stringObject;
 	}catch(_com_error e) {
 		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
@@ -909,9 +910,9 @@ vector<vector<string>> DataBase::getGridAllRsrpInfo(int gridId) {
 			stringObject.push_back(userInfo); 
 			recordSet->MoveNext(); ///移到下一条记录
 		}
-		return stringObject;
 		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		return stringObject;
 	}catch(_com_error e) {
 		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
@@ -949,9 +950,9 @@ vector<int> DataBase::getLayOptimizeAreaIdFromDb(string sqlInfo) {
 			stringObject.push_back(tmp); 
 			recordSet->MoveNext(); ///移到下一条记录
 		}
-		return stringObject;
 		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		return stringObject;
 	}catch(_com_error e) {
 		DBConnPool::Instanse()->CloseRecordSet(recordSet);
 		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
@@ -960,10 +961,10 @@ vector<int> DataBase::getLayOptimizeAreaIdFromDb(string sqlInfo) {
 	}
 }
 
-void DataBase::setWeakLay() {  //将没有场强的网格判定为弱覆盖网格
+void DataBase::setWeakLay() {  
 	_ConnectionPtr connection;
-	DBConnect* dbconnection;
-	string weakLayString = "update Grid set GWeakLay = 0 where GAId is null";
+	DBConnect* dbconnection;  //将不相交但是没有场强的网格判定为弱覆盖网格
+	string weakLayString = "update Grid set GWeakLay = 1 where GColor!=0 and GRealRSRP =0 "; 
 	try {
 		//connection=GetDBConnTool::getMyConnection();
 		//GetDBConnTool dbCon;
@@ -1032,3 +1033,208 @@ vector<float> DataBase::getCellInfo(int cellId) {
 }
 
 
+vector<int> DataBase::getDirectNeighAreaFromDb(double x,double y) {
+	vector<int> cellVector;
+	int cellId = 0;
+	string info;
+	stringstream ss;
+	//select * from Area where (ABS(AX - 808) < 0.1 ) and (ABS(AY - 572.5)<0.1 ) 
+	ss<<"select AId from Area where (ABS(AX - ";
+	ss<<x;
+	ss<<")<0.1) and (ABS(AY - ";
+	ss<<y;
+	ss<<" )<0.1)";
+	info = ss.str();
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		recordSet.CreateInstance(__uuidof(Recordset));
+		sqlString=info.c_str();
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		while(!recordSet->EndOfFile) {
+			vTmp = recordSet->GetCollect(_variant_t((long)0));//这儿给字段编号和字段名都可以 
+			if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+				cellId = 0;
+			} else {
+				cellId = int(vTmp);//.dblVal;
+			}	
+			cellVector.push_back(cellId); 
+			recordSet->MoveNext(); ///移到下一条记录
+		}
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		//dbCon.closeConnection(connection
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<"failed";
+	}
+	return cellVector;
+}
+
+
+bool DataBase::judgeGrid(double x,double y) { //判断该网格是否为相交的网格
+	bool flag = false;
+	int gcolor = 1;
+	float grealrsrp = 0;
+	string info = CreateSqlTool::judgeGridFromXY(x,y);
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		recordSet.CreateInstance(__uuidof(Recordset));
+		sqlString=info.c_str();
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vTmp = recordSet->GetCollect(_variant_t((long)0));
+		if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+			gcolor = 0;
+		} else {
+			gcolor = int(vTmp);//.dblVal;
+		}		
+		vTmp = recordSet->GetCollect(_variant_t((long)1));
+		if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+			grealrsrp = 0;
+		} else {
+			grealrsrp = float(vTmp);//.dblVal;
+		}		
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		//dbCon.closeConnection(connection
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<"failed";
+	}
+	if(gcolor==0||abs(grealrsrp-0)<0.1) { //grealrsrp为0 也不可以
+		flag = true;
+	} else {
+		flag = false;
+	}
+	return flag;
+}
+
+
+void DataBase::resetGridColorFromDb() {  //将没有场强的网格判定为弱覆盖网格
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	string gridColorString = "update Grid set GColor = 16777215 where GColor != 0";
+	try {
+		//connection=GetDBConnTool::getMyConnection();
+		//GetDBConnTool dbCon;
+		//dbCon.getMyConnection(connection);
+		//connection.CreateInstance(__uuidof(Connection));
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		sqlString = gridColorString.c_str();
+		connection->Execute(sqlString,0,0); 
+		//dbCon.closeConnection(connection);
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//_CrtDumpMemoryLeaks();
+	}catch(_com_error e) {
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<e.Description()<<endl;
+		cout<<"reset grid color failed";
+	}
+
+}
+
+bool DataBase::isExistsNRTFromDb(int aid,int adjCellId) {
+	bool flag = true;
+	int cnt = 0;
+	stringstream ss;
+	string info;
+	ss<<"select count(*) from ANRT where Aid = ";
+	ss<<aid;
+	ss<<" and ANeiCellId = ";
+	ss<<adjCellId;
+	info = ss.str();
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		recordSet.CreateInstance(__uuidof(Recordset));
+		sqlString=info.c_str();
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vTmp = recordSet->GetCollect(_variant_t((long)0));
+		if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+			cnt = 0;
+		} else {
+			cnt = int(vTmp);//.dblVal;
+		}		
+			
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		//dbCon.closeConnection(connection
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<"failed";
+	}
+	if(cnt>0) { //grealrsrp为0 也不可以
+		flag = true;
+	} else {
+		flag = false;
+	}
+	return flag;
+}
+
+double DataBase::getNRTAvgCntFromDb(string tableName) {
+	double cnt = 0;
+	stringstream ss;
+	string info;
+	ss<<"select 1.0*(select count(*) from ";
+	ss<<tableName;
+	ss<<" ) /(select count(*) from Area) ";
+	info = ss.str();
+	_ConnectionPtr connection;
+	DBConnect* dbconnection;
+	_RecordsetPtr recordSet;
+	try {
+		dbconnection = DBConnPool::Instanse()->GetAConnection();
+		connection = dbconnection->_connection_ptr;
+		recordSet.CreateInstance(__uuidof(Recordset));
+		sqlString=info.c_str();
+		recordSet->Open(sqlString,connection.GetInterfacePtr(),adOpenDynamic,adLockOptimistic,adCmdText);
+		_variant_t vTmp;
+		vTmp = recordSet->GetCollect(_variant_t((long)0));
+		if(vTmp.vt==VT_NULL || vTmp.vt==VT_EMPTY) {
+			cnt = 0;
+		} else {
+			cnt = double(vTmp);//.dblVal;
+		}		
+
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		//DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+	}catch(_com_error e) {
+		//dbCon.closeConnection(connection
+		//		DBConnPool::Instanse()->CloseConnection(connection);
+		//_CrtDumpMemoryLeaks();
+		DBConnPool::Instanse()->CloseRecordSet(recordSet);
+		DBConnPool::Instanse()->RestoreAConnection(dbconnection);
+		cout<<"failed";
+	}
+	return cnt;
+}

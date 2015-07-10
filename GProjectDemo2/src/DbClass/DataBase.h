@@ -32,7 +32,7 @@ public:
 	 vector<int> getLayOptimizeAreaIdFromDb(string sqlInfo);
 	 void setWeakLay();//将没有收到场强的网格判定为弱覆盖
 	 vector<float> getCellInfo(int cellId);
-
+	 void resetGridColorFromDb();
 	 //干扰优化的方法
 	 vector<vector<string>> getUserFromDb(string tableName,int areaId,int userCnt);
 	 vector<int> getAdjAreaIdFromDb(string tableName,int areaId);
@@ -48,6 +48,10 @@ public:
 	 vector<vector<string>> getUserANRFromDb(string tableName,int areaId,int userCnt);
 	 int getGidFromXY(double x,double y);
 	 vector<vector<string>> getGridAllRsrpInfo(int gridId);
+	 vector<int> getDirectNeighAreaFromDb(double x,double y);
+	 bool judgeGrid(double x,double y);
+	 bool isExistsNRTFromDb(int aid,int adjCellId);
+	 double getNRTAvgCntFromDb(string tableName);
 };
 
 #endif

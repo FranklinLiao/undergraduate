@@ -12,8 +12,10 @@ string SFROptimize::optimizeOld(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 	int i = 1;
 	while(iter!=areaInfo.end()) {
 		Area area = Area(*iter,1); //1ÓÃÀ´±êÊ¶ÊÇSFRµÄArea
+		
 		//ÓÃÓÚ¿Æ¼¼ÂÛÎÄµÄ½á¹û  Ö®ºóÒªÉ¾³ı
 		//****************************************/
+		/*
 		switch(i) {
 		case 1:
 		case 4:
@@ -21,6 +23,7 @@ string SFROptimize::optimizeOld(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 		default:simUserCnt = 10;break;
 		}
 		i++;
+		*/
 		OldArea oldArea = OldArea(area,simUserCnt);
 		oldAreaSet.push_back(oldArea);
 		iter++;
@@ -30,7 +33,8 @@ string SFROptimize::optimizeOld(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 	******************************************************/
 	vector<OldArea>::iterator iterArea12 = oldAreaSet.begin();
 	while(iterArea12!=oldAreaSet.end()) {
-		iterArea12->adjAreaId = DBHelper::getAdjAreaId(iterArea12->area.AId);
+		string tableName = "ANRT";
+		iterArea12->adjAreaId = DBHelper::getAdjAreaId(tableName,iterArea12->area.AId);
 		/*
 		vector<int>::iterator iterArea13 = iterArea12->adjAreaId.begin();
 		while(iterArea13!=iterArea12->adjAreaId.end()) { //¸ù¾İid£¬ÕÒµ½ÁÚÇø
@@ -160,15 +164,17 @@ string SFROptimize::optimizeOld(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 			iterArea5++;
 		}
 	}
-	//·ÂÕæ100´Îºó ½«100´ÎµÄ½á¹ûÇóÆ½¾ù
+	//½«½á¹ûÇóÆ½¾ù
 	vector<OldArea>::iterator iterArea5 = oldAreaSet.begin();
 	while(iterArea5!=oldAreaSet.end()) {
 		double edgeOutPut = iterArea5->edgeThroughput;
 		iterArea5->edgeThroughput = 1.0*edgeOutPut / SIMCNT; //´æ´¢Ã¿´ÎµÄ±ßÔµÍÌÍÂÁ¿
 		iterArea5++;
 	}
-	avgAllOutput = sumAllOutput / SIMCNT;
-	avgEdageOutput = sumEdgeOutput / SIMCNT;
+	avgAllOutput = 1.0*sumAllOutput / SIMCNT / 1000; //mbps
+	avgEdageOutput = 1.0*sumEdgeOutput / SIMCNT /1000; //mbps
+	edgeOldVector.push_back(avgEdageOutput);
+	allOldVector.push_back(avgAllOutput);
 	cout<<"old avgall"<<avgAllOutput;
 	cout<<"old avgedge"<<avgEdageOutput;
 	stringstream ss;
@@ -187,9 +193,12 @@ string SFROptimize::optimizeNew(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 	vector<vector<string>> areaInfo = DBHelper::queryAreaInfoFromDB();
 	vector<NewArea> newAreaSet;
 	vector<vector<string>>::iterator iter = areaInfo.begin();
-	int i = 1;
+	//int i = 1;
 	while(iter!=areaInfo.end()) {
 		Area area = Area(*iter++,1);
+		//ÓÃÓÚ¿Æ¼¼ÂÛÎÄµÄ½á¹û  Ö®ºóÒªÉ¾³ı
+		//****************************************/
+		/*
 		switch(i) {
 		case 1:
 		case 4:
@@ -197,6 +206,7 @@ string SFROptimize::optimizeNew(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 		default:simUserCnt = 10;break;
 		}
 		i++;
+		*/
 		NewArea newArea = NewArea(area,simUserCnt);
 		newAreaSet.push_back(newArea);
 	}
@@ -205,7 +215,8 @@ string SFROptimize::optimizeNew(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 	******************************************************/
 	vector<NewArea>::iterator iterArea12 = newAreaSet.begin();
 	while(iterArea12!=newAreaSet.end()) {
-		iterArea12->adjAreaId = DBHelper::getAdjAreaId(iterArea12->area.AId);
+		string tableName = "ANRT";
+		iterArea12->adjAreaId = DBHelper::getAdjAreaId(tableName,iterArea12->area.AId);
 		/*
 		vector<int>::iterator iterArea13 = iterArea12->adjAreaId.begin();
 		while(iterArea13!=iterArea12->adjAreaId.end()) { //¸ù¾İid£¬ÕÒµ½ÁÚÇø
@@ -364,8 +375,11 @@ string SFROptimize::optimizeNew(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 		iterArea5->edgeThroughput = 1.0*edgeOutPut / SIMCNT; //´æ´¢Ã¿´ÎµÄ±ßÔµÍÌÍÂÁ¿
 		iterArea5++;
 	}
-	avgAllOutput = sumAllOutput / SIMCNT;
-	avgEdageOutput = sumEdgeOutput / SIMCNT;
+	
+	avgAllOutput = 1.0*sumAllOutput / SIMCNT /1000; //mbps
+	avgEdageOutput = 1.0* sumEdgeOutput / SIMCNT / 1000; //mbps
+	edgeNewVector.push_back(avgEdageOutput);
+	allNewVector.push_back(avgAllOutput);
 	cout<<"new avgall"<<avgAllOutput;
 	cout<<"new avgedge"<<avgEdageOutput;
 	stringstream ss;
@@ -376,22 +390,37 @@ string SFROptimize::optimizeNew(int simUserCnt) {  //×¢Òâ²é¿´Ò»ÏÂ±êÖ¾£¬ÌØ±ğÊÇ¶à´
 }
 
 bool SFROptimize::opertion() {
-	vector<int> userCnt;
-	userCnt.push_back(5);
-	//userCnt.push_back(40);
-	//userCnt.push_back(60);
-	//vector<string> oldThroughput;
-	//vector<string> newThroughput;
+	/*
+	int userarray[9] = {0,10,20,30,40,50,60,70,80};  
+	vector<int> userCnt(userarray , userarray+9); 
 	vector<int>::iterator userCntIter = userCnt.begin();
 	while(userCntIter!=userCnt.end()) {
-		string oldput = optimizeOld(*userCntIter);
-		//TRACE("the oldput :%s\n",oldput);
-		string newput = optimizeNew(*userCntIter);
-		//oldThroughput.push_back(oldput));
-		//newThroughput.push_back(optimizeNew(*userCntIter));
-		
-		//TRACE("the newput :%s\n",newput);
+		optimizeOld(*userCntIter);
+		optimizeNew(*userCntIter);
 		userCntIter++;
 	}
+	*/
+	
+	//¼ÆËãµÃµ½µÄÍÌÍÂÁ¿
+	double edgeOldSfrArray[9] = {0,0.314,1.141,1.718,2.150,2.641,2.965,3.573,4.032};  
+	vector<double> edgeOldSfrVector(edgeOldSfrArray,edgeOldSfrArray+9);
+	double edgeNewSfrArray[9] = {0,0.366,0.919,1.824,2.511,2.857,3.243,3.873,4.549};  
+	vector<double> edgeNewSfrVector(edgeNewSfrArray,edgeNewSfrArray+9);
+	double allOldSfrArray[9] = {0,5.918,12.804,19.302,20.451,21.639,23.550,24.375,24.917};  
+	vector<double> allOldSfrVector(allOldSfrArray,allOldSfrArray+9);
+	double allNewSfrArray[9] = {0,5.825,12.609,18.750,19.947,21.019,23.093,23.939,24.426};  
+	vector<double> allNewSfrVector(allNewSfrArray,allNewSfrArray+9);
+
+	//ÎªÁË·½±ãÑİÊ¾£¬Ê¹ÓÃÁËÖ®Ç°¼ÆËãµÄÊı¾İ
+	edgeOldVector.clear();
+	edgeOldVector.assign(edgeOldSfrVector.begin(), edgeOldSfrVector.end());
+	edgeNewVector.clear();
+	edgeNewVector.assign(edgeNewSfrVector.begin(), edgeNewSfrVector.end());
+	allOldVector.clear();
+	allOldVector.assign(allOldSfrVector.begin(), allOldSfrVector.end());
+	allNewVector.clear();
+	allNewVector.assign(allNewSfrVector.begin(), allNewSfrVector.end());
+	
+	
 	return true;
 }

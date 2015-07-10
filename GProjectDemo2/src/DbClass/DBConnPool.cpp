@@ -5,7 +5,7 @@ DBConnPool* DBConnPool::m_pInstanse = NULL;
 //需要在构造函数外初始化
 string DBConnPool::m_username = "sa";
 string DBConnPool::m_password = "123456";
-string DBConnPool::m_dbname = "LteArea";
+string DBConnPool::m_dbname = "LTE_OPT";
 DBConnPool::DBConnPool()
 {
 	m_bNeedStop = FALSE;
@@ -167,6 +167,7 @@ DBConnect* DBConnPool::GetAConnection()
 	if (5 == nTimes){
 		// 进来肯定是等待了一定时间，但是依然没有连接可用，所以直接报错退出！
 		cout<<"Waiting for a connection for a long time, but failed. So this will return Null"<<endl;
+		
 		return pDBEngine;
 	}
 	// 从空闲队列中取出，并且加入到使用队列中
